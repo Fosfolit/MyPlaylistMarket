@@ -7,13 +7,95 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/mainBackground">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:layout_marginHorizontal="@dimen/layoutMarginHorizontalMenu"
+            android:text="@string/app_name"
+            android:textColor="@color/mainBackgroundText"
+            android:textSize="@dimen/textSizeMenu"
+            android:gravity="start|center_vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/layoutMarginHorizontalMenu"
+
+            >
+
+            <Button
+                android:id="@+id/buttonSearch"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+
+                android:backgroundTint="@color/buttonMain"
+                android:padding="@dimen/padding"
+                android:layout_margin="@dimen/layoutMarginMenu"
+
+                android:text="@string/menubuttonText1"
+                android:textColor="@color/buttonMainText"
+                android:textSize="@dimen/textSizeMenu"
+
+                app:cornerRadius="@dimen/cornerRadiusMenuButton"
+                app:icon="@drawable/baseline_search_24"
+                app:iconTint="@color/buttonMainText"
+                app:iconSize="@dimen/iconSize"
+                app:iconGravity="textStart"
+                />
+
+            <Button
+                android:id="@+id/buttonMedia"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonMain"
+                android:padding="@dimen/padding"
+                android:layout_margin="@dimen/layoutMarginMenu"
+
+                android:text="@string/menubuttonText2"
+                android:textColor="@color/buttonMainText"
+                android:textSize="@dimen/textSizeMenu"
+
+                app:cornerRadius="@dimen/cornerRadiusMenuButton"
+                app:icon="@drawable/baseline_library_music_24"
+                app:iconTint="@color/buttonMainText"
+                app:iconSize="@dimen/iconSize"
+                app:iconGravity="textStart"
+                />
+
+            <Button
+                android:id="@+id/buttonSetting"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/padding"
+                android:layout_margin="@dimen/layoutMarginMenu"
+                android:backgroundTint="@color/buttonMain"
+
+                android:text="@string/setting"
+                android:textColor="@color/buttonMainText"
+                android:textSize="@dimen/textSizeMenu"
+
+                app:cornerRadius="@dimen/cornerRadiusMenuButton"
+                app:icon="@drawable/baseline_build_24"
+                app:iconTint="@color/buttonMainText"
+                app:iconSize="@dimen/iconSize"
+                app:iconGravity="textStart"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding">40dp</dimen>
+    <dimen name="textSize">20sp</dimen>
+    <dimen name="textSizeMenu">30sp</dimen>
+    <dimen name="iconSize">80px</dimen>
+    <dimen name="textSetting">16sp</dimen>
+    <dimen name="paddingSettingMenu">5dp</dimen>
+    <dimen name="layoutMarginMenu">5dp</dimen>
+    <dimen name="layoutMarginHorizontalMenu">20dp</dimen>
+    <dimen name="cornerRadiusMenuButton">20dp</dimen>
+</resources>
