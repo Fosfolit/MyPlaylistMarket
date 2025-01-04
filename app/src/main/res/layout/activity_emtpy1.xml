@@ -16,7 +16,7 @@
             android:layout_height="80dp"
             android:backgroundTint="@color/settingBackground"
 
-            android:text="Назад"
+            android:text="@string/buttonBack"
             android:textColor="@color/buttonMainText"
             android:textSize="@dimen/textSize"
             android:textStyle="bold"
