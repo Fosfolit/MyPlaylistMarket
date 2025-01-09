@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mainBackground">#4058AF</color>
-    <color name="mainBackgroundText">#FFFFFFFD</color>
-    <color name="buttonMain">#FFFFFFFD</color>
-    <color name="buttonMainText">#000000</color>
+    <color name="menuBackground">#3772E7</color>
+    <color name="menuBackgroundButton">#FFFFFFFF</color>
+    <color name="menuTextMain">#FFFFFFFF</color>
+    <color name="menuText">#1A1B22</color>
+    <color name="menuIcon">#1A1B22</color>
+
     <color name="settingBackground">#FFFFFFFF</color>
-    <color name="settingBackgroundText">#000000</color>
+    <color name="settingTextMain">#1A1B22</color>
+    <color name="settingText">#000000</color>
+    <color name="settingIconMain">#1A1B22</color>
+    <color name="settingIcon">#AEAFB4</color>
+
+    <color name="emptyBackground">#FFFFFFFF</color>
+    <color name="emptyText">#1A1B22</color>
+    <color name="emptyIcon">#1A1B22</color>
 
 </resources>

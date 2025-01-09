@@ -13,10 +13,10 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".EmtpyActivity2"
+            android:name=".MediaActivity"
             android:exported="false" />
         <activity
-            android:name=".EmtpyActivity1"
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"

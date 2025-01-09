@@ -6,15 +6,14 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
-class EmtpyActivity2 : AppCompatActivity() {
+class MediaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_emtpy2)
+        setContentView(R.layout.activity_media)
         val buttonSetting = findViewById<Button>(R.id.buttonBack)
         buttonSetting.setOnClickListener {
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
     }
 }
