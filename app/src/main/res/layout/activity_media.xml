@@ -9,21 +9,19 @@
     android:backgroundTint="@color/emptyBackground"
     android:orientation="vertical"
     tools:context=".MediaActivity">
-        <Button
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/emptyBackground"
-            android:gravity="center_vertical"
-
-            android:text="@string/buttonBack"
-            android:textColor="@color/emptyText"
-            android:textSize="@dimen/emptyTextSize"
-            android:textStyle="bold"
-
-            app:icon="@drawable/arrow_back"
-            app:iconSize="@dimen/emptyIconSize"
-            app:iconTint="@color/emptyIcon"
-            app:iconGravity="textStart"
-            />
+            app:navigationIcon="@drawable/arrow_back"
+            >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buttonBack"
+                    android:textColor="@color/emptyText"
+                    android:textSize="@dimen/emptyTextSize"
+                    android:textStyle="bold"
+                    />
+        </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

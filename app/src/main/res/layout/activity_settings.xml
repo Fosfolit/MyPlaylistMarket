@@ -7,28 +7,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity"
+    android:backgroundTint="@color/emptyBackground"
     android:orientation="vertical">
-    <Button
-            android:id="@+id/buttonBackMain"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/buttonBackMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/arrow_back"
+        >
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:paddingHorizontal="@dimen/settingSmallPadding"
-            android:paddingVertical="@dimen/settingMediumPadding"
-            android:backgroundTint="@color/settingBackground"
-
             android:text="@string/setting"
-            android:textSize="@dimen/settingTextSizeMain"
             android:textColor="@color/settingTextMain"
+            android:textSize="@dimen/settingTextSizeMain"
             android:textStyle="bold"
-            android:gravity="center_vertical"
-            android:textAllCaps = "false"
-
-            app:icon="@drawable/arrow_back"
-            app:iconTint="@color/settingTextMain"
-            app:iconGravity="textStart"
             />
-    <com.google.android.material.switchmaterial.SwitchMaterial
+
+    </androidx.appcompat.widget.Toolbar>
+    <Switch
         android:id="@+id/textViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,9 +38,9 @@
         android:textSize="@dimen/settingTextSize"
         android:textColor="@color/settingText"
         android:gravity="center_vertical"
-
         android:checked="false"
         />
+
     <TextView
         android:id="@+id/textViewShare"
         android:layout_width="match_parent"

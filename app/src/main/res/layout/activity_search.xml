@@ -9,21 +9,20 @@
     android:orientation="vertical"
     android:backgroundTint="@color/emptyBackground"
     tools:context=".SearchActivity">
-        <Button
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/emptyBackground"
-            android:gravity="center_vertical"
+            app:navigationIcon="@drawable/arrow_back"
+            >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buttonBack"
+                    android:textColor="@color/emptyText"
+                    android:textSize="@dimen/emptyTextSize"
+                    android:textStyle="bold"
+                    />
 
-            android:text="@string/buttonBack"
-            android:textColor="@color/emptyText"
-            android:textSize="@dimen/emptyTextSize"
-            android:textStyle="bold"
-
-            app:icon="@drawable/arrow_back"
-            app:iconSize="@dimen/emptyIconSize"
-            app:iconTint="@color/emptyIcon"
-            app:iconGravity="textStart"
-            />
+        </androidx.appcompat.widget.Toolbar>
 </LinearLayout>
