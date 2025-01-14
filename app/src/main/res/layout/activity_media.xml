@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/emptyBackground"
+    android:theme="@style/Empty.Theme"
+    android:backgroundTint="?attr/colorPrimary"
     android:orientation="vertical"
     tools:context=".MediaActivity">
         <androidx.appcompat.widget.Toolbar
@@ -19,7 +20,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/buttonBack"
-                    android:textColor="@color/emptyText"
+                    android:textColor="?attr/colorOnPrimary"
                     android:textSize="@dimen/emptyTextSize"
                     android:textStyle="bold"
                     />

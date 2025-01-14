@@ -1,7 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMarket" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/menuPrimaryNight</item>
+        <item name="colorPrimaryVariant">@color/menuPrimaryVariantNight</item>
+        <item name="colorOnPrimary">@color/menuOnPrimaryNight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/menuSecondaryNight</item>
+        <item name="colorSecondaryVariant">@color/menuSecondaryVariantNight</item>
+        <item name="colorOnSecondary">@color/menuOnSecondaryNight</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/settingPrimaryNight</item>
+        <item name="colorPrimaryVariant">@color/settingPrimaryVariantNight</item>
+        <item name="colorOnPrimary">@color/settingOnPrimaryNight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/settingSecondaryNight</item>
+        <item name="colorSecondaryVariant">@color/settingSecondaryVariantNight</item>
+        <item name="colorOnSecondary">@color/settingOnSecondaryNight</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/menuPrimaryNight</item>
+        <item name="colorPrimaryVariant">@color/menuPrimaryVariantNight</item>
+        <item name="colorOnPrimary">@color/menuOnPrimaryNight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/menuSecondaryNight</item>
+        <item name="colorSecondaryVariant">@color/menuSecondaryVariantNight</item>
+        <item name="colorOnSecondary">@color/menuOnSecondaryNight</item>
+        <!-- Customize your theme here. -->
     </style>
 </resources>

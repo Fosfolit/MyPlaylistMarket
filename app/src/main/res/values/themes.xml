@@ -1,9 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMarket" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/menuPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/menuPrimaryVariantLight</item>
+        <item name="colorOnPrimary">@color/menuOnPrimaryLight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/menuSecondaryLight</item>
+        <item name="colorSecondaryVariant">@color/menuSecondaryVariantLight</item>
+        <item name="colorOnSecondary">@color/menuOnSecondaryLight</item>
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.PlaylistMarket" parent="Base.Theme.PlaylistMarket" />
+    <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/settingPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/settingPrimaryVariantLight</item>
+        <item name="colorOnPrimary">@color/settingOnPrimaryLight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/settingSecondaryLight</item>
+        <item name="colorSecondaryVariant">@color/settingSecondaryVariantLight</item>
+        <item name="colorOnSecondary">@color/settingOnSecondaryLight</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/emptyPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/emptyPrimaryVariantLight</item>
+        <item name="colorOnPrimary">@color/emptyOnPrimaryLight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/emptySecondaryLight</item>
+        <item name="colorSecondaryVariant">@color/emptySecondaryVariantLight</item>
+        <item name="colorOnSecondary">@color/emptyOnSecondaryLight</item>
+        <!-- Customize your theme here. -->
+    </style>
 </resources>

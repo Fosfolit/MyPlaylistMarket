@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/menuBackground"
+    android:theme="@style/Menu.Theme"
+    android:background="?attr/colorPrimary"
     >
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -23,79 +24,31 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/menuMediumPadding"
-
                 android:text="@string/app_name"
-                android:textColor="@color/menuTextMain"
-                android:textSize="@dimen/menuTextSizeMain"
+                style="@style/MenuMainStyle"
                 />
 
         </androidx.appcompat.widget.Toolbar>
 
         <Button
             android:id="@+id/buttonSearch"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/menuMediumPadding"
-
-            android:layout_marginVertical="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/menuBackgroundButton"
-
             android:text="@string/menubuttonText1"
-            android:textColor="@color/menuText"
-            android:textSize="@dimen/menuTextSize"
-            android:textAllCaps = "false"
-
-            app:cornerRadius="@dimen/menuButtonCornerRadius"
             app:icon="@drawable/search"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/menuIconSize"
-            app:iconTint="@color/menuIcon" />
+            style="@style/MenuButtonStyle"
+            />
 
         <Button
             android:id="@+id/buttonMedia"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/menuMediumPadding"
-
-            android:layout_marginVertical="@dimen/menuSmallPadding"
-            android:layout_weight="1"
-            android:backgroundTint="@color/menuBackgroundButton"
-
             android:text="@string/menubuttonText2"
-            android:textColor="@color/menuText"
-            android:textSize="@dimen/menuTextSize"
-            android:textAllCaps = "false"
-
-            app:cornerRadius="@dimen/menuButtonCornerRadius"
             app:icon="@drawable/music_library"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/menuIconSize"
-            app:iconTint="@color/menuIcon" />
+            style="@style/MenuButtonStyle"
+            />
 
         <Button
             android:id="@+id/buttonSetting"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/menuMediumPadding"
-
-            android:layout_marginVertical="@dimen/menuSmallPadding"
-            android:layout_weight="1"
-            android:backgroundTint="@color/menuBackgroundButton"
-
             android:text="@string/setting"
-            android:textColor="@color/menuText"
-            android:textSize="@dimen/menuTextSize"
-            android:textAllCaps = "false"
-
-            app:cornerRadius="@dimen/menuButtonCornerRadius"
             app:icon="@drawable/setting"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/menuIconSize"
-            app:iconTint="@color/menuIcon" />
+            style="@style/MenuButtonStyle"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

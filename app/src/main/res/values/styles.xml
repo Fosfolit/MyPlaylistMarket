@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MenuButtonStyle" >
+        <item name="android:textSize">@dimen/menuTextSize</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">@dimen/menuButtonCornerRadius</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">@dimen/menuIconSize</item>
+        <item name="android:layout_marginHorizontal">@dimen/menuMediumPadding</item>
+        <item name="android:layout_marginVertical">@dimen/menuSmallPadding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+        <item name="iconTint">?attr/colorOnSecondary</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
+    </style>
+
+    <style name="MenuMainStyle" >
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/menuTextSizeMain</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginHorizontal">@dimen/menuMediumPadding</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+
+
+
+    <style name="SettingMainStyle">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/settingTextSizeMain</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="SettingMainToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="SettingButtonStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingHorizontal">@dimen/settingSmallPadding</item>
+        <item name="android:paddingVertical">@dimen/settingMediumPadding</item>
+        <item name="android:text">@string/settingbuttonText2</item>
+        <item name="android:textSize">@dimen/settingTextSize</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="drawableTint">?attr/colorOnSecondary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:backgroundTint">?attr/colorOnPrimary</item>
+    </style>
+
+</resources>
