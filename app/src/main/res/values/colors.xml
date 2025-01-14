@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="menuBackground">#3772E7</color>
+    <color name="menuBackgroundMain">#3772E7</color>
     <color name="menuBackgroundButton">#FFFFFFFF</color>
     <color name="menuTextMain">#FFFFFFFF</color>
-    <color name="menuText">#1A1B22</color>
-    <color name="menuIcon">#1A1B22</color>
+    <color name="menuTextButton">#1A1B22</color>
+    <color name="menuIconButton">#1A1B22</color>
 
     <color name="settingBackground">#FFFFFFFF</color>
     <color name="settingTextMain">#1A1B22</color>
-    <color name="settingText">#000000</color>
+    <color name="settingTextButton">#000000</color>
     <color name="settingIconMain">#1A1B22</color>
-    <color name="settingIcon">#AEAFB4</color>
+    <color name="settingIconButton">#AEAFB4</color>
 
     <color name="emptyBackground">#FFFFFFFF</color>
     <color name="emptyText">#1A1B22</color>
     <color name="emptyIcon">#1A1B22</color>
+
+    <color name="menuBackgroundMainNight">#1A1B22</color>
+    <color name="menuBackgroundButtonNight">#FFFFFFFF</color>
+    <color name="menuTextMainNight">#FFFFFF</color>
+    <color name="menuTextButtonNight">#1A1B22</color>
+    <color name="menuIconButtonNight">#1A1B22</color>
+
+    <color name="settingBackgroundNight">#1A1B22</color>
+    <color name="settingTextMainNight">#FFFFFF</color>
+    <color name="settingTextButtonNight">#FFFFFF</color>
+    <color name="settingIconMainNight">#FFFFFF</color>
+    <color name="settingIconButtonNight">#FFFFFF</color>
+
+    <color name="emptyBackgroundNight">#1A1B22</color>
+    <color name="emptyTextNight">#FFFFFF</color>
+    <color name="emptyIconNight">#FFFFFF</color>
 </resources>

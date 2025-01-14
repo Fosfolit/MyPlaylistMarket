@@ -4,4 +4,27 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <style name="MenuButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundButtonNight</item>
+        <item name="android:textColor">@color/menuTextButtonNight</item>
+        <item name="iconTint">@color/menuIconButtonNight</item>
+    </style>
+    <style name="MenuMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundMainNight</item>
+        <item name="android:textColor">@color/menuTextMainNight</item>
+
+    </style>
+    <style name="SettingButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundButtonNight</item>
+        <item name="android:textColor">@color/settingTextButtonNight</item>
+        <item name="iconTint">@color/settingIconButtonNight</item>
+        <item name="drawableTint">@color/settingIconButtonNight</item>
+    </style>
+    <style name="SettingMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundMainNight</item>
+        <item name="android:textColor">@color/settingTextMainNight</item>
+        <item name="iconTint">@color/settingIconMainNight</item>
+        <item name="drawableTint">@color/settingIconMainNight</item>
+
+    </style>
 </resources>

@@ -4,6 +4,28 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <style name="MenuButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundButton</item>
+        <item name="android:textColor">@color/menuTextButton</item>
+        <item name="iconTint">@color/menuIconButton</item>
+    </style>
+    <style name="MenuMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundMain</item>
+        <item name="android:textColor">@color/menuTextMain</item>
+        <item name="iconTint">@color/menuIconMain</item>
+    </style>
+    <style name="SettingButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundButton</item>
+        <item name="android:textColor">@color/settingTextButton</item>
+        <item name="iconTint">@color/settingIconButton</item>
+        <item name="drawableTint">@color/settingIconButton</item>
+    </style>
+    <style name="SettingMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundMain</item>
+        <item name="android:textColor">@color/settingTextMain</item>
+        <item name="iconTint">@color/settingIconMain</item>
+        <item name="drawableTint">@color/settingIconMain</item>
 
-    <style name="Theme.PlaylistMarket" parent="Base.Theme.PlaylistMarket" />
+    </style>
+
 </resources>
