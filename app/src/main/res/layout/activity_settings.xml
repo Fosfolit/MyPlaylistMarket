@@ -12,8 +12,10 @@
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/buttonBackMain"
+        style="@style/SettingMainToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemIconTint="?attr/colorSecondary"
         app:navigationIcon="@drawable/arrow_back"
         >
         <TextView

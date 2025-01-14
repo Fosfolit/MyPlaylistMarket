@@ -43,6 +43,8 @@
     <style name="SettingMainToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="itemIconTint">?attr/colorOnPrimary</item>
+        <item name="navigationIconTint">?attr/colorOnPrimary</item>
     </style>
 
 
