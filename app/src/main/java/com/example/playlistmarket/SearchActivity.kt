@@ -10,7 +10,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_search)
-        val toolbar: Toolbar = findViewById(R.id.buttonBack)
+        val toolbar: Toolbar = findViewById(R.id.buttonBack1)
         toolbar.setOnClickListener {
             finish()
         }

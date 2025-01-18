@@ -11,7 +11,7 @@
     android:backgroundTint="?attr/colorPrimary"
     tools:context=".SearchActivity">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/buttonBack"
+            android:id="@+id/buttonBack1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/arrow_back"
