@@ -35,4 +35,15 @@
         <item name="colorOnSecondary">@color/emptyOnSecondaryLight</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/searchPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/searchPrimaryVariantLight</item>
+        <item name="colorOnPrimary">@color/searchOnPrimaryLight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/searchSecondaryLight</item>
+        <item name="colorSecondaryVariant">@color/searchSecondaryVariantLight</item>
+        <item name="colorOnSecondary">@color/searchOnSecondaryLight</item>
+        <!-- Customize your theme here. -->
+    </style>
 </resources>

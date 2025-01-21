@@ -46,4 +46,21 @@
     <color name="emptySecondaryNight">#FFFFFFFF</color>
     <color name="emptySecondaryVariantNight">#FFFFFFFF</color>
     <color name="emptyOnSecondaryNight">#1A1B22</color>
+
+
+
+    <color name="searchPrimaryLight">#FFFFFFFF</color>
+    <color name="searchPrimaryVariantLight">#FFFFFFFF</color>
+    <color name="searchOnPrimaryLight">#1A1B22</color>
+    <color name="searchSecondaryLight">#E6E8EB</color>
+    <color name="searchSecondaryVariantLight">#E6E8EB</color>
+    <color name="searchOnSecondaryLight">#AEAFB4</color>
+
+    <color name="searchPrimaryNight">#1A1B22</color>
+    <color name="searchPrimaryVariantNight">#1A1B22</color>
+    <color name="searchOnPrimaryNight">#FFFFFFFF</color>
+    <color name="searchSecondaryNight">#FFFFFFFF</color>
+    <color name="searchSecondaryVariantNight">#FFFFFFFF</color>
+    <color name="searchOnSecondaryNight">#1A1B22</color>
+
 </resources>

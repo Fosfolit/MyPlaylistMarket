@@ -18,5 +18,8 @@
     <dimen name="emptyIconSize">52dp</dimen>
     <dimen name="emptyTextSize">24sp</dimen>
 
-
+    <dimen name="shortPadding">4dp</dimen>
+    <dimen name="littlePadding">8dp</dimen>
+    <dimen name="smallPadding">16dp</dimen>
+    <dimen name="mediumPadding">24dp</dimen>
 </resources>

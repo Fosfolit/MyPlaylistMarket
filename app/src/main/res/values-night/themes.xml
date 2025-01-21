@@ -35,4 +35,16 @@
         <item name="colorOnSecondary">@color/menuOnSecondaryNight</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/searchPrimaryNight</item>
+        <item name="colorPrimaryVariant">@color/searchPrimaryVariantNight</item>
+        <item name="colorOnPrimary">@color/searchOnPrimaryNight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/searchSecondaryNight</item>
+        <item name="colorSecondaryVariant">@color/searchSecondaryVariantNight</item>
+        <item name="colorOnSecondary">@color/searchOnSecondaryNight</item>
+        <!-- Customize your theme here. -->
+    </style>
 </resources>

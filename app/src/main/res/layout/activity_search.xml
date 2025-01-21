@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/Empty.Theme"
+    android:theme="@style/Search.Theme"
     android:backgroundTint="?attr/colorPrimary"
     tools:context=".SearchActivity">
         <androidx.appcompat.widget.Toolbar
@@ -19,11 +19,38 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/buttonBack"
+                    android:text="@string/searchMain"
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="@dimen/emptyTextSize"
                     android:textStyle="bold"
                     />
 
         </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/littlePadding"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/littlePadding"
+            >
+                <EditText
+                    android:id="@+id/inputEditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    style="@style/Search"
+                    android:drawableStart="@drawable/search"
+                    android:hint="@string/searchHelp"
+                    android:autofillHints="text"
+                    />
+
+                <ImageView
+                    android:id="@+id/clearIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:visibility="gone" />
+        </LinearLayout>
 </LinearLayout>
