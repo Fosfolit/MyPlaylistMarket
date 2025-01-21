@@ -41,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         val buttonUserText: TextView = findViewById(R.id.buttonUserText)
         buttonUserText.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("@string/titleYandexText"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.titleYandexText)))
             startActivity(browserIntent)
         }
     }

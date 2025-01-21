@@ -10,16 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
 class SearchActivity : AppCompatActivity() {
+    private var countValue: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        val clearButton   = findViewById<ImageView>(R.id.clearIcon)
 
         clearButton.setOnClickListener {
             inputEditText.setText("")
         }
+
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -34,12 +36,9 @@ class SearchActivity : AppCompatActivity() {
         }
 
         inputEditText.addTextChangedListener(simpleTextWatcher)
-        val toolbar: Toolbar = findViewById(R.id.buttonBack1)
-        toolbar.setOnClickListener {
-            finish()
-        }
+
+        toolFinish()
     }
-    private var countValue: String = "555"
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -57,10 +56,12 @@ class SearchActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
-
     }
 
-
-
-
+    private fun toolFinish(){
+        val toolbar: Toolbar = findViewById(R.id.buttonBack1)
+        toolbar.setOnClickListener {
+            finish()
+        }
+    }
 }

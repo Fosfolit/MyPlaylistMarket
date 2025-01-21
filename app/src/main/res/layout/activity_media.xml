@@ -21,7 +21,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/buttonBack"
                     android:textColor="?attr/colorOnPrimary"
-                    android:textSize="@dimen/emptyTextSize"
+                    android:textSize="@dimen/mediumTextSize"
                     android:textStyle="bold"
                     />
         </androidx.appcompat.widget.Toolbar>

@@ -2,49 +2,49 @@
     <!-- Base application theme. -->
     <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/menuPrimaryNight</item>
-        <item name="colorPrimaryVariant">@color/menuPrimaryVariantNight</item>
-        <item name="colorOnPrimary">@color/menuOnPrimaryNight</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/menuSecondaryNight</item>
-        <item name="colorSecondaryVariant">@color/menuSecondaryVariantNight</item>
-        <item name="colorOnSecondary">@color/menuOnSecondaryNight</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/settingPrimaryNight</item>
-        <item name="colorPrimaryVariant">@color/settingPrimaryVariantNight</item>
-        <item name="colorOnPrimary">@color/settingOnPrimaryNight</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/settingSecondaryNight</item>
-        <item name="colorSecondaryVariant">@color/settingSecondaryVariantNight</item>
-        <item name="colorOnSecondary">@color/settingOnSecondaryNight</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/menuPrimaryNight</item>
-        <item name="colorPrimaryVariant">@color/menuPrimaryVariantNight</item>
-        <item name="colorOnPrimary">@color/menuOnPrimaryNight</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/menuSecondaryNight</item>
-        <item name="colorSecondaryVariant">@color/menuSecondaryVariantNight</item>
-        <item name="colorOnSecondary">@color/menuOnSecondaryNight</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/searchPrimaryNight</item>
-        <item name="colorPrimaryVariant">@color/searchPrimaryVariantNight</item>
-        <item name="colorOnPrimary">@color/searchOnPrimaryNight</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/searchSecondaryNight</item>
-        <item name="colorSecondaryVariant">@color/searchSecondaryVariantNight</item>
-        <item name="colorOnSecondary">@color/searchOnSecondaryNight</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

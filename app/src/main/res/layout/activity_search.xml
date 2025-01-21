@@ -12,17 +12,12 @@
     tools:context=".SearchActivity">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/SettingMainToolbarStyle"
             app:navigationIcon="@drawable/arrow_back"
             >
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/searchMain"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textSize="@dimen/emptyTextSize"
-                    android:textStyle="bold"
+                    style="@style/SettingMainStyle"
+                    android:text="@string/search"
                     />
 
         </androidx.appcompat.widget.Toolbar>
@@ -41,7 +36,7 @@
                     android:layout_weight="1"
                     style="@style/Search"
                     android:drawableStart="@drawable/search"
-                    android:hint="@string/searchHelp"
+                    android:hint="@string/search"
                     android:autofillHints="text"
                     />
 

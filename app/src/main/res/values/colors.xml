@@ -1,66 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="menuPrimaryLight">#3772E7</color>
-    <color name="menuPrimaryVariantLight">#3772E7</color>
-    <color name="menuOnPrimaryLight">#FFFFFFFF</color>
-    <color name="menuSecondaryLight">#FFFFFFFF</color>
-    <color name="menuSecondaryVariantLight">#FFFFFFFF</color>
-    <color name="menuOnSecondaryLight">#1A1B22</color>
-
-    <color name="menuPrimaryNight">#1A1B22</color>
-    <color name="menuPrimaryVariantNight">#1A1B22</color>
-    <color name="menuOnPrimaryNight">#FFFFFFFF</color>
-    <color name="menuSecondaryNight">#FFFFFFFF</color>
-    <color name="menuSecondaryVariantNight">#FFFFFFFF</color>
-    <color name="menuOnSecondaryNight">#1A1B22</color>
-
-
-
-    <color name="settingPrimaryLight">#FFFFFFFF</color>
-    <color name="settingPrimaryVariantLight">#FFFFFFFF</color>
-    <color name="settingOnPrimaryLight">#1A1B22</color>
-    <color name="settingSecondaryLight">#FFFFFFFF</color>
-    <color name="settingSecondaryVariantLight">#FFFFFFFF</color>
-    <color name="settingOnSecondaryLight">#AEAFB4</color>
-
-    <color name="settingPrimaryNight">#1A1B22</color>
-    <color name="settingPrimaryVariantNight">#1A1B22</color>
-    <color name="settingOnPrimaryNight">#FFFFFFFF</color>
-    <color name="settingSecondaryNight">#1A1B22</color>
-    <color name="settingSecondaryVariantNight">#1A1B22</color>
-    <color name="settingOnSecondaryNight">#FFFFFFFF</color>
-
-
-
-    <color name="emptyPrimaryLight">#FFFFFFFF</color>
-    <color name="emptyPrimaryVariantLight">#FFFFFFFF</color>
-    <color name="emptyOnPrimaryLight">#1A1B22</color>
-    <color name="emptySecondaryLight">#FFFFFFFF</color>
-    <color name="emptySecondaryVariantLight">#FFFFFFFF</color>
-    <color name="emptyOnSecondaryLight">#1A1B22</color>
-
-    <color name="emptyPrimaryNight">#1A1B22</color>
-    <color name="emptyPrimaryVariantNight">#1A1B22</color>
-    <color name="emptyOnPrimaryNight">#FFFFFFFF</color>
-    <color name="emptySecondaryNight">#FFFFFFFF</color>
-    <color name="emptySecondaryVariantNight">#FFFFFFFF</color>
-    <color name="emptyOnSecondaryNight">#1A1B22</color>
-
-
-
-    <color name="searchPrimaryLight">#FFFFFFFF</color>
-    <color name="searchPrimaryVariantLight">#FFFFFFFF</color>
-    <color name="searchOnPrimaryLight">#1A1B22</color>
-    <color name="searchSecondaryLight">#E6E8EB</color>
-    <color name="searchSecondaryVariantLight">#E6E8EB</color>
-    <color name="searchOnSecondaryLight">#AEAFB4</color>
-
-    <color name="searchPrimaryNight">#1A1B22</color>
-    <color name="searchPrimaryVariantNight">#1A1B22</color>
-    <color name="searchOnPrimaryNight">#FFFFFFFF</color>
-    <color name="searchSecondaryNight">#FFFFFFFF</color>
-    <color name="searchSecondaryVariantNight">#FFFFFFFF</color>
-    <color name="searchOnSecondaryNight">#1A1B22</color>
-
+    <color name="blu">#3772E7</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#1A1B22</color>
+    <color name="cray">#AEAFB4</color>
+    <color name="notcray">#E6E8EB</color>
 </resources>
