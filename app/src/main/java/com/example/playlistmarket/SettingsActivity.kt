@@ -29,14 +29,14 @@ class SettingsActivity : AppCompatActivity() {
         val textViewShare: TextView = findViewById(R.id.textViewShare)
         textViewShare.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SENDTO)
-            startActivity(Intent.createChooser(shareIntent,"@string/titleYandex"))
+            startActivity(Intent.createChooser(shareIntent,getString(R.string.titleYandex)))
         }
         val buttonHelper: TextView = findViewById(R.id.buttonHelper)
         buttonHelper.setOnClickListener {
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, "@string/mailMain")
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "@string/spsAdmin")
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "@string/spsPeople")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.mailMain))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.spsAdmin))
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.spsPeople))
         startActivity(emailIntent)
         }
         val buttonUserText: TextView = findViewById(R.id.buttonUserText)
