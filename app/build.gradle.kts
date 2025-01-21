@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.playlistmarket"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.playlistmarket"
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-
+    implementation (libs.androidx.appcompat.v160)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

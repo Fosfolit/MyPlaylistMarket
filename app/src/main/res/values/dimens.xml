@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menuMediumPadding">16dp</dimen>
+    <dimen name="menuSmallPadding">8dp</dimen>
+
+    <dimen name="menuTextSizeMain">24sp</dimen>
+    <dimen name="menuTextSize">24sp</dimen>
+    <dimen name="menuIconSize">24dp</dimen>
+    <dimen name="menuButtonCornerRadius">16dp</dimen>
+
+    <dimen name="settingMediumPadding">20dp</dimen>
+    <dimen name="settingSmallPadding">16dp</dimen>
+
+    <dimen name="settingIconSize">24sp</dimen>
+    <dimen name="settingTextSize">16sp</dimen>
+    <dimen name="settingTextSizeMain">24sp</dimen>
+
+    <dimen name="emptyIconSize">52dp</dimen>
+    <dimen name="emptyTextSize">24sp</dimen>
+
+
+</resources>
