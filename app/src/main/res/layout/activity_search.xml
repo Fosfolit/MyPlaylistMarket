@@ -30,22 +30,29 @@
             android:orientation="horizontal"
             android:padding="@dimen/littlePadding"
             >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/inputEditText"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     style="@style/Search"
                     android:drawableStart="@drawable/search"
                     android:hint="@string/search"
                     android:autofillHints="text"
+                    android:paddingStart="@dimen/littlePadding"
                     />
 
-                <ImageView
-                    android:id="@+id/clearIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@android:drawable/ic_menu_close_clear_cancel"
-                    android:visibility="gone" />
+                        <ImageView
+                            android:id="@+id/clearIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/shortPadding"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:visibility="gone" />
+                </RelativeLayout>
         </LinearLayout>
 </LinearLayout>

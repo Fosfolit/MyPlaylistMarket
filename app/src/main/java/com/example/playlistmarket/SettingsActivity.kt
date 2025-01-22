@@ -13,11 +13,13 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        val toolbar: Toolbar = findViewById(R.id.buttonBackMain)
-        setSupportActionBar(toolbar);
-        toolbar.setOnClickListener {
-            finish()
-        }
+        myBack()
+        myStyle()
+        myShare()
+        myHelper()
+        myUserText()
+    }
+    private fun myStyle(){
         val textViewStyle: Switch = findViewById(R.id.textViewStyle)
         textViewStyle.setOnClickListener {
             if (textViewStyle.isChecked){
@@ -25,24 +27,35 @@ class SettingsActivity : AppCompatActivity() {
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-          }
+        }
+    }
+    private fun myBack(){
+        val toolbar: Toolbar = findViewById(R.id.buttonBack)
+        toolbar.setOnClickListener {
+            finish()
+        }}
+    private fun myShare(){
         val textViewShare: TextView = findViewById(R.id.textViewShare)
         textViewShare.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SENDTO)
+            val shareIntent = Intent(Intent.ACTION_SEND)
             startActivity(Intent.createChooser(shareIntent,getString(R.string.titleYandex)))
         }
-        val buttonHelper: TextView = findViewById(R.id.buttonHelper)
-        buttonHelper.setOnClickListener {
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.mailMain))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.spsAdmin))
-        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.spsPeople))
-        startActivity(emailIntent)
-        }
+    }
+    private fun myUserText(){
         val buttonUserText: TextView = findViewById(R.id.buttonUserText)
         buttonUserText.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.titleYandexText)))
             startActivity(browserIntent)
+        }
+    }
+    private fun myHelper(){
+        val buttonHelper: TextView = findViewById(R.id.buttonHelper)
+        buttonHelper.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.mailMain))
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.spsAdmin))
+            emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.spsPeople))
+            startActivity(emailIntent)
         }
     }
 }

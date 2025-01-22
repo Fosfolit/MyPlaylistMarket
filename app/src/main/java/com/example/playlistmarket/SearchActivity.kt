@@ -1,9 +1,12 @@
 package com.example.playlistmarket
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +14,16 @@ import androidx.appcompat.widget.Toolbar
 
 class SearchActivity : AppCompatActivity() {
     private var countValue: String = ""
+    private lateinit var inputEditText: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearButton   = findViewById<ImageView>(R.id.clearIcon)
 
         clearButton.setOnClickListener {
+            hideKeyboardAndClearFocus(inputEditText)
             inputEditText.setText("")
         }
 
@@ -48,6 +53,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         countValue = savedInstanceState.getString("codrush","")
+        inputEditText.setText(countValue)
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
@@ -64,4 +70,10 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
     }
+    fun Activity.hideKeyboardAndClearFocus(view: View) {
+        view.clearFocus()
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 }
