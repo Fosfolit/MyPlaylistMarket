@@ -39,10 +39,10 @@ class SettingsActivity : AppCompatActivity() {
         textViewShare.setOnClickListener {
             val shareIntent = Intent().apply{
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, R.string.titleYandex)
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.titleYandex))
                 type = "text/plain"
             }
-            startActivity(Intent.createChooser(shareIntent,"R.string.share"))
+            startActivity(Intent.createChooser(shareIntent,getString(R.string.share)))
         }
     }
     private fun myUserText(){
