@@ -7,89 +7,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity"
-    android:backgroundTint="@color/emptyBackground"
+    android:theme="@style/Setting.Theme"
+    android:backgroundTint="?attr/colorPrimary"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/buttonBackMain"
+        android:id="@+id/buttonBack"
+        style="@style/SettingMainToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemIconTint="?attr/colorSecondary"
         app:navigationIcon="@drawable/arrow_back"
         >
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/SettingMainStyle"
             android:text="@string/setting"
-            android:textColor="@color/settingTextMain"
-            android:textSize="@dimen/settingTextSizeMain"
-            android:textStyle="bold"
             />
 
     </androidx.appcompat.widget.Toolbar>
     <Switch
         android:id="@+id/textViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/settingBackground"
-
-        android:paddingHorizontal="@dimen/settingSmallPadding"
-        android:paddingVertical="@dimen/settingMediumPadding"
-
         android:text="@string/settingbuttonText1"
-        android:textSize="@dimen/settingTextSize"
-        android:textColor="@color/settingText"
-        android:gravity="center_vertical"
         android:checked="false"
+        style="@style/SettingButtonStyle"
         />
 
     <TextView
         android:id="@+id/textViewShare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:paddingHorizontal="@dimen/settingSmallPadding"
-        android:paddingVertical="@dimen/settingMediumPadding"
-        android:backgroundTint="@color/settingBackground"
-
+        style="@style/SettingButtonStyle"
         android:text="@string/settingbuttonText2"
-        android:textColor="@color/settingText"
-        android:textSize="@dimen/settingTextSize"
-        android:gravity="center_vertical"
-
         app:drawableEndCompat="@drawable/share"
-        app:drawableTint="@color/settingIcon"
         />
     <TextView
         android:id="@+id/buttonHelper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:paddingHorizontal="@dimen/settingSmallPadding"
-        android:paddingVertical="@dimen/settingMediumPadding"
-        android:backgroundTint="@color/settingBackground"
-
+        style="@style/SettingButtonStyle"
         android:text="@string/settingbuttonText3"
-        android:textColor="@color/settingText"
-        android:textSize="@dimen/settingTextSize"
-        android:gravity="center_vertical"
-
         app:drawableEndCompat="@drawable/support"
-        app:drawableTint="@color/settingIcon"
         />
     <TextView
         android:id="@+id/buttonUserText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:paddingHorizontal="@dimen/settingSmallPadding"
-        android:paddingVertical="@dimen/settingMediumPadding"
-        android:backgroundTint="@color/settingBackground"
-
+        style="@style/SettingButtonStyle"
         android:text="@string/settingbuttonText4"
-        android:textColor="@color/settingText"
-        android:textSize="@dimen/settingTextSize"
-        android:gravity="center_vertical"
-
         app:drawableEndCompat="@drawable/vector"
-        app:drawableTint="@color/settingIcon"
         />
 </LinearLayout>

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Playlist market</string>
-    <string name="menubuttonText1">Поиск</string>
+
     <string name="menubuttonText2">Медиатека</string>
     <string name="setting">Настройки</string>
     <string name="settingbuttonText1">Тёмная тема</string>
@@ -9,4 +9,13 @@
     <string name="settingbuttonText4">Пользовательское соглашение</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="buttonBack">Назад</string>
+    <string name="titleYandex">https://practicum.yandex.ru/learn/android-developer-plus/courses/aa69bcb1-18ad-4e02-b80f-7ab8ffca3574/sprints/342785/topics/9fbf99c8-cc59-4961-b3ab-368f9f433525/lessons/fe5f10e2-f6b9-48de-a585-986772cd94e0/</string>
+    <string name="titleYandexText">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="mailMain">bedarev_egor@mail.ru</string>
+    <string name="spsAdmin">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="spsPeople">Сообщение разработчикам и разработчицам приложения Playlist Make</string>
+    <string name="share">Поделится через:</string>
+
+    <string name="search">Поиск</string>
+
 </resources>

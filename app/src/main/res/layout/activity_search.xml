@@ -7,22 +7,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:backgroundTint="@color/emptyBackground"
+    android:theme="@style/Search.Theme"
+    android:backgroundTint="?attr/colorPrimary"
     tools:context=".SearchActivity">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/buttonBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/buttonBack1"
+            style="@style/SettingMainToolbarStyle"
             app:navigationIcon="@drawable/arrow_back"
             >
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/buttonBack"
-                    android:textColor="@color/emptyText"
-                    android:textSize="@dimen/emptyTextSize"
-                    android:textStyle="bold"
+                    style="@style/SettingMainStyle"
+                    android:text="@string/search"
                     />
 
         </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/littlePadding"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/littlePadding"
+            >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/inputEditText"
+                    android:layout_width="match_parent"
+                    style="@style/Search"
+                    android:drawableStart="@drawable/search"
+                    android:hint="@string/search"
+                    android:autofillHints="text"
+                    android:paddingStart="@dimen/littlePadding"
+                    />
+
+                        <ImageView
+                            android:id="@+id/clearIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/shortPadding"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:visibility="gone" />
+                </RelativeLayout>
+        </LinearLayout>
 </LinearLayout>
