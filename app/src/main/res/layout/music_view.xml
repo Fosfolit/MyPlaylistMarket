@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+    android:backgroundTint="?attr/colorPrimary"
+    android:theme="@style/Search.Theme"
+>
+    <ImageView
+        android:id="@+id/artworkUrl100"
+        style="@style/MusicImageMain"
+        />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:id="@+id/trackName"
+            style ="@style/MusicBlockTextUp"
+            tools:text="@string/settingbuttonText1"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start"
+            >
+            <TextView
+                android:id="@+id/artistName"
+                style ="@style/MusicBlockTextDown"
+                tools:text="@string/settingbuttonText3"
+                />
+            <ImageView
+                style="@style/MusicImageInText"
+                />
+            <TextView
+                android:id="@+id/trackTime"
+                style ="@style/MusicBlockTextDown"
+                tools:text="@string/settingbuttonText3"
+                />
+    </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        style="@style/MusicImageEnd"
+        />
+</LinearLayout>
