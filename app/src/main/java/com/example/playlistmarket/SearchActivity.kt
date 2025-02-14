@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 
 class SearchActivity : AppCompatActivity() {
     private var countValue: String = ""
@@ -133,7 +135,9 @@ class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         trackName.text = model.trackName
         trackTime.text = model.trackTime
         artistName.text = model.artistName
-        Glide.with(itemView).load(model.artworkUrl100).into(artworkUrl100)
+        Glide.with(itemView).load(model.artworkUrl100).apply(RequestOptions.bitmapTransform(
+            RoundedCorners(16)
+        )).into(artworkUrl100)
     }
 
 }
