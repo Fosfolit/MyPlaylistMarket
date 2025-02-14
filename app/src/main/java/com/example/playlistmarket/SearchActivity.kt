@@ -84,7 +84,7 @@ class SearchActivity : AppCompatActivity() {
         )
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val newsAdapter = NewsAdapter(musicList)
+        val newsAdapter =MusicAdapter(musicList)
         recyclerView.adapter = newsAdapter
 
 
@@ -121,39 +121,6 @@ class SearchActivity : AppCompatActivity() {
         view.clearFocus()
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
-}
-class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
-    private val trackName: TextView = itemView.findViewById(R.id.trackName)
-    private val trackTime: TextView = itemView.findViewById(R.id.trackTime)
-    private val artistName: TextView = itemView.findViewById(R.id.artistName)
-    private val artworkUrl100: ImageView = itemView.findViewById(R.id.artworkUrl100)
-
-    fun bind(model: DataMusic) {
-        trackName.text = model.trackName
-        trackTime.text = model.trackTime
-        artistName.text = model.artistName
-        Glide.with(itemView).load(model.artworkUrl100).apply(RequestOptions.bitmapTransform(
-            RoundedCorners(16)
-        )).into(artworkUrl100)
-    }
-
-}
-class NewsAdapter(private val news: List<DataMusic>) : RecyclerView.Adapter<NewsViewHolder> () {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
-        return NewsViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bind(news[position])
-    }
-
-    override fun getItemCount(): Int {
-        return news.size
     }
 
 }
