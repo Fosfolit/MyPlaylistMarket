@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:backgroundTint="?attr/colorPrimary"
-    android:theme="@style/Search.Theme"
->
+    android:theme="@style/Search.Theme">
     <ImageView
         android:id="@+id/artworkUrl100"
         style="@style/MusicImageMain"
@@ -23,26 +23,43 @@ android:orientation="horizontal"
             style ="@style/MusicBlockTextUp"
             tools:text="@string/settingbuttonText1"
             />
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="start"
-            >
+            android:layout_gravity="start">
+
             <TextView
                 android:id="@+id/artistName"
-                style ="@style/MusicBlockTextDown"
+                style="@style/MusicBlockTextDown"
                 tools:text="@string/settingbuttonText3"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
+                android:id="@+id/imageView"
                 style="@style/MusicImageInText"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/artistName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp" />
+
             <TextView
                 android:id="@+id/trackTime"
-                style ="@style/MusicBlockTextDown"
+                style="@style/MusicBlockTextDown"
                 tools:text="@string/settingbuttonText3"
-                />
-    </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/imageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
     <ImageView
         style="@style/MusicImageEnd"
