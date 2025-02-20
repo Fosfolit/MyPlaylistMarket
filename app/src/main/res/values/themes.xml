@@ -43,7 +43,7 @@
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/notcray</item>
-        <item name="colorSecondaryVariant">@color/notcray</item>
+        <item name="colorSecondaryVariant">@color/cray</item>
         <item name="colorOnSecondary">@color/cray</item>
         <!-- Customize your theme here. -->
     </style>
