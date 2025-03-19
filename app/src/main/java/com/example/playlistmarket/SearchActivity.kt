@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,14 +56,32 @@ class SearchActivity : AppCompatActivity() {
     private fun Textne(inputtrext : String){
         retrofit.getMusic(inputtrext).enqueue(object : Callback<ListDataMusic> {
             override fun onResponse(call: Call<ListDataMusic>, response: Response<ListDataMusic>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && (response.body()!!.resultCount >0)) {
                     val newsAdapter = MusicAdapter(response.body()!!.results)
                     recyclerView.adapter = newsAdapter
                 } else {
+                    val newsAdapter = ErrorAdapter(listOf(
+                        ErrorData(
+                            imageError = R.drawable.search_error_notfound,
+                            nameError = "Ничего не найдено",
+                            commentError = "",
+                            buttonErrorVisibility = 3,
+                            buttonErrorText ="",
+                        )))
+                    recyclerView.adapter = newsAdapter
                 }
             }
 
             override fun onFailure(call: Call<ListDataMusic>, t: Throwable) {
+                val newsAdapter = ErrorAdapter(listOf(
+                    ErrorData(
+                        imageError = R.drawable.search_error_notfound,
+                        nameError = "Проблемы со связью",
+                        commentError = "Загрузка не удалась. Проверьте подключение к интернету",
+                        buttonErrorVisibility = 1,
+                        buttonErrorText ="Обновить",
+                    )))
+                recyclerView.adapter = newsAdapter
 
             }
         })
@@ -85,13 +104,6 @@ class SearchActivity : AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
-    }
-
-    private fun buttonclear(){
-        clearButton.setOnClickListener {
-            hideKeyboardAndClearFocus(inputEditText)
-            inputEditText.setText("")
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -117,6 +129,13 @@ class SearchActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.buttonBack1)
         toolbar.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun buttonclear(){
+        clearButton.setOnClickListener {
+            hideKeyboardAndClearFocus(inputEditText)
+            inputEditText.setText("")
         }
     }
     private fun Activity.hideKeyboardAndClearFocus(view: View) {
