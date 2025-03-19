@@ -1,5 +1,7 @@
 package com.example.playlistmarket
 
+import android.view.View
+
 data class ErrorData(
     val imageError: Int,
     val nameError: String,
@@ -8,12 +10,5 @@ data class ErrorData(
     val buttonErrorText: String,
 )
 
-data class ListErrorData(
-    val resultCount: Int,
-    val results: String,
-    val commentError: String,
-    val buttonErrorVisibility: Int,
-    val buttonErrorText: String,
-)
 
 

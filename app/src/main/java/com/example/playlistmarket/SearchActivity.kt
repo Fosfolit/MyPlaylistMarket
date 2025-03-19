@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,9 +42,9 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        clearButton = findViewById<ImageView>(R.id.clearIcon)
+        clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recyclerView)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -66,8 +67,8 @@ class SearchActivity : AppCompatActivity() {
                             nameError = "Ничего не найдено",
                             commentError = "",
                             buttonErrorVisibility = 3,
-                            buttonErrorText ="",
-                        )))
+                            buttonErrorText =""
+                        ))){}
                     recyclerView.adapter = newsAdapter
                 }
             }
@@ -80,14 +81,18 @@ class SearchActivity : AppCompatActivity() {
                         commentError = "Загрузка не удалась. Проверьте подключение к интернету",
                         buttonErrorVisibility = 1,
                         buttonErrorText ="Обновить",
-                    )))
+                    ))){Textne(inputEditText.text.toString())}
                 recyclerView.adapter = newsAdapter
 
             }
         })
     }
 
+    val clickListener = View.OnClickListener {
+        Toast.makeText(this, "Кнопка нажата!", Toast.LENGTH_SHORT).show()
+        Textne(inputEditText.text.toString())
 
+    }
 
     private fun Textsee(){
         val simpleTextWatcher = object : TextWatcher {

@@ -14,11 +14,10 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val commentError: TextView = itemView.findViewById(R.id.commentError)
     private val buttonError: Button = itemView.findViewById(R.id.buttonError)
 
-
-    fun bind(errorCode: ErrorData) {
+    fun bind(errorCode: ErrorData, retryClickListener: (ErrorData) -> Unit) {
         loadImage(errorCode)
         loadText(errorCode)
-        loadButton(errorCode)
+        loadButton(errorCode, retryClickListener)
     }
 
     private fun loadText(error: ErrorData){
@@ -32,13 +31,16 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
             .placeholder(error.imageError)
             .centerCrop()
     }
-    private fun loadButton(error: ErrorData){
+    private fun loadButton(error: ErrorData, retryClickListener: (ErrorData) -> Unit){
         buttonError.text = error.buttonErrorText
         when(error.buttonErrorVisibility){
             0 ->buttonError.visibility = View.INVISIBLE
             1 ->buttonError.visibility = View.VISIBLE
             2 ->buttonError.visibility = View.GONE
             else -> buttonError.visibility = View.GONE
+        }
+        buttonError.setOnClickListener  {
+            retryClickListener(error)
         }
     }
 
