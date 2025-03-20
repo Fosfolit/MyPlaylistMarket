@@ -1,6 +1,5 @@
 package com.example.playlistmarket
 
-import android.view.View
 
 data class ErrorData(
     val imageError: Int,
