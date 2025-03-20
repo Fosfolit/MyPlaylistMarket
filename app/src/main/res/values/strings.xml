@@ -17,5 +17,15 @@
     <string name="share">Поделится через:</string>
 
     <string name="search">Поиск</string>
+    <string name="searchSite">https://itunes.apple.com</string>
+
+
+
+    <string name="notFoundError1">Ничего не найдено</string>
+    <string name="notFoundError2"> </string>
+    <string name="notFoundError3"> </string>
+    <string name="notInternetError1">Проблемы со связью</string>
+    <string name="notInternetError2">Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="notInternetError3">Обновить</string>
 
 </resources>
