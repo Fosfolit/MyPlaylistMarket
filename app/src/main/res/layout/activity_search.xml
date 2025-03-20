@@ -45,14 +45,19 @@
 
                         <ImageView
                             android:id="@+id/clearIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/smallTextSize"
+                            android:layout_height="@dimen/smallTextSize"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="end"
-                            android:layout_marginEnd="@dimen/shortPadding"
-                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:layout_marginEnd="@dimen/littlePadding"
+                            android:src="@drawable/krest"
                             android:visibility="gone" />
                 </RelativeLayout>
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 </LinearLayout>

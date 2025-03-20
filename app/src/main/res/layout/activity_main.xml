@@ -9,6 +9,7 @@
     tools:context=".MainActivity"
     android:theme="@style/Menu.Theme"
     android:background="?attr/colorPrimary"
+
     >
     <LinearLayout
         android:id="@+id/linearLayout"
