@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -40,54 +41,65 @@ class SearchActivity : AppCompatActivity() {
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
-
         recyclerView.layoutManager = LinearLayoutManager(this)
+        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                textFind(inputEditText.text.toString())
+                true
+            }
+            false
+        }
+
 
         inputEditTextWatcher()
-
         buttonClear()
         toolFinish()
-
-
-
-
     }
 
     private fun textFind(textFind : String){
         retrofit.getMusic(textFind).enqueue(object : Callback<ListDataMusic> {
             override fun onResponse(call: Call<ListDataMusic>, response: Response<ListDataMusic>) {
-                if (response.isSuccessful && (response.body()!!.resultCount >0)) {
-                    val newsAdapter = MusicAdapter(response.body()!!.results)
-
-                    recyclerView.adapter = newsAdapter
-                } else {
-                    val newsAdapter = ErrorAdapter(listOf(
-                        ErrorData(
-                            imageError = R.drawable.search_error_notfound,
-                            nameError = getString(R.string.notFoundError1),
-                            commentError = getString(R.string.notFoundError2),
-                            buttonErrorVisibility = 3,
-                            buttonErrorText = getString(R.string.notFoundError3)
-                        ))){}
-
-                    recyclerView.adapter = newsAdapter
+                when (response.code()) {
+                    200 -> {
+                        susses(response)
+                    }
+                    else->{
+                        nosusses()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<ListDataMusic>, t: Throwable) {
-                val newsAdapter = ErrorAdapter(listOf(
-                    ErrorData(
-                        imageError = R.drawable.search_error_notfound,
-                        nameError = getString(R.string.notInternetError1),
-                        commentError = getString(R.string.notInternetError2),
-                        buttonErrorVisibility = 1,
-                        buttonErrorText = getString(R.string.notInternetError3),
-                    ))){textFind(inputEditText.text.toString())}
-                recyclerView.adapter = newsAdapter
-
+                nosusses()
             }
         })
             recyclerView.visibility = View.VISIBLE
+    }
+
+    private  fun susses(response: Response<ListDataMusic>){
+        if (response.isSuccessful && (response.body()!!.resultCount >0)) {
+            recyclerView.adapter = MusicAdapter(response.body()!!.results)
+        }
+        else{
+            recyclerView.adapter = ErrorAdapter(listOf(
+                ErrorData(
+                    imageError = R.drawable.search_error_notfound,
+                    nameError = getString(R.string.notFoundError1),
+                    commentError = getString(R.string.notFoundError2),
+                    buttonErrorVisibility = 3,
+                    buttonErrorText = getString(R.string.notFoundError3)
+                ))){}
+        }
+        }
+    private  fun nosusses(){
+        recyclerView.adapter = ErrorAdapter(listOf(
+        ErrorData(
+            imageError = R.drawable.search_error_internet,
+            nameError = getString(R.string.notInternetError1),
+            commentError = getString(R.string.notInternetError2),
+            buttonErrorVisibility = 1,
+            buttonErrorText = getString(R.string.notInternetError3),
+        ))){textFind(inputEditText.text.toString())}
     }
 
     private fun inputEditTextWatcher(){
@@ -143,6 +155,7 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
     }
+    
     private fun buttonClear(){
         clearButton.setOnClickListener {
             hideKeyboardAndClearFocus(inputEditText)
@@ -150,6 +163,7 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.INVISIBLE
         }
     }
+
     private fun Activity.hideKeyboardAndClearFocus(view: View) {
         view.clearFocus()
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
