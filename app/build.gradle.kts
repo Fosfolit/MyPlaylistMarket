@@ -50,5 +50,7 @@ dependencies {
     implementation (libs.retrofit)
     implementation (libs.gson)
     annotationProcessor(libs.compiler)
+    implementation (libs.androidx.recyclerview)
     implementation (libs.converter.gson)
+    implementation (libs.gson.v288)
 }

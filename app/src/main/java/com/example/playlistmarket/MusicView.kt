@@ -1,7 +1,10 @@
 package com.example.playlistmarket
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,8 +19,9 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val trackTime: TextView = itemView.findViewById(R.id.trackTime)
     private val artistName: TextView = itemView.findViewById(R.id.artistName)
     private val artworkUrl100: ImageView = itemView.findViewById(R.id.artworkUrl100)
+    private val trackMain: LinearLayout = itemView.findViewById(R.id.trackMain)
 
-    fun bind(model: DataMusic) {
+    fun bind(model: DataMusic,retryClickListener: (DataMusic) -> Unit) {
         trackName.text = model.trackName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
         artistName.text = model.artistName
@@ -27,6 +31,26 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .centerCrop()
             .transform(RoundedCorners(16))
             .into(artworkUrl100)
+        trackMain.setOnClickListener {
+            retryClickListener(model)
+        }
+    }
+
+}
+
+class MusicAdapter(private val news: List<DataMusic>,private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
+        return MusicViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
+        holder.bind(news[position],retryClickListener)
+    }
+
+    override fun getItemCount(): Int {
+        return news.size
     }
 
 }
