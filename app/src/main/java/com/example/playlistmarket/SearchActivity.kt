@@ -2,6 +2,7 @@ package com.example.playlistmarket
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,14 +13,19 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.util.LinkedList
+
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -29,8 +35,8 @@ class SearchActivity : AppCompatActivity() {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create<MusicInterface>()
-
-
+    public val linkedList : LinkedList<DataMusic> = LinkedList()
+    private lateinit var sharedPrefs: SharedPreferences
     private var countValue: String = ""
     private lateinit var inputEditText: EditText
     private lateinit var clearButton :ImageView
@@ -38,6 +44,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
@@ -49,7 +56,13 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
-
+        loadInPhone()
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            displayRecentlyViewed()
+        }
+        sharedPrefs.registerOnSharedPreferenceChangeListener { sharedPrefs, key ->
+            renderingCondition()
+        }
 
         inputEditTextWatcher()
         buttonClear()
@@ -61,24 +74,24 @@ class SearchActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ListDataMusic>, response: Response<ListDataMusic>) {
                 when (response.code()) {
                     200 -> {
-                        susses(response)
+                        successfulСall(response)
                     }
                     else->{
-                        nosusses()
+                        unsuccessfulСall()
                     }
                 }
             }
 
             override fun onFailure(call: Call<ListDataMusic>, t: Throwable) {
-                nosusses()
+                unsuccessfulСall()
             }
         })
             recyclerView.visibility = View.VISIBLE
     }
 
-    private  fun susses(response: Response<ListDataMusic>){
+    private  fun successfulСall(response: Response<ListDataMusic>){
         if (response.isSuccessful && (response.body()!!.resultCount >0)) {
-            recyclerView.adapter = MusicAdapter(response.body()!!.results)
+            recyclerView.adapter = MusicAdapter(response.body()!!.results){DataMusic -> addMusicInList(DataMusic)}
         }
         else{
             recyclerView.adapter = ErrorAdapter(listOf(
@@ -91,7 +104,8 @@ class SearchActivity : AppCompatActivity() {
                 ))){}
         }
         }
-    private  fun nosusses(){
+
+    private  fun unsuccessfulСall(){
         recyclerView.adapter = ErrorAdapter(listOf(
         ErrorData(
             imageError = R.drawable.search_error_internet,
@@ -105,15 +119,23 @@ class SearchActivity : AppCompatActivity() {
     private fun inputEditTextWatcher(){
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (count<0){
-                    recyclerView.visibility = View.INVISIBLE
+                if (count<0) {
+                    if (inputEditText.hasFocus()) {
+                        displayRecentlyViewed()
+                    } else {
+                        recyclerView.visibility = View.INVISIBLE
+                    }
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
                 countValue = inputEditText.text.toString()
                 if (countValue.isEmpty()) {
-                    recyclerView.visibility = View.INVISIBLE
+                    if (inputEditText.hasFocus()) {
+                        displayRecentlyViewed()
+                    } else {
+                        recyclerView.visibility = View.INVISIBLE
+                    }
                 } else {
                     recyclerView.visibility = View.VISIBLE
                     textFind(countValue)
@@ -121,8 +143,12 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count<0){
-                    recyclerView.visibility = View.INVISIBLE
+                if (count<0) {
+                    if (inputEditText.hasFocus()) {
+                        displayRecentlyViewed()
+                    } else {
+                        recyclerView.visibility = View.INVISIBLE
+                    }
                 }
                 clearButton.visibility = clearButtonVisibility(s)
             }
@@ -168,6 +194,78 @@ class SearchActivity : AppCompatActivity() {
         view.clearFocus()
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
+    private fun displayRecentlyViewed(){
+        if(linkedList.size>0){
+            recyclerView.adapter = ConcatAdapter(textPart(), recentSearchesPart(), buttonPart())
+        }
+    }
+
+    private fun textPart(): RecyclerView.Adapter<*> {
+        return SearchedQueriesTextAdapter(listOf("Вы искали"))
+    }
+    private fun buttonPart(): RecyclerView.Adapter<*> {
+        return SearchedQueriesButtonAdapter(listOf("Очистить историю")){
+            linkedList.clear()
+            cleanLoadHistori()
+            recyclerView.visibility = View.INVISIBLE
+        }
+    }
+    private fun recentSearchesPart(): RecyclerView.Adapter<*>{
+        return  MusicAdapter(linkedList){DataMusic ->
+            addMusicInList(DataMusic)
+            displayRecentlyViewed()}
+    }
+
+    private fun renderingCondition(){
+        if (inputEditText.text.isEmpty()) {
+            if (inputEditText.hasFocus()) {
+                displayRecentlyViewed()
+            } else {
+                recyclerView.visibility = View.INVISIBLE
+            }
+        }
+
+    }
+
+    private fun addMusicInList(te : DataMusic){
+        linkedList.remove(te)
+        if(linkedList.size>=5){
+            linkedList.removeLast()
+        }
+     linkedList.push(te)
+        saveInPhone()
+    }
+    private fun cleanLoadHistori(){
+        sharedPrefs.edit()
+            .remove("0")
+            .remove("1")
+            .remove("2")
+            .remove("3")
+            .remove("4")
+            .remove("5")
+            .apply()
+    }
+
+    private fun saveInPhone(){
+        cleanLoadHistori()
+
+        linkedList.forEachIndexed { index, item ->
+            sharedPrefs.edit()
+                .putString((index).toString(), Gson().toJson(item))
+                .apply()
+        }
+    }
+
+    private fun loadInPhone(){
+        linkedList.clear()
+        for(i in 0..5){
+            val json =  sharedPrefs.getString(i.toString(), null) ?: return
+            linkedList.offerLast(Gson().fromJson(json, DataMusic::class.java))
+        }
+
     }
 
 }
