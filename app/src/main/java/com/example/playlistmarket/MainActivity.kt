@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
 
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
 const val EDIT_TEXT_KEY = "key_for_edit_text"

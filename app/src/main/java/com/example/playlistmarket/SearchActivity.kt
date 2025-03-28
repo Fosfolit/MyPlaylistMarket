@@ -23,7 +23,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import java.util.Collections
 import java.util.LinkedList
 
 
@@ -57,12 +56,12 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
-        load()
+        loadInPhone()
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
             displayRecentlyViewed()
         }
         sharedPrefs.registerOnSharedPreferenceChangeListener { sharedPrefs, key ->
-            displayRecentlyViewed()
+            renderingCondition()
         }
 
         inputEditTextWatcher()
@@ -70,55 +69,29 @@ class SearchActivity : AppCompatActivity() {
         toolFinish()
     }
 
-
-
-
-    private fun displayRecentlyViewed(){
-        if(linkedList.size>0){
-            recyclerView.adapter = ConcatAdapter(textPart(), recentSearchesPart(), buttonPart())
-    }}
-
-    private fun textPart(): RecyclerView.Adapter<*> {
-        return SearchedQueriesTextAdapter(listOf("Вы искали"))
-    }
-
-    private fun buttonPart(): RecyclerView.Adapter<*> {
-        return SearchedQueriesButtonAdapter(listOf("Очистить историю")){
-            linkedList.clear()
-            sharedPrefs.edit().clear()
-            displayRecentlyViewed()
-        }
-    }
-
-    private fun recentSearchesPart(): RecyclerView.Adapter<*>{
-        return  MusicAdapter(linkedList){DataMusic ->
-            add(DataMusic)
-            displayRecentlyViewed()}
-    }
-
     private fun textFind(textFind : String){
         retrofit.getMusic(textFind).enqueue(object : Callback<ListDataMusic> {
             override fun onResponse(call: Call<ListDataMusic>, response: Response<ListDataMusic>) {
                 when (response.code()) {
                     200 -> {
-                        susses(response)
+                        successfulСall(response)
                     }
                     else->{
-                        nosusses()
+                        unsuccessfulСall()
                     }
                 }
             }
 
             override fun onFailure(call: Call<ListDataMusic>, t: Throwable) {
-                nosusses()
+                unsuccessfulСall()
             }
         })
             recyclerView.visibility = View.VISIBLE
     }
 
-    private  fun susses(response: Response<ListDataMusic>){
+    private  fun successfulСall(response: Response<ListDataMusic>){
         if (response.isSuccessful && (response.body()!!.resultCount >0)) {
-            recyclerView.adapter = MusicAdapter(response.body()!!.results){DataMusic -> add(DataMusic)}
+            recyclerView.adapter = MusicAdapter(response.body()!!.results){DataMusic -> addMusicInList(DataMusic)}
         }
         else{
             recyclerView.adapter = ErrorAdapter(listOf(
@@ -132,7 +105,7 @@ class SearchActivity : AppCompatActivity() {
         }
         }
 
-    private  fun nosusses(){
+    private  fun unsuccessfulСall(){
         recyclerView.adapter = ErrorAdapter(listOf(
         ErrorData(
             imageError = R.drawable.search_error_internet,
@@ -223,16 +196,49 @@ class SearchActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun add(te : DataMusic){
+
+    private fun displayRecentlyViewed(){
+        if(linkedList.size>0){
+            recyclerView.adapter = ConcatAdapter(textPart(), recentSearchesPart(), buttonPart())
+        }
+    }
+
+    private fun textPart(): RecyclerView.Adapter<*> {
+        return SearchedQueriesTextAdapter(listOf("Вы искали"))
+    }
+    private fun buttonPart(): RecyclerView.Adapter<*> {
+        return SearchedQueriesButtonAdapter(listOf("Очистить историю")){
+            linkedList.clear()
+            cleanLoadHistori()
+            recyclerView.visibility = View.INVISIBLE
+        }
+    }
+    private fun recentSearchesPart(): RecyclerView.Adapter<*>{
+        return  MusicAdapter(linkedList){DataMusic ->
+            addMusicInList(DataMusic)
+            displayRecentlyViewed()}
+    }
+
+    private fun renderingCondition(){
+        if (inputEditText.text.isEmpty()) {
+            if (inputEditText.hasFocus()) {
+                displayRecentlyViewed()
+            } else {
+                recyclerView.visibility = View.INVISIBLE
+            }
+        }
+
+    }
+
+    private fun addMusicInList(te : DataMusic){
         linkedList.remove(te)
         if(linkedList.size>=5){
             linkedList.removeLast()
         }
      linkedList.push(te)
-        save()
+        saveInPhone()
     }
-
-    private fun save(){
+    private fun cleanLoadHistori(){
         sharedPrefs.edit()
             .remove("0")
             .remove("1")
@@ -240,6 +246,11 @@ class SearchActivity : AppCompatActivity() {
             .remove("3")
             .remove("4")
             .remove("5")
+            .apply()
+    }
+
+    private fun saveInPhone(){
+        cleanLoadHistori()
 
         linkedList.forEachIndexed { index, item ->
             sharedPrefs.edit()
@@ -248,10 +259,10 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun load(){
+    private fun loadInPhone(){
         linkedList.clear()
         for(i in 0..5){
-            val json = sharedPrefs.getString(i.toString(), null) ?: return
+            val json =  sharedPrefs.getString(i.toString(), null) ?: return
             linkedList.offerLast(Gson().fromJson(json, DataMusic::class.java))
         }
 
