@@ -35,12 +35,12 @@ class SearchActivity : AppCompatActivity() {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create<MusicInterface>()
-    public val linkedList : LinkedList<DataMusic> = LinkedList()
     private lateinit var sharedPrefs: SharedPreferences
     private var countValue: String = ""
     private lateinit var inputEditText: EditText
     private lateinit var clearButton :ImageView
     private lateinit var recyclerView :RecyclerView
+    private lateinit var recentlyViewed: RecentlyViewed
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -49,6 +49,7 @@ class SearchActivity : AppCompatActivity() {
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recentlyViewed = RecentlyViewed(this)
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 textFind(inputEditText.text.toString())
@@ -56,12 +57,9 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
-        loadInPhone()
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            recyclerView.visibility = View.VISIBLE
             displayRecentlyViewed()
-        }
-        sharedPrefs.registerOnSharedPreferenceChangeListener { sharedPrefs, key ->
-            renderingCondition()
         }
 
         inputEditTextWatcher()
@@ -75,6 +73,7 @@ class SearchActivity : AppCompatActivity() {
                 when (response.code()) {
                     200 -> {
                         successfulСall(response)
+                        recyclerView.visibility = View.VISIBLE
                     }
                     else->{
                         unsuccessfulСall()
@@ -86,12 +85,13 @@ class SearchActivity : AppCompatActivity() {
                 unsuccessfulСall()
             }
         })
-            recyclerView.visibility = View.VISIBLE
     }
 
     private  fun successfulСall(response: Response<ListDataMusic>){
         if (response.isSuccessful && (response.body()!!.resultCount >0)) {
-            recyclerView.adapter = MusicAdapter(response.body()!!.results){DataMusic -> addMusicInList(DataMusic)}
+            recyclerView.adapter = MusicAdapter(response.body()!!.results) {
+                DataMusic -> recentlyViewed.addItem(DataMusic)
+            }
         }
         else{
             recyclerView.adapter = ErrorAdapter(listOf(
@@ -102,6 +102,7 @@ class SearchActivity : AppCompatActivity() {
                     buttonErrorVisibility = 3,
                     buttonErrorText = getString(R.string.notFoundError3)
                 ))){}
+            recyclerView.visibility = View.VISIBLE
         }
         }
 
@@ -114,41 +115,29 @@ class SearchActivity : AppCompatActivity() {
             buttonErrorVisibility = 1,
             buttonErrorText = getString(R.string.notInternetError3),
         ))){textFind(inputEditText.text.toString())}
+        recyclerView.visibility = View.VISIBLE
     }
 
     private fun inputEditTextWatcher(){
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (count<0) {
-                    if (inputEditText.hasFocus()) {
-                        displayRecentlyViewed()
-                    } else {
-                        recyclerView.visibility = View.INVISIBLE
-                    }
+                if (count==0) {
+                    displayRecentlyViewed()
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
                 countValue = inputEditText.text.toString()
                 if (countValue.isEmpty()) {
-                    if (inputEditText.hasFocus()) {
-                        displayRecentlyViewed()
-                    } else {
-                        recyclerView.visibility = View.INVISIBLE
-                    }
+                    displayRecentlyViewed()
                 } else {
-                    recyclerView.visibility = View.VISIBLE
                     textFind(countValue)
                 }
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count<0) {
-                    if (inputEditText.hasFocus()) {
-                        displayRecentlyViewed()
-                    } else {
-                        recyclerView.visibility = View.INVISIBLE
-                    }
+                if (count==0) {
+                    displayRecentlyViewed()
                 }
                 clearButton.visibility = clearButtonVisibility(s)
             }
@@ -160,13 +149,11 @@ class SearchActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putString("codrush", countValue)
     }
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         countValue = savedInstanceState.getString("codrush","")
         inputEditText.setText(countValue)
     }
-
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -174,14 +161,12 @@ class SearchActivity : AppCompatActivity() {
             View.VISIBLE
         }
     }
-
     private fun toolFinish(){
         val toolbar: Toolbar = findViewById(R.id.buttonBack1)
         toolbar.setOnClickListener {
             finish()
         }
     }
-    
     private fun buttonClear(){
         clearButton.setOnClickListener {
             hideKeyboardAndClearFocus(inputEditText)
@@ -189,83 +174,30 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.INVISIBLE
         }
     }
-
     private fun Activity.hideKeyboardAndClearFocus(view: View) {
         view.clearFocus()
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
-
     private fun displayRecentlyViewed(){
-        if(linkedList.size>0){
-            recyclerView.adapter = ConcatAdapter(textPart(), recentSearchesPart(), buttonPart())
-        }
-    }
-
-    private fun textPart(): RecyclerView.Adapter<*> {
-        return SearchedQueriesTextAdapter(listOf("Вы искали"))
-    }
-    private fun buttonPart(): RecyclerView.Adapter<*> {
-        return SearchedQueriesButtonAdapter(listOf("Очистить историю")){
-            linkedList.clear()
-            cleanLoadHistori()
+        if(!recentlyViewed.isEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            recyclerView.adapter = ConcatAdapter(
+                SearchedQueriesTextAdapter(listOf("Вы искали")),
+                MusicAdapter(recentlyViewed.dataMusic())
+                { DataMusic ->
+                    recentlyViewed.addItem(DataMusic)
+                    displayRecentlyViewed()
+                },
+                SearchedQueriesButtonAdapter(listOf("Очистить историю"))
+                {
+                    recentlyViewed.clearPreferencesAll()
+                    recyclerView.visibility = View.INVISIBLE
+                }
+            )
+        }else{
             recyclerView.visibility = View.INVISIBLE
         }
-    }
-    private fun recentSearchesPart(): RecyclerView.Adapter<*>{
-        return  MusicAdapter(linkedList){DataMusic ->
-            addMusicInList(DataMusic)
-            displayRecentlyViewed()}
-    }
-
-    private fun renderingCondition(){
-        if (inputEditText.text.isEmpty()) {
-            if (inputEditText.hasFocus()) {
-                displayRecentlyViewed()
-            } else {
-                recyclerView.visibility = View.INVISIBLE
-            }
-        }
-
-    }
-
-    private fun addMusicInList(te : DataMusic){
-        linkedList.remove(te)
-        if(linkedList.size>=5){
-            linkedList.removeLast()
-        }
-     linkedList.push(te)
-        saveInPhone()
-    }
-    private fun cleanLoadHistori(){
-        sharedPrefs.edit()
-            .remove("0")
-            .remove("1")
-            .remove("2")
-            .remove("3")
-            .remove("4")
-            .remove("5")
-            .apply()
-    }
-
-    private fun saveInPhone(){
-        cleanLoadHistori()
-
-        linkedList.forEachIndexed { index, item ->
-            sharedPrefs.edit()
-                .putString((index).toString(), Gson().toJson(item))
-                .apply()
-        }
-    }
-
-    private fun loadInPhone(){
-        linkedList.clear()
-        for(i in 0..5){
-            val json =  sharedPrefs.getString(i.toString(), null) ?: return
-            linkedList.offerLast(Gson().fromJson(json, DataMusic::class.java))
-        }
-
     }
 
 }
