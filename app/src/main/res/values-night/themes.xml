@@ -2,49 +2,49 @@
     <!-- Base application theme. -->
     <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/YP_White</item>
+        <item name="colorSecondaryVariant">@color/YP_White</item>
+        <item name="colorOnSecondary">@color/YP_Black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/YP_Blue</item>
+        <item name="colorSecondaryVariant">@color/YP_Blue_Light</item>
+        <item name="colorOnSecondary">@color/YP_White</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/YP_White</item>
+        <item name="colorSecondaryVariant">@color/YP_White</item>
+        <item name="colorOnSecondary">@color/YP_Black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/YP_Black</item>
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/YP_White</item>
+        <item name="colorSecondaryVariant">@color/YP_White</item>
+        <item name="colorOnSecondary">@color/YP_Black</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

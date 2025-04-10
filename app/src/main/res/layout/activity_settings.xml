@@ -24,11 +24,12 @@
             />
 
     </androidx.appcompat.widget.Toolbar>
+
     <Switch
         android:id="@+id/textViewStyle"
-        android:text="@string/settingbuttonText1"
-        android:checked="false"
         style="@style/SettingButtonStyle"
+        android:checked="false"
+        android:text="@string/settingbuttonText1"
         />
 
     <TextView

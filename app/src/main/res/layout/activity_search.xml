@@ -38,6 +38,7 @@
                     android:layout_width="match_parent"
                     style="@style/Search"
                     android:drawableStart="@drawable/search"
+                    android:textCursorDrawable="@color/YP_Blue"
                     android:hint="@string/search"
                     android:autofillHints="text"
                     android:paddingStart="@dimen/littlePadding"
