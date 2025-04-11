@@ -36,8 +36,8 @@
         android:id="@+id/textViewShare"
         style="@style/SettingButtonStyle"
         android:text="@string/settingbuttonText2"
-        app:drawableEndCompat="@drawable/share"
-        />
+        app:drawableEndCompat="@drawable/share" />
+
     <TextView
         android:id="@+id/buttonHelper"
         style="@style/SettingButtonStyle"

@@ -7,7 +7,9 @@
     android:layout_marginHorizontal="24dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:theme="@style/Search.Theme">
+    android:theme="@style/Search.Theme"
+    android:backgroundTint="?attr/colorPrimary"
+    >
     <ImageView
         android:id="@+id/imageError"
         android:layout_width="120dp"
@@ -23,6 +25,7 @@
         android:layout_gravity="center"
         android:text="Ничего не нашлось"
         android:fontFamily="@font/ys_display_medium"
+        android:textColor="?attr/colorSecondary"
         android:textSize="19sp"
         />
     <TextView
@@ -33,7 +36,7 @@
         android:layout_marginTop="@dimen/mediumPadding"
         android:layout_gravity="center"
         android:textAlignment="center"
-
+        android:textColor="?attr/colorSecondary"
         android:text = "Загрузка не удалась. Проверьте подключение к интернету"
         android:fontFamily="@font/ys_display_medium"
         android:textSize="19sp"
@@ -46,8 +49,8 @@
         android:layout_height="36dp"
         android:textSize="14sp"
         android:fontFamily = "@font/ys_display_medium"
-        android:textColor="?attr/colorOnSecondary"
-        android:backgroundTint="?attr/colorOnPrimary"
+        android:textColor="?attr/colorPrimary"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:padding="6dp"
         android:text="Обновить" />
 </LinearLayout>
