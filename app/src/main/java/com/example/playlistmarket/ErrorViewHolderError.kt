@@ -5,9 +5,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 
 class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -27,9 +24,11 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
         commentError.text = error.commentError
         buttonError.text = error.buttonErrorText
     }
+
     private fun loadImage(error: ErrorData){
         imageError.setImageResource(error.imageError)
     }
+
     private fun loadButton(error: ErrorData, retryClickListener: (ErrorData) -> Unit){
         buttonError.text = error.buttonErrorText
         when(error.buttonErrorVisibility){

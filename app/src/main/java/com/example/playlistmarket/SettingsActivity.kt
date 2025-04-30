@@ -1,6 +1,7 @@
 package com.example.playlistmarket
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Switch
@@ -8,24 +9,42 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import com.google.gson.Gson
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var sharedPrefs: SharedPreferences
+    private lateinit var textViewStyle: Switch
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        myBack()
+        textViewStyle = findViewById(R.id.textViewStyle)
+        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            textViewStyle.isChecked = true
+        } else {
+            textViewStyle.isChecked = false
+        }
         myStyle()
+        myBack()
         myShare()
         myHelper()
         myUserText()
     }
     private fun myStyle(){
-        val textViewStyle: Switch = findViewById(R.id.textViewStyle)
         textViewStyle.setOnClickListener {
             if (textViewStyle.isChecked){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+                sharedPrefs.edit()
+                    .remove("style")
+                    .putBoolean("style", true)
+                    .apply()
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefs.edit()
+                    .remove("style")
+                    .putBoolean("style", false)
+                    .apply()
             }
         }
     }

@@ -2,49 +2,49 @@
     <!-- Base application theme. -->
     <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blu</item>
-        <item name="colorPrimaryVariant">@color/blu</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/YP_Blue</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item><!-- Кнопки -->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/YP_White</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Black</item><!-- Текст кнопок-->
+        <item name="colorOnSecondary">@color/YP_Black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_Text_Gray</item><!-- Иконки -->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/cray</item>
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Light_Gray</item><!-- Swich овал -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Swich круг -->
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_Black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Black</item>
+        <item name="colorOnSecondary">@color/YP_Black</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон --><!-- Текст на кнопке -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item><!-- Кнопка и Картинки ошибки-->
+        <item name="colorOnPrimary">@color/YP_Light_Gray</item><!-- Фон поля для ввода-->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/notcray</item>
-        <item name="colorSecondaryVariant">@color/cray</item>
-        <item name="colorOnSecondary">@color/cray</item>
-        <!-- Customize your theme here. -->
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Text_Gray</item><!-- Текст низ datamusic -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текстна на поле для ввода-->
+        <!-- Customize your theme here.  -->
     </style>
 </resources>

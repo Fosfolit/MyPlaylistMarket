@@ -20,7 +20,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/buttonBack"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorSecondary"
                     android:textSize="@dimen/mediumTextSize"
                     android:textStyle="bold"
                     />

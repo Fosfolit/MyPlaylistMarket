@@ -33,15 +33,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/inputEditText"
-                    android:layout_width="match_parent"
-                    style="@style/Search"
-                    android:drawableStart="@drawable/search"
-                    android:hint="@string/search"
-                    android:autofillHints="text"
-                    android:paddingStart="@dimen/littlePadding"
-                    />
+
+                        <EditText
+                            android:id="@+id/inputEditText"
+                            style="@style/Search"
+                            android:layout_width="match_parent"
+                            android:autofillHints="text"
+                            android:drawableStart="@drawable/search"
+                            android:hint="@string/search"
+                            android:paddingStart="@dimen/littlePadding"
+                            android:textCursorDrawable="@color/YP_Blue" />
 
                         <ImageView
                             android:id="@+id/clearIcon"
