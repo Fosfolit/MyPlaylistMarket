@@ -90,7 +90,7 @@ class SearchActivity : AppCompatActivity() {
 
     private  fun successfulСall(response: Response<ListDataMusic>){
         if (response.isSuccessful && (response.body()!!.resultCount >0)) {
-            recyclerView.adapter = MusicAdapter(this,response.body()!!.results) {
+            recyclerView.adapter = MusicAdapter(response.body()!!.results) {
                 DataMusic ->
                 recentlyViewed.addItem(DataMusic)
                 viewTrack(DataMusic)
@@ -187,7 +187,7 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.VISIBLE
             recyclerView.adapter = ConcatAdapter(
                 SearchedQueriesTextAdapter(listOf("Вы искали")),
-                MusicAdapter(this,recentlyViewed.dataMusic())
+                MusicAdapter(recentlyViewed.dataMusic())
                 { DataMusic ->
                     recentlyViewed.addItem(DataMusic)
                     viewTrack(DataMusic)
@@ -202,7 +202,7 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.INVISIBLE
         }
     }
-private fun viewTrack(dataForSave : DataMusic){
+    private fun viewTrack(dataForSave : DataMusic){
     sharedPrefs.edit()
         .remove("lisneng")
         .putString("lisneng", Gson().toJson(dataForSave))

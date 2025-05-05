@@ -55,7 +55,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/YP_White</item><!-- Текст на фоне -->
         <item name="colorSecondaryVariant">@color/YP_White</item><!-- Текст низ datamusic -->
-        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текстна на поле для ввода-->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текст характеристик datamusic-->
         <!-- Customize your theme here. -->
     </style>
 </resources>

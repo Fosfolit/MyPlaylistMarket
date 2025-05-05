@@ -1,7 +1,5 @@
 package com.example.playlistmarket
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
-import android.content.SharedPreferences
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.startActivity
-import com.google.gson.Gson
 
 class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -45,7 +36,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 }
 
-class MusicAdapter(private val poprot: Context,private val news: List<DataMusic>,private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
+class MusicAdapter(private val news: List<DataMusic>,private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
