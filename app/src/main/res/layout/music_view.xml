@@ -33,11 +33,11 @@
             <TextView
                 android:id="@+id/artistName"
                 style="@style/MusicBlockTextDown"
-                tools:text="@string/settingbuttonText3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/settingbuttonText3" />
 
             <ImageView
                 android:id="@+id/imageView"
