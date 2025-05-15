@@ -133,26 +133,30 @@
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
-        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_width">124dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="layout_constraintWidth_min">124dp</item>
     </style>
     <style name="MusicViewTextR">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
         <item name="android:maxLines">1</item>
+
         <item name="android:singleLine">true</item>
-        <item name="layout_constraintWidth_max">235dp</item>
     </style>
     <style name="MusicViewMainTextT">
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
         <item name="android:textSize">22sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:layout_marginVertical">12dp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
     <style name="MusicViewMainTextB">
@@ -170,7 +174,6 @@
         <item name="android:singleLine">true</item>
     </style>
     <style name="MusicViewButton">
-
         <item name="android:backgroundTint">?attr/colorOnSecondary</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
@@ -181,5 +184,31 @@
         <item name="iconPadding">0dp</item>
         <item name="iconSize">25dp</item>
         <item name="iconTint">@null</item>
+    </style>
+    <style name="PlayerTrackPropertyTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/player_track_properties_margin</item>
+        <item name="android:layout_marginLeft">@dimen/player_track_properties_margin</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:textSize">@dimen/player_track_properties_textSize</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="PlayerTrackPropertyValue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:layout_marginEnd">@dimen/player_track_properties_margin</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:textSize">@dimen/player_track_properties_textSize</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_marginStart">12dp</item>
     </style>
 </resources>

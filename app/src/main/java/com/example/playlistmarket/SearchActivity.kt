@@ -24,8 +24,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import java.util.LinkedList
-
 
 
 class SearchActivity : AppCompatActivity() {
@@ -207,7 +205,7 @@ class SearchActivity : AppCompatActivity() {
         .remove("lisneng")
         .putString("lisneng", Gson().toJson(dataForSave))
         .apply()
-    val displayIntent = Intent(this, MediaActivity::class.java)
+    val displayIntent = Intent(this, AudioPlayer::class.java)
     startActivity(displayIntent)
 }
 }

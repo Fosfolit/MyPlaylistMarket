@@ -2,6 +2,7 @@ package com.example.playlistmarket
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +14,7 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class MediaActivity : AppCompatActivity() {
+class AudioPlayer : AppCompatActivity() {
     private lateinit var sharedPrefs: SharedPreferences
     private lateinit var track: DataMusic
 
@@ -23,10 +24,13 @@ class MediaActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_media)
         dataSet()
-        managerTrack()
-        setToolbarFunc()
+        funSet()
     }
 
+    private fun funSet(){
+        setToolbarFunc()
+        managerTrack()
+    }//Установка функционала
     private fun dataSet(){
         dataLoad()
         setImage()
@@ -60,7 +64,11 @@ class MediaActivity : AppCompatActivity() {
         val genreText: TextView = findViewById(R.id.genreText)
         val countryText: TextView = findViewById(R.id.countryText)
         timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime)
-        albumText.text = track.collectionName
+        albumText.visibility = View.INVISIBLE
+        if (track.collectionName.isNotEmpty()){
+            albumText.text = track.collectionName
+        }
+        albumText.visibility = View.VISIBLE
         yearText.text =  track.releaseDate.substring(0, 4)
         genreText.text = track.primaryGenreName
         countryText.text = track.country
