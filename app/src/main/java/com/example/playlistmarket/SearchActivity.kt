@@ -2,7 +2,6 @@ package com.example.playlistmarket
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -91,9 +90,7 @@ class SearchActivity : AppCompatActivity() {
     private  fun successfulСall(response: Response<ListDataMusic>){
         if (response.isSuccessful && (response.body()!!.resultCount >0)) {
             recyclerView.adapter = MusicAdapter(response.body()!!.results) {
-                DataMusic ->
-                recentlyViewed.addItem(DataMusic)
-                viewTrack(DataMusic)
+                DataMusic -> recentlyViewed.addItem(DataMusic)
             }
         }
         else{
@@ -190,7 +187,7 @@ class SearchActivity : AppCompatActivity() {
                 MusicAdapter(recentlyViewed.dataMusic())
                 { DataMusic ->
                     recentlyViewed.addItem(DataMusic)
-                    viewTrack(DataMusic)
+                    displayRecentlyViewed()
                 },
                 SearchedQueriesButtonAdapter(listOf("Очистить историю"))
                 {
@@ -202,12 +199,5 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.INVISIBLE
         }
     }
-    private fun viewTrack(dataForSave : DataMusic){
-    sharedPrefs.edit()
-        .remove("lisneng")
-        .putString("lisneng", Gson().toJson(dataForSave))
-        .apply()
-    val displayIntent = Intent(this, MediaActivity::class.java)
-    startActivity(displayIntent)
-}
+
 }

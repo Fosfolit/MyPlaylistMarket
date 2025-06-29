@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+
 class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val trackName: TextView = itemView.findViewById(R.id.trackName)
@@ -19,6 +20,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val artistName: TextView = itemView.findViewById(R.id.artistName)
     private val artworkUrl100: ImageView = itemView.findViewById(R.id.artworkUrl100)
     private val trackMain: LinearLayout = itemView.findViewById(R.id.trackMain)
+
     fun bind(model: DataMusic,retryClickListener: (DataMusic) -> Unit) {
         trackName.text = model.trackName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
@@ -45,7 +47,6 @@ class MusicAdapter(private val news: List<DataMusic>,private val retryClickListe
 
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
         holder.bind(news[position],retryClickListener)
-
     }
 
     override fun getItemCount(): Int {

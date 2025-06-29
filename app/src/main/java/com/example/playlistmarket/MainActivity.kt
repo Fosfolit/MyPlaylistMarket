@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
 
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
 const val EDIT_TEXT_KEY = "key_for_edit_text"
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
         val buttonMedia = findViewById<Button>(R.id.buttonMedia)
         buttonMedia.setOnClickListener {
-            val displayIntent = Intent(this, NewEmptyActivity::class.java)
+            val displayIntent = Intent(this, MediaActivity::class.java)
             startActivity(displayIntent)
         }
         val buttonSetting = findViewById<Button>(R.id.buttonSetting)
