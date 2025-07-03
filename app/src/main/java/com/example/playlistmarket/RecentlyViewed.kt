@@ -38,7 +38,7 @@ class RecentlyViewed (var context: Context) {
     }
     private fun saveInPhone() {
         clearload()
-        clearPreferences()
+
         linkedList.forEachIndexed { index, item ->
             sharedPrefs.edit()
                 .putString((index).toString(), Gson().toJson(item))
@@ -47,7 +47,7 @@ class RecentlyViewed (var context: Context) {
     }
     private fun clearPreferences() {
         sharedPrefs.edit().clear().apply()
-    }
+    }//Функция кала
     private fun clearload() {
         val clern = sharedPrefs.edit()
         for( i in 0..maxListSize) {
@@ -57,7 +57,7 @@ class RecentlyViewed (var context: Context) {
     }
     fun clearPreferencesAll() {
         clearload()
-        clearPreferences()
+
         linkedList.clear()
     }
 

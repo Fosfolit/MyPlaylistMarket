@@ -131,7 +131,7 @@ class SearchActivity : AppCompatActivity() {
                     imageError = R.drawable.search_error_notfound,
                     nameError = getString(R.string.notFoundError1),
                     commentError = getString(R.string.notFoundError2),
-                    buttonErrorVisibility = 3,
+                    buttonErrorVisibility = ButtonVisibility.GONE ,
                     buttonErrorText = getString(R.string.notFoundError3)
                 ))){}
             recyclerView.visibility = View.VISIBLE
@@ -145,7 +145,7 @@ class SearchActivity : AppCompatActivity() {
             imageError = R.drawable.search_error_internet,
             nameError = getString(R.string.notInternetError1),
             commentError = getString(R.string.notInternetError2),
-            buttonErrorVisibility = 1,
+            buttonErrorVisibility =  ButtonVisibility.VISIBLE,
             buttonErrorText = getString(R.string.notInternetError3),
         ))){textFind(inputEditText.text.toString())}
         recyclerView.visibility = View.VISIBLE

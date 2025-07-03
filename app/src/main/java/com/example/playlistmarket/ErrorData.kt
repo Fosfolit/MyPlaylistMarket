@@ -13,11 +13,14 @@ data class ErrorData(
     val imageError: Int,
     val nameError: String,
     val commentError: String,
-    val buttonErrorVisibility: Int,
+    val buttonErrorVisibility: ButtonVisibility,
     val buttonErrorText: String,
 )
-
-
+enum class ButtonVisibility {
+    INVISIBLE,  // 0
+    VISIBLE,    // 1
+    GONE        // 2
+}
 
 class ErrorAdapter(private val news: List<ErrorData>,private val retryClickListener: (ErrorData) -> Unit) : RecyclerView.Adapter<ErrorViewHolderError> () {
 
@@ -58,14 +61,13 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
     private fun loadButton(error: ErrorData, retryClickListener: (ErrorData) -> Unit){
         buttonError.text = error.buttonErrorText
         when(error.buttonErrorVisibility){
-            0 ->buttonError.visibility = View.INVISIBLE
-            1 ->buttonError.visibility = View.VISIBLE
-            2 ->buttonError.visibility = View.GONE
+            ButtonVisibility.INVISIBLE -> View.INVISIBLE
+            ButtonVisibility.VISIBLE -> View.VISIBLE
+            ButtonVisibility.GONE -> View.GONE
             else -> buttonError.visibility = View.GONE
         }
         buttonError.setOnClickListener  {
             retryClickListener(error)
         }
     }
-
 }
