@@ -20,14 +20,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmarket.Creator.provideMusicInteractor
 import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.RecentlyViewed
-import com.example.playlistmarket.data.MusicInterface
+import com.example.playlistmarket.data.network.MusicInterface
 import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
 import com.example.playlistmarket.domain.ListDataMusic
+import com.example.playlistmarket.domain.api.MusicInteractor
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -94,40 +96,24 @@ class SearchActivity : AppCompatActivity() {
         }
         return current
     }
-
-    private fun textFind(textFind : String){
+    fun textFind(textFind : String){
         progressBarOn(true)
-        val newThread = Thread {
-            retrofit.getMusic(textFind).enqueue(object : Callback<ListDataMusic> {
-                override fun onResponse(
-                    call: Call<ListDataMusic>,
-                    response: Response<ListDataMusic>
-                ) {
-                    when (response.code()) {
-                        200 -> {
-                            successfulСall(response)
-                            recyclerView.visibility = View.VISIBLE
-                        }
-
-                        else -> {
-                            unsuccessfulСall()
-                        }
+        val d = provideMusicInteractor()
+        d.searchMusic(textFind, object : MusicInteractor.MusicConsumer {
+            override fun consume(foundMusic: List<DataMusic>) {
+                runOnUiThread {
+                    successfulСall(foundMusic)
+                    recyclerView.visibility = View.VISIBLE
                     }
                 }
-
-                override fun onFailure(call: Call<ListDataMusic>, t: Throwable) {
-                    unsuccessfulСall()
-                }
-            })
-        }
-        newThread.start()
+        })
     }
 
-    private  fun successfulСall(response: Response<ListDataMusic>){
+    private  fun successfulСall(response: List<DataMusic>){
         progressBarOn(false)
-        if (response.isSuccessful && (response.body()!!.resultCount >0)) {
+        if (response.isNotEmpty()) {
             progressBar.visibility = View.GONE
-            recyclerView.adapter = MusicAdapter(response.body()!!.results) {
+            recyclerView.adapter = MusicAdapter(response) {
                 DataMusic ->
                 recentlyViewed.addItem(DataMusic)
                 viewTrack(DataMusic)

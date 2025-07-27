@@ -233,6 +233,7 @@ class AudioPlayer : AppCompatActivity() {
             .apply()
     }//Функция сохраненого трека
     private fun loadTrac() {
+        
         val savedUrl = sharedPrefs.getString("TracFullName", null)
         val savedPosition = sharedPrefs.getInt("TracTime", 0)
         if (!savedUrl.isNullOrEmpty() && savedUrl != track.previewUrl) {
