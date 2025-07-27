@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.domain
 
 import com.google.gson.annotations.SerializedName
 

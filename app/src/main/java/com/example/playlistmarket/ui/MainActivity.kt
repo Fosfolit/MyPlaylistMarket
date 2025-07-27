@@ -1,8 +1,7 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.playlistmarket.R
 
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
 const val EDIT_TEXT_KEY = "key_for_edit_text"

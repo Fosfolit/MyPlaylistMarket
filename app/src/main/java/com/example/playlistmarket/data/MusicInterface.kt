@@ -1,5 +1,6 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.data
 
+import com.example.playlistmarket.domain.ListDataMusic
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Music.Theme"
     android:backgroundTint="?attr/colorPrimary"
-    tools:context=".AudioPlayer">
+    tools:context=".ui.AudioPlayer">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"

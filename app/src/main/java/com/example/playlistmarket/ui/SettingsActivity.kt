@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.google.gson.Gson
+import com.example.playlistmarket.R
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var sharedPrefs: SharedPreferences

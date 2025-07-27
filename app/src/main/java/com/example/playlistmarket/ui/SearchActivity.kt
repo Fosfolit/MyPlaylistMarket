@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.ui
 
 import android.app.Activity
 import android.content.Context
@@ -20,6 +20,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.RecentlyViewed
+import com.example.playlistmarket.data.MusicInterface
+import com.example.playlistmarket.domain.ButtonVisibility
+import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.ErrorAdapter
+import com.example.playlistmarket.domain.ErrorData
+import com.example.playlistmarket.domain.ListDataMusic
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -133,7 +141,8 @@ class SearchActivity : AppCompatActivity() {
                     commentError = getString(R.string.notFoundError2),
                     buttonErrorVisibility = ButtonVisibility.GONE ,
                     buttonErrorText = getString(R.string.notFoundError3)
-                ))){}
+                )
+            )){}
             recyclerView.visibility = View.VISIBLE
         }
         }
@@ -147,7 +156,8 @@ class SearchActivity : AppCompatActivity() {
             commentError = getString(R.string.notInternetError2),
             buttonErrorVisibility =  ButtonVisibility.VISIBLE,
             buttonErrorText = getString(R.string.notInternetError3),
-        ))){textFind(inputEditText.text.toString())}
+        )
+        )){textFind(inputEditText.text.toString())}
         recyclerView.visibility = View.VISIBLE
     }
 

@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.domain
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmarket.R
 
 
 data class ErrorData(
@@ -22,7 +23,7 @@ enum class ButtonVisibility {
     GONE        // 2
 }
 
-class ErrorAdapter(private val news: List<ErrorData>,private val retryClickListener: (ErrorData) -> Unit) : RecyclerView.Adapter<ErrorViewHolderError> () {
+class ErrorAdapter(private val news: List<ErrorData>, private val retryClickListener: (ErrorData) -> Unit) : RecyclerView.Adapter<ErrorViewHolderError> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ErrorViewHolderError {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.search_error_notfound, parent, false)

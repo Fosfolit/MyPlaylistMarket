@@ -1,7 +1,8 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.domain
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.playlistmarket.ui.PRACTICUM_EXAMPLE_PREFERENCES
 import com.google.gson.Gson
 import java.util.LinkedList
 
