@@ -1,8 +1,8 @@
 package com.example.playlistmarket.data.network
 
 import com.example.playlistmarket.data.NetworkClient
-import com.example.playlistmarket.data.dto.MusicSearchRequest
-import com.example.playlistmarket.data.dto.MusicSearchResponse
+import com.example.playlistmarket.data.dto.request.MusicSearchRequest
+import com.example.playlistmarket.data.dto.response.MusicSearchResponse
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.api.MusicRepository
 

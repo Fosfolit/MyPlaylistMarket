@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.dto
+package com.example.playlistmarket.data.dto.dto
 
 import com.google.gson.annotations.SerializedName
 

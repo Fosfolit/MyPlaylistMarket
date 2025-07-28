@@ -1,7 +1,7 @@
 package com.example.playlistmarket.data.network
 
 import com.example.playlistmarket.data.NetworkClient
-import com.example.playlistmarket.data.dto.MusicSearchRequest
+import com.example.playlistmarket.data.dto.request.MusicSearchRequest
 import com.example.playlistmarket.data.dto.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

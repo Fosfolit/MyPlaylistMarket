@@ -1,7 +1,6 @@
 package com.example.playlistmarket.data.network
 
-import com.example.playlistmarket.data.dto.ListDataMusicDto
-import com.example.playlistmarket.data.dto.MusicSearchResponse
+import com.example.playlistmarket.data.dto.response.MusicSearchResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
