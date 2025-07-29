@@ -28,12 +28,8 @@ import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
-import com.example.playlistmarket.domain.ListDataMusic
 import com.example.playlistmarket.domain.api.MusicInteractor
 import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create

@@ -15,15 +15,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.api.StorageInteractor
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayer : AppCompatActivity() {
-    private lateinit var track: DataMusic
+    private lateinit var thisTrack: DataMusic
     private lateinit var buttonPause: MaterialButton
     private lateinit var buttonAddInPlaylist: Button
     private lateinit var buttonLike: Button
@@ -33,6 +36,9 @@ class AudioPlayer : AppCompatActivity() {
     private var playerState = PlayerState.STATE_DEFAULT
     private lateinit var newThread:Thread
     private lateinit var sharedPrefs: SharedPreferences
+    private lateinit var d : StorageInteractor
+    private lateinit var trackPosition : TrackPosition
+
  private  var chekplay : Boolean = false
     var url = "755"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +53,8 @@ class AudioPlayer : AppCompatActivity() {
             Context.MODE_PRIVATE)
         dataSet()
         funSet()
+        d = provideStorageInteractor(this)
+
     }
 
     override fun onDestroy() {
@@ -73,12 +81,12 @@ class AudioPlayer : AppCompatActivity() {
     }//Установка всех данных трека
     private fun dataLoad(){
        val json =  sharedPrefs.getString("lisneng", null) ?: return
-        track = Gson().fromJson(json, DataMusic::class.java)
+        thisTrack = Gson().fromJson(json, DataMusic::class.java)
     }//Загрузка данных
     private fun setImage(){
         val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
         Glide.with(this)
-            .load(track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+            .load(thisTrack.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
             .placeholder(R.drawable.music_base)
             .centerCrop()
             .transform(RoundedCorners(8))
@@ -87,8 +95,8 @@ class AudioPlayer : AppCompatActivity() {
     private fun setMainText(){
         val trackName: TextView = findViewById(R.id.trackName)
         val artistName: TextView = findViewById(R.id.artistName)
-        trackName.text = track.trackName
-        artistName.text = track.artistName
+        trackName.text = thisTrack.trackName
+        artistName.text = thisTrack.artistName
     }//Установка названия и исполниьеля трека
     private fun setInfoText(){
         val timerText: TextView = findViewById(R.id.timerText)
@@ -96,15 +104,15 @@ class AudioPlayer : AppCompatActivity() {
         val yearText: TextView = findViewById(R.id.yearText)
         val genreText: TextView = findViewById(R.id.genreText)
         val countryText: TextView = findViewById(R.id.countryText)
-        timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime)
+        timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(thisTrack.trackTime)
         albumText.visibility = View.INVISIBLE
-        if (track.collectionName.isNotEmpty()){
-            albumText.text = track.collectionName
+        if (thisTrack.collectionName.isNotEmpty()){
+            albumText.text = thisTrack.collectionName
         }
         albumText.visibility = View.VISIBLE
-        yearText.text =  track.releaseDate.substring(0, 4)
-        genreText.text = track.primaryGenreName
-        countryText.text = track.country
+        yearText.text =  thisTrack.releaseDate.substring(0, 4)
+        genreText.text = thisTrack.primaryGenreName
+        countryText.text = thisTrack.country
     }//Установка дополнительных данных
     private fun setToolbarFunc(){
         val toolbar: Toolbar = findViewById(R.id.buttonBack)
@@ -156,7 +164,7 @@ class AudioPlayer : AppCompatActivity() {
                 buttonPause.setIconResource(R.drawable.button_pause)
                 mediaPlayer.start()
                 val savedUrl = sharedPrefs.getString("TracFullName", null)
-                if (!savedUrl.isNullOrEmpty() && savedUrl != track.previewUrl) {
+                if (!savedUrl.isNullOrEmpty() && savedUrl != thisTrack.previewUrl) {
                     deletTrac()
                 }
             }
@@ -174,8 +182,8 @@ class AudioPlayer : AppCompatActivity() {
 
 
     private fun preparePlayer() {
-        if (track.previewUrl.isNotEmpty()){
-            mediaPlayer.setDataSource( track.previewUrl)
+        if (thisTrack.previewUrl.isNotEmpty()){
+            mediaPlayer.setDataSource( thisTrack.previewUrl)
         } else{
             mediaPlayer.setDataSource( url )
         }
@@ -226,25 +234,24 @@ class AudioPlayer : AppCompatActivity() {
             .apply()
     }//Функция удаления сохраненого трека
     private fun saveTrac() {
-        deletTrac()
-        sharedPrefs.edit()
-            .putString("TracFullName", track.previewUrl)
-            .putInt("TracTime", mediaPlayer.currentPosition)
-            .apply()
+        d.saveTrackPosition(TrackPosition(thisTrack.previewUrl,mediaPlayer.currentPosition))
     }//Функция сохраненого трека
     private fun loadTrac() {
-        
-        val savedUrl = sharedPrefs.getString("TracFullName", null)
-        val savedPosition = sharedPrefs.getInt("TracTime", 0)
-        if (!savedUrl.isNullOrEmpty() && savedUrl != track.previewUrl) {
-
-        } else if (savedUrl == track.previewUrl) {
-            mediaPlayer.seekTo(savedPosition)
-            val timer: TextView = findViewById(R.id.timer)
-            val seconds = (savedPosition / 1000) % 60
-            val minutes = (savedPosition / (1000 * 60)) % 60
-            timer.text = "%02d:%02d".format(minutes, seconds)
+        d.loadTrackPosition(object : StorageInteractor.StorageConsumer {
+            override fun consume(track: TrackPosition) {
+                runOnUiThread {
+                    trackPosition = track
+                    if (trackPosition.trackUrl == thisTrack.previewUrl) {
+                        mediaPlayer.seekTo(trackPosition.position)
+                        val timer: TextView = findViewById(R.id.timer)
+                        val seconds = (trackPosition.position / 1000) % 60
+                        val minutes = (trackPosition.position / (1000 * 60)) % 60
+                        timer.text = "%02d:%02d".format(minutes, seconds)
+                    }
+                }
+            }
         }
+        )
     }//Функция загрузка трека
 
 }
