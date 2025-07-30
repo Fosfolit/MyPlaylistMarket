@@ -8,7 +8,7 @@ interface StorageInteractor{
     fun loadTheme(consumeTheme:ThemeConsumer )
     fun saveTheme(theme :Boolean)
     fun saveTrack(expression: DataTrack)
-    fun loadTrackPosition(consumer: TrackConsumer)
+    fun loadTrack(consumer: TrackConsumer)
     interface StorageConsumer {
         fun consume(track: TrackPosition )
     }
