@@ -20,4 +20,12 @@ class StorageRepositoryImpl(private val storageClient : StorageClient) :StorageR
         return TrackPosition(response.trackUrl,response.position)
     }
 
+    override fun loadTheme(): Boolean {
+        return  storageClient.loadTheme()
+    }
+
+    override fun saveTheme(theme: Boolean) {
+         storageClient.saveTheme(theme)
+    }
+
 }

@@ -2,6 +2,8 @@ package com.example.playlistmarket.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Switch
@@ -9,17 +11,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.api.StorageInteractor
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var sharedPrefs: SharedPreferences
     private lateinit var textViewStyle: Switch
+    private lateinit var d : StorageInteractor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         textViewStyle = findViewById(R.id.textViewStyle)
-        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        d = provideStorageInteractor(this)
+       if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             textViewStyle.isChecked = true
         } else {
             textViewStyle.isChecked = false
@@ -32,20 +36,20 @@ class SettingsActivity : AppCompatActivity() {
     }
     private fun myStyle(){
         textViewStyle.setOnClickListener {
-            if (textViewStyle.isChecked){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            d.loadTheme(object : StorageInteractor.ThemeConsumer {
+                override fun consume(theme: Boolean) {
+                    runOnUiThread {
+                        if (theme){
+                            d.saveTheme(!theme)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        } else{
+                            d.saveTheme(!theme)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                            }
+                        }
+                    }
+                })
 
-                sharedPrefs.edit()
-                    .remove("style")
-                    .putBoolean("style", true)
-                    .apply()
-            }else{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPrefs.edit()
-                    .remove("style")
-                    .putBoolean("style", false)
-                    .apply()
-            }
         }
     }
     private fun myBack(){

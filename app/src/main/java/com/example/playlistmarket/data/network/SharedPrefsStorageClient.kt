@@ -36,4 +36,18 @@ class SharedPrefsStorageClient(context: Context) : StorageClient {
         }
         return TrackPositionDto("",0)
     }
+
+    override fun loadTheme(): Boolean {
+        if(sharedPrefs.contains("Theme")) {
+            return  sharedPrefs.getBoolean("Theme",false)
+        }
+        return false
+    }
+
+    override fun saveTheme(theme: Boolean) {
+        sharedPrefs.edit()
+            .remove("Theme")
+            .putBoolean("Theme",theme)
+            .apply()
+    }
 }

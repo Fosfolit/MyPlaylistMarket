@@ -6,22 +6,36 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.api.StorageInteractor
 
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
 const val EDIT_TEXT_KEY = "key_for_edit_text"
+private lateinit var d : StorageInteractor
 class MainActivity : AppCompatActivity() {
-    private lateinit var sharedPrefs: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
-        loadStyle()
+        d = provideStorageInteractor(this)
+        d.loadTheme(object : StorageInteractor.ThemeConsumer {
+            override fun consume(theme: Boolean) {
+                runOnUiThread {
+                    if (theme){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    } else{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                }
+            }
+        })
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -43,27 +57,5 @@ class MainActivity : AppCompatActivity() {
             val displayIntent = Intent(this, SettingsActivity::class.java)
             startActivity(displayIntent)
         }
-    }
-
-
-    private fun loadStyle(){
-        if (sharedPrefs.contains("style")){
-            if (sharedPrefs.getBoolean("style",false)){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }else{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        } else{
-            when (UI_MODE_NIGHT_YES) {
-                UI_MODE_NIGHT_YES ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                UI_MODE_NIGHT_NO ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-            }
-        }
-
-
-
     }
 }
