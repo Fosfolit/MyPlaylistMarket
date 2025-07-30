@@ -241,17 +241,20 @@ class AudioPlayer : AppCompatActivity() {
             override fun consume(track: TrackPosition) {
                 runOnUiThread {
                     trackPosition = track
-                    if (trackPosition.trackUrl == thisTrack.previewUrl) {
-                        mediaPlayer.seekTo(trackPosition.position)
-                        val timer: TextView = findViewById(R.id.timer)
-                        val seconds = (trackPosition.position / 1000) % 60
-                        val minutes = (trackPosition.position / (1000 * 60)) % 60
-                        timer.text = "%02d:%02d".format(minutes, seconds)
-                    }
+                    seterTrac(track)
                 }
             }
         }
         )
     }//Функция загрузка трека
-
+    private fun seterTrac(track: TrackPosition){
+        if (track.trackUrl == thisTrack.previewUrl) {
+                        mediaPlayer.seekTo(track.position)
+                        val timer: TextView = findViewById(R.id.timer)
+                        val seconds = (track.position / 1000) % 60
+                        val minutes = (track.position / (1000 * 60)) % 60
+                        timer.text = "%02d:%02d".format(minutes, seconds)
+                    }
+    }
+    
 }
