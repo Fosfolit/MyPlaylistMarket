@@ -1,5 +1,6 @@
 package com.example.playlistmarket.domain.api
 
+import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackPosition
 
 interface StorageInteractor{
@@ -7,8 +8,8 @@ interface StorageInteractor{
     fun loadTrackPosition(consumer: StorageConsumer)
     fun loadTheme(consumeTheme:ThemeConsumer )
     fun saveTheme(theme :Boolean)
-    fun saveTrack(expression: DataTrack)
-    fun loadTrack(consumer: TrackConsumer)
+    fun saveTrack(expression: DataMusic)
+    fun loadTrack(trackConsumer : TrackConsumer)
     interface StorageConsumer {
         fun consume(track: TrackPosition )
     }
@@ -16,6 +17,6 @@ interface StorageInteractor{
         fun consume(theme :Boolean)
     }
     interface TrackConsumer {
-        fun consume(expression: DataTrack)
+        fun consume(expression: DataMusic)
     }
 }

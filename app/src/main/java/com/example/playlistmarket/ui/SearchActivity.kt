@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.Creator.provideMusicInteractor
+import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.RecentlyViewed
 import com.example.playlistmarket.data.network.MusicInterface
@@ -29,6 +30,7 @@ import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
 import com.example.playlistmarket.domain.api.MusicInteractor
+import com.example.playlistmarket.domain.api.StorageInteractor
 import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,9 +52,11 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recentlyViewed: RecentlyViewed
     private lateinit var progressBar: ProgressBar
+    private lateinit var c : StorageInteractor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        c = provideStorageInteractor(this)
         sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
@@ -228,10 +232,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
     private fun viewTrack(dataForSave : DataMusic){
-    sharedPrefs.edit()
-        .remove("lisneng")
-        .putString("lisneng", Gson().toJson(dataForSave))
-        .apply()
+        c.saveTrack(dataForSave)
     val displayIntent = Intent(this, AudioPlayer::class.java)
     startActivity(displayIntent)
 }

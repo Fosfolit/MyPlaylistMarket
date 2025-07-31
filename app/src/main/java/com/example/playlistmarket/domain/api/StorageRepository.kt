@@ -1,5 +1,6 @@
 package com.example.playlistmarket.domain.api
 
+import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackPosition
 
 
@@ -8,6 +9,6 @@ interface StorageRepository {
     fun loadTrackPosition(): TrackPosition
     fun loadTheme() :Boolean
     fun saveTheme(theme :Boolean)
-    fun saveTrack(track: DataTrack)
-    fun loadTrack(): DataTrack
+    fun saveTrack(track: DataMusic)
+    fun loadTrack():  DataMusic
 }

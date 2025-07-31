@@ -73,16 +73,13 @@ class AudioPlayer : AppCompatActivity() {
         managerTrack()
     }//Установка функционала
     private fun dataSet(){
-        dataLoad()
+        trackLoad()
         setImage()
         setMainText()
         setInfoText()
         preparePlayer()
     }//Установка всех данных трека
-    private fun dataLoad(){
-       val json =  sharedPrefs.getString("lisneng", null) ?: return
-        thisTrack = Gson().fromJson(json, DataMusic::class.java)
-    }//Загрузка данных
+
     private fun setImage(){
         val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
         Glide.with(this)
@@ -114,6 +111,7 @@ class AudioPlayer : AppCompatActivity() {
         genreText.text = thisTrack.primaryGenreName
         countryText.text = thisTrack.country
     }//Установка дополнительных данных
+
     private fun setToolbarFunc(){
         val toolbar: Toolbar = findViewById(R.id.buttonBack)
         toolbar.setOnClickListener {
@@ -129,25 +127,18 @@ class AudioPlayer : AppCompatActivity() {
         }
     }//Функционал Toolbar
     private fun managerTrack(){
-        setButtonAddInPlaylist()
         setButtonPause()
-        setButtonLike()
         trackTime()
     }//Блок управления треком
     private fun trackTime(){
         val timer: TextView = findViewById(R.id.timer)
         timer.text = "00:00"
-
     }//Время состояния трека
     private fun setButtonPause(){
         buttonPause.setOnClickListener{
             musicSwitch ()
         }
     }//Функционал кнопки "пауза"
-    private fun setButtonAddInPlaylist(){
-    }//Функционал кнопки "добавить в плей лист"
-    private fun setButtonLike(){
-    }//Функционал кнопки "лайк"
 
     private fun musicSwitch () {
         when(playerState) {
@@ -200,6 +191,15 @@ class AudioPlayer : AppCompatActivity() {
         timerStart()
     }// Функция подготовки проигрывателя
 
+    private fun seterTrac(track: TrackPosition){
+        if (track.trackUrl == thisTrack.previewUrl) {
+            mediaPlayer.seekTo(track.position)
+            val timer: TextView = findViewById(R.id.timer)
+            val seconds = (track.position / 1000) % 60
+            val minutes = (track.position / (1000 * 60)) % 60
+            timer.text = "%02d:%02d".format(minutes, seconds)
+        }
+    }
 
 
     private fun timerStart() {
@@ -225,17 +225,24 @@ class AudioPlayer : AppCompatActivity() {
         handler.postDelayed(timeFun , 100L)
     }//Обновление таймера каждую секунду
 
-
-
     private fun deletTrac() {
         sharedPrefs.edit()
-            .remove("TracFullName")
-            .remove("TracTime")
+            .remove("TrackPosition")
             .apply()
     }//Функция удаления сохраненого трека
+
+    private fun trackLoad(){
+        d.loadTrack(object : StorageInteractor. TrackConsumer {
+            override fun consume(expression: DataMusic) {
+                runOnUiThread {
+                    thisTrack = expression
+                }
+            }
+        })
+    }//Загрузка данных трека
     private fun saveTrac() {
         d.saveTrackPosition(TrackPosition(thisTrack.previewUrl,mediaPlayer.currentPosition))
-    }//Функция сохраненого трека
+    }//Функция сохраненого позиции трека
     private fun loadTrac() {
         d.loadTrackPosition(object : StorageInteractor.StorageConsumer {
             override fun consume(track: TrackPosition) {
@@ -246,15 +253,5 @@ class AudioPlayer : AppCompatActivity() {
             }
         }
         )
-    }//Функция загрузка трека
-    private fun seterTrac(track: TrackPosition){
-        if (track.trackUrl == thisTrack.previewUrl) {
-                        mediaPlayer.seekTo(track.position)
-                        val timer: TextView = findViewById(R.id.timer)
-                        val seconds = (track.position / 1000) % 60
-                        val minutes = (track.position / (1000 * 60)) % 60
-                        timer.text = "%02d:%02d".format(minutes, seconds)
-                    }
-    }
-    
+    }//Функция загрузка позиции трека
 }
