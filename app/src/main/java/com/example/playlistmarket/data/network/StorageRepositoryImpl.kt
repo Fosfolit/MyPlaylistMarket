@@ -1,6 +1,6 @@
 package com.example.playlistmarket.data.network
 
-import com.example.playlistmarket.data.StorageClient
+import com.example.playlistmarket.data.interfaceClient.StorageClient
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.domain.TrackPosition
 import com.example.playlistmarket.domain.api.StorageRepository
@@ -20,14 +20,6 @@ class StorageRepositoryImpl(private val storageClient : StorageClient) :StorageR
     override fun loadTrackPosition(): TrackPosition {
         val response = storageClient.loadTrackPosition()
         return TrackPosition(response.trackUrl,response.position)
-    }
-
-    override fun loadTheme(): Boolean {
-        return  storageClient.loadTheme()
-    }
-
-    override fun saveTheme(theme: Boolean) {
-         storageClient.saveTheme(theme)
     }
 
     override fun saveTrack(track: DataMusic) {

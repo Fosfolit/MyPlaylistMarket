@@ -3,7 +3,6 @@ package com.example.playlistmarket.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,29 +22,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.Creator.provideMusicInteractor
 import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.RecentlyViewed
-import com.example.playlistmarket.data.network.MusicInterface
+import com.example.playlistmarket.presentation.RecentlyViewed
 import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
-import com.example.playlistmarket.domain.api.MusicInteractor
+import com.example.playlistmarket.domain.api.SearchMusic.MusicInteractor
 import com.example.playlistmarket.domain.api.StorageInteractor
-import com.google.gson.Gson
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 
 class SearchActivity : AppCompatActivity() {
 
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://itunes.apple.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create<MusicInterface>()
-    private lateinit var sharedPrefs: SharedPreferences
     private var countValue: String = ""
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
@@ -57,7 +44,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         c = provideStorageInteractor(this)
-        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)

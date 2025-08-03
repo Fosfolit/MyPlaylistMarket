@@ -35,7 +35,6 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var  timeFun :Runnable
     private var playerState = PlayerState.STATE_DEFAULT
     private lateinit var newThread:Thread
-    private lateinit var sharedPrefs: SharedPreferences
     private lateinit var d : StorageInteractor
     private lateinit var trackPosition : TrackPosition
 
@@ -48,9 +47,6 @@ class AudioPlayer : AppCompatActivity() {
         buttonPause = findViewById(R.id.buttonPause)
         buttonAddInPlaylist = findViewById(R.id.buttonAddInPlaylist)
         buttonLike = findViewById(R.id.buttonLike)
-        sharedPrefs = getSharedPreferences(
-            PRACTICUM_EXAMPLE_PREFERENCES,
-            Context.MODE_PRIVATE)
         dataSet()
         funSet()
         d = provideStorageInteractor(this)
@@ -154,9 +150,8 @@ class AudioPlayer : AppCompatActivity() {
 
                 buttonPause.setIconResource(R.drawable.button_pause)
                 mediaPlayer.start()
-                val savedUrl = sharedPrefs.getString("TracFullName", null)
-                if (!savedUrl.isNullOrEmpty() && savedUrl != thisTrack.previewUrl) {
-                    deletTrac()
+                if (trackPosition.trackUrl != thisTrack.previewUrl) {
+                    saveTrac()
                 }
             }
             else ->{}
@@ -182,7 +177,7 @@ class AudioPlayer : AppCompatActivity() {
         mediaPlayer.setOnPreparedListener {
             buttonPause.isEnabled = true
             playerState = PlayerState.STATE_PREPARED
-            loadTrac()
+            loadTracPosition()
         }
         mediaPlayer.setOnCompletionListener {
             playerState = PlayerState.STATE_PREPARED
@@ -190,16 +185,6 @@ class AudioPlayer : AppCompatActivity() {
 
         timerStart()
     }// Функция подготовки проигрывателя
-
-    private fun seterTrac(track: TrackPosition){
-        if (track.trackUrl == thisTrack.previewUrl) {
-            mediaPlayer.seekTo(track.position)
-            val timer: TextView = findViewById(R.id.timer)
-            val seconds = (track.position / 1000) % 60
-            val minutes = (track.position / (1000 * 60)) % 60
-            timer.text = "%02d:%02d".format(minutes, seconds)
-        }
-    }
 
 
     private fun timerStart() {
@@ -225,11 +210,6 @@ class AudioPlayer : AppCompatActivity() {
         handler.postDelayed(timeFun , 100L)
     }//Обновление таймера каждую секунду
 
-    private fun deletTrac() {
-        sharedPrefs.edit()
-            .remove("TrackPosition")
-            .apply()
-    }//Функция удаления сохраненого трека
 
     private fun trackLoad(){
         d.loadTrack(object : StorageInteractor. TrackConsumer {
@@ -243,12 +223,18 @@ class AudioPlayer : AppCompatActivity() {
     private fun saveTrac() {
         d.saveTrackPosition(TrackPosition(thisTrack.previewUrl,mediaPlayer.currentPosition))
     }//Функция сохраненого позиции трека
-    private fun loadTrac() {
+    private fun loadTracPosition() {
         d.loadTrackPosition(object : StorageInteractor.StorageConsumer {
             override fun consume(track: TrackPosition) {
                 runOnUiThread {
                     trackPosition = track
-                    seterTrac(track)
+                    if (track.trackUrl == thisTrack.previewUrl) {
+                        mediaPlayer.seekTo(track.position)
+                        val timer: TextView = findViewById(R.id.timer)
+                        val seconds = (track.position / 1000) % 60
+                        val minutes = (track.position / (1000 * 60)) % 60
+                        timer.text = "%02d:%02d".format(minutes, seconds)
+                    }
                 }
             }
         }

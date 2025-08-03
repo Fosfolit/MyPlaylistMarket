@@ -1,7 +1,7 @@
 package com.example.playlistmarket.domain.Impl
 
-import com.example.playlistmarket.domain.api.MusicInteractor
-import com.example.playlistmarket.domain.api.MusicRepository
+import com.example.playlistmarket.domain.api.SearchMusic.MusicInteractor
+import com.example.playlistmarket.domain.api.SearchMusic.MusicRepository
 
 class MusicInteractImpl(private val repository: MusicRepository) : MusicInteractor {
 

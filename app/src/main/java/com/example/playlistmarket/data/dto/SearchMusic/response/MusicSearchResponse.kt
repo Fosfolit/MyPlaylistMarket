@@ -1,6 +1,6 @@
-package com.example.playlistmarket.data.dto.response
+package com.example.playlistmarket.data.dto.SearchMusic.response
 
-import com.example.playlistmarket.data.dto.Response
+import com.example.playlistmarket.data.dto.SearchMusic.Response
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 
 class MusicSearchResponse(val expression: String,

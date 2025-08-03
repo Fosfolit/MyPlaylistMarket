@@ -20,20 +20,6 @@ class StorageInteractImpl(private val repository: StorageRepository): StorageInt
         t.start()
     }
 
-    override fun loadTheme(consumeTheme: StorageInteractor.ThemeConsumer) {
-        val t = Thread {
-            consumeTheme.consume(repository.loadTheme())
-        }
-        t.start()
-    }
-
-    override fun saveTheme(theme: Boolean) {
-        val t = Thread {
-            repository.saveTheme(theme)
-        }
-        t.start()
-    }
-
     override fun saveTrack(expression: DataMusic) {
         val t = Thread {
             repository.saveTrack(expression)

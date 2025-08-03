@@ -2,12 +2,12 @@ package com.example.playlistmarket.data.network
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.playlistmarket.data.StorageClient
+import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
+import com.example.playlistmarket.data.interfaceClient.StorageClient
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.ui.PRACTICUM_EXAMPLE_PREFERENCES
+
 import com.google.gson.Gson
 
 class SharedPrefsStorageClient(context: Context) : StorageClient {
@@ -39,19 +39,6 @@ class SharedPrefsStorageClient(context: Context) : StorageClient {
         return TrackPositionDto("",0)
     }
 
-    override fun loadTheme(): Boolean {
-        if(sharedPrefs.contains("Theme")) {
-            return  sharedPrefs.getBoolean("Theme",false)
-        }
-        return false
-    }
-
-    override fun saveTheme(theme: Boolean) {
-        sharedPrefs.edit()
-            .remove("Theme")
-            .putBoolean("Theme",theme)
-            .apply()
-    }
 
     override fun saveTrack(track: DataMusicDto) {
         sharedPrefs.edit()
