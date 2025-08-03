@@ -1,7 +1,7 @@
-package com.example.playlistmarket.domain.Impl
+package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.api.Theme.ThemeInteractor
-import com.example.playlistmarket.domain.api.Theme.ThemeRepository
+import com.example.playlistmarket.domain.api.theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.theme.ThemeRepository
 
 class ThemeInteractorImpl(private val repository: ThemeRepository):ThemeInteractor {
     override fun loadTheme(consumeTheme: ThemeInteractor.ThemeConsumer) {

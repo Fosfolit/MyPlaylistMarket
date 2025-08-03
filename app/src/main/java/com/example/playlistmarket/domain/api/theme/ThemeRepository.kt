@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain.api.Theme
+package com.example.playlistmarket.domain.api.theme
 
 interface ThemeRepository {
     fun loadTheme() :Boolean

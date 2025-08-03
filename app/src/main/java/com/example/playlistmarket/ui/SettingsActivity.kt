@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.example.playlistmarket.Creator.provideThemeInteractor
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.api.Theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var textViewStyle: Switch

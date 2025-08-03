@@ -1,7 +1,7 @@
-package com.example.playlistmarket.data.network.Theme
+package com.example.playlistmarket.data.network.theme
 
 import com.example.playlistmarket.data.interfaceClient.ThemeClient
-import com.example.playlistmarket.domain.api.Theme.ThemeRepository
+import com.example.playlistmarket.domain.api.theme.ThemeRepository
 
 class ThemeRepositoryImpl(private val themeClient: ThemeClient): ThemeRepository {
 

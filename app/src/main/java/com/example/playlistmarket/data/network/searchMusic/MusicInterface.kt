@@ -1,6 +1,6 @@
-package com.example.playlistmarket.data.network.SearchMusic
+package com.example.playlistmarket.data.network.searchMusic
 
-import com.example.playlistmarket.data.dto.SearchMusic.response.MusicSearchResponse
+import com.example.playlistmarket.data.dto.searchMusic.response.MusicSearchResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

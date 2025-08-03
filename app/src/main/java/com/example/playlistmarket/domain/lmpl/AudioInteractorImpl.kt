@@ -1,8 +1,4 @@
-package com.example.playlistmarket.domain.Impl
-
-import com.example.playlistmarket.domain.api.AudioInteractor
-import com.example.playlistmarket.domain.api.StorageInteractor
-import com.example.playlistmarket.presentation.MediaPlayer
+package com.example.playlistmarket.domain.lmpl
 
 //class AudioInteractorImpl(private val medio: MediaPlayer) : AudioInteractor {
 //    override fun AudioSwitch(medio: MediaPlayer) {

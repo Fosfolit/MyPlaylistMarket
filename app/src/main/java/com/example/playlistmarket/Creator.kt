@@ -1,21 +1,27 @@
 package com.example.playlistmarket
 
 import android.content.Context
-import com.example.playlistmarket.data.network.SearchMusic.MusicRepositoryImpl
-import com.example.playlistmarket.data.network.SearchMusic.RetrofitNetworkClient
-import com.example.playlistmarket.domain.Impl.MusicInteractImpl
-import com.example.playlistmarket.domain.api.SearchMusic.MusicInteractor
-import com.example.playlistmarket.domain.api.SearchMusic.MusicRepository
+import com.example.playlistmarket.data.network.activTrack.ActivTrackRepositoryImpl
+import com.example.playlistmarket.data.network.activTrack.StorageActivTrackClient
+import com.example.playlistmarket.data.network.searchMusic.MusicRepositoryImpl
+import com.example.playlistmarket.data.network.searchMusic.RetrofitNetworkClient
+import com.example.playlistmarket.data.network.SharedPrefsStorageClient
+import com.example.playlistmarket.data.network.StorageRepositoryImpl
+import com.example.playlistmarket.data.network.theme.StorageThemeClient
+import com.example.playlistmarket.data.network.theme.ThemeRepositoryImpl
+import com.example.playlistmarket.domain.lmpl.ActivTrackInteractorImpl
+import com.example.playlistmarket.domain.lmpl.MusicInteractImpl
+import com.example.playlistmarket.domain.lmpl.StorageInteractImpl
+import com.example.playlistmarket.domain.lmpl.ThemeInteractorImpl
+import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.activTrack.ActivTrackRepository
+import com.example.playlistmarket.domain.api.searchMusic.MusicInteractor
+import com.example.playlistmarket.domain.api.searchMusic.MusicRepository
 import com.example.playlistmarket.domain.api.StorageInteractor
 import com.example.playlistmarket.domain.api.StorageRepository
-import com.example.playlistmarket.domain.Impl.StorageInteractImpl
-import com.example.playlistmarket.data.network.StorageRepositoryImpl
-import com.example.playlistmarket.data.network.SharedPrefsStorageClient
-import com.example.playlistmarket.data.network.Theme.StorageThemeClient
-import com.example.playlistmarket.data.network.Theme.ThemeRepositoryImpl
-import com.example.playlistmarket.domain.Impl.ThemeInteractorImpl
-import com.example.playlistmarket.domain.api.Theme.ThemeInteractor
-import com.example.playlistmarket.domain.api.Theme.ThemeRepository
+import com.example.playlistmarket.domain.api.theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.theme.ThemeRepository
+
 
 object Creator {
     private fun getMusicRepository(): MusicRepository {
@@ -39,6 +45,14 @@ object Creator {
 
     fun provideThemeInteractor(context : Context): ThemeInteractor {
         return ThemeInteractorImpl(getThemeRepository(context))
+    }
+
+    private fun getActivTrackRepository(context : Context): ActivTrackRepository {
+        return ActivTrackRepositoryImpl(StorageActivTrackClient(context))
+    }
+
+    fun provideActivTrackInteractor(context : Context): ActivTrackInteractor {
+        return ActivTrackInteractorImpl(getActivTrackRepository(context))
     }
 
 }

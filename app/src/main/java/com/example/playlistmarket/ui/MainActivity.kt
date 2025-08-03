@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmarket.Creator.provideThemeInteractor
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.api.Theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
 private lateinit var d : ThemeInteractor
 class MainActivity : AppCompatActivity() {

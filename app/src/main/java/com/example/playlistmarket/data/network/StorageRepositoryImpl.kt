@@ -21,47 +21,4 @@ class StorageRepositoryImpl(private val storageClient : StorageClient) :StorageR
         val response = storageClient.loadTrackPosition()
         return TrackPosition(response.trackUrl,response.position)
     }
-
-    override fun saveTrack(track: DataMusic) {
-        storageClient.saveTrack(  DataMusicDto(
-            track.previewUrl,
-            track.trackName,
-            track.artistName,
-            track.trackTime,
-            track.artworkUrl100,
-            track.collectionName,
-            track.releaseDate,
-            track.primaryGenreName,
-            track.country))
-    }
-
-    override fun loadTrack(): DataMusic {
-       val out =  storageClient.loadTrack ()
-        if (out == null){
-            return DataMusic(
-                "",
-                "",
-                "",
-                0,
-                "",
-                "",
-                "",
-                "",
-                ""
-                )
-        } else {
-            return DataMusic(
-                out.previewUrl,
-                out.trackName,
-                out.artistName,
-                out.trackTime,
-                out.artworkUrl100,
-                out.collectionName,
-                out.releaseDate,
-                out.primaryGenreName,
-                out.country)
-        }
-    }
-
-
 }

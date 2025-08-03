@@ -19,16 +19,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmarket.Creator.provideActivTrackInteractor
 import com.example.playlistmarket.Creator.provideMusicInteractor
-import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.R
 import com.example.playlistmarket.presentation.RecentlyViewed
 import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
-import com.example.playlistmarket.domain.api.SearchMusic.MusicInteractor
-import com.example.playlistmarket.domain.api.StorageInteractor
+import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.searchMusic.MusicInteractor
 
 
 class SearchActivity : AppCompatActivity() {
@@ -39,11 +39,12 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recentlyViewed: RecentlyViewed
     private lateinit var progressBar: ProgressBar
-    private lateinit var c : StorageInteractor
+
+    private lateinit var activTrack : ActivTrackInteractor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        c = provideStorageInteractor(this)
+        activTrack = provideActivTrackInteractor(this)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
@@ -218,10 +219,11 @@ class SearchActivity : AppCompatActivity() {
         }
     }
     private fun viewTrack(dataForSave : DataMusic){
-        c.saveTrack(dataForSave)
-    val displayIntent = Intent(this, AudioPlayer::class.java)
-    startActivity(displayIntent)
-}
+        activTrack.saveTrack(dataForSave)
+        val displayIntent = Intent(this, AudioPlayer::class.java)
+        startActivity(displayIntent)
+
+    }
     private fun progressBarOn(tri: Boolean) {
         if (tri){
             progressBar.visibility = View.VISIBLE

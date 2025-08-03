@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.Theme
+package com.example.playlistmarket.data.network.theme
 
 import android.content.Context
 import android.content.SharedPreferences

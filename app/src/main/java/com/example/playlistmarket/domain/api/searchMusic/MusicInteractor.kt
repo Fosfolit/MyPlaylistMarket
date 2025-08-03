@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain.api.SearchMusic
+package com.example.playlistmarket.domain.api.searchMusic
 
 import com.example.playlistmarket.domain.DataMusic
 

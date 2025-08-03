@@ -1,10 +1,10 @@
-package com.example.playlistmarket.data.network.SearchMusic
+package com.example.playlistmarket.data.network.searchMusic
 
 import com.example.playlistmarket.data.interfaceClient.NetworkClient
-import com.example.playlistmarket.data.dto.SearchMusic.request.MusicSearchRequest
-import com.example.playlistmarket.data.dto.SearchMusic.response.MusicSearchResponse
+import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchRequest
+import com.example.playlistmarket.data.dto.searchMusic.response.MusicSearchResponse
 import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.api.SearchMusic.MusicRepository
+import com.example.playlistmarket.domain.api.searchMusic.MusicRepository
 
 class MusicRepositoryImpl(private val networkClient: NetworkClient) : MusicRepository {
 
@@ -26,4 +26,5 @@ class MusicRepositoryImpl(private val networkClient: NetworkClient) : MusicRepos
             return emptyList()
         }
     }
+
 }

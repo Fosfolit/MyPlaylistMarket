@@ -1,6 +1,5 @@
-package com.example.playlistmarket.domain.Impl
+package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackPosition
 import com.example.playlistmarket.domain.api.StorageInteractor
 import com.example.playlistmarket.domain.api.StorageRepository
@@ -16,20 +15,6 @@ class StorageInteractImpl(private val repository: StorageRepository): StorageInt
     override fun loadTrackPosition(consumer: StorageInteractor.StorageConsumer) {
         val t = Thread {
             consumer.consume(repository.loadTrackPosition())
-        }
-        t.start()
-    }
-
-    override fun saveTrack(expression: DataMusic) {
-        val t = Thread {
-            repository.saveTrack(expression)
-        }
-        t.start()
-    }
-
-    override fun loadTrack(consumerTrack: StorageInteractor.TrackConsumer) {
-        val t = Thread {
-            consumerTrack.consume(repository.loadTrack())
         }
         t.start()
     }

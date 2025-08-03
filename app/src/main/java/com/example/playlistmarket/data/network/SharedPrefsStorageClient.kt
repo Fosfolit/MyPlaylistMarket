@@ -38,20 +38,4 @@ class SharedPrefsStorageClient(context: Context) : StorageClient {
         }
         return TrackPositionDto("",0)
     }
-
-
-    override fun saveTrack(track: DataMusicDto) {
-        sharedPrefs.edit()
-            .remove("TrackSave")
-            .putString("TrackSave", Gson().toJson(track))
-            .apply()
-    }
-
-    override fun loadTrack(): DataMusicDto? {
-        if(sharedPrefs.contains("TrackSave")) {
-            val json =  sharedPrefs.getString("TrackSave", null) ?: return null
-            return Gson().fromJson(json, DataMusicDto::class.java)
-        }
-        return null
-    }
 }

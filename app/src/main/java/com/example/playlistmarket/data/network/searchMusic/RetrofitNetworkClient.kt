@@ -1,9 +1,9 @@
-package com.example.playlistmarket.data.network.SearchMusic
+package com.example.playlistmarket.data.network.searchMusic
 
 import com.example.playlistmarket.Constants.BASE_URL
 import com.example.playlistmarket.data.interfaceClient.NetworkClient
-import com.example.playlistmarket.data.dto.SearchMusic.request.MusicSearchRequest
-import com.example.playlistmarket.data.dto.SearchMusic.Response
+import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchRequest
+import com.example.playlistmarket.data.dto.searchMusic.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
