@@ -11,4 +11,10 @@ override fun loadListTrack(): List<DataMusicDto> {
         }
         return emptyList()
     }
+    override fun saveListTrack(list : List<DataMusicDto>) {
+        sharedPrefs.edit()
+            .remove("ListTrack")
+            .putString("ListTrack", Gson().toJson(list))
+            .apply()
+    }
 }
