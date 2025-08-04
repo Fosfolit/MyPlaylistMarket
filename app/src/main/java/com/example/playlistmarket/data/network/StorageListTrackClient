@@ -1,0 +1,14 @@
+class StorageListTrackClient(context: Context) : ListTrackClient {
+    private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
+        PRACTICUM_EXAMPLE_PREFERENCES,
+        Context.MODE_PRIVATE
+    )
+
+override fun loadListTrack(): List<DataMusicDto> {
+        if(sharedPrefs.contains("ListTrack")) {
+            val json =  sharedPrefs.getString("ListTrack", null) 
+            return Gson().fromJson(json, List<DataMusicDto>::class.java)
+        }
+        return emptyList()
+    }
+}
