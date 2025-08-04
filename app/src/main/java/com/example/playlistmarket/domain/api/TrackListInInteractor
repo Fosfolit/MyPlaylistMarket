@@ -1,0 +1,9 @@
+package com.example.playlistmarket.domain.Impl
+interface TrackListInteractor {
+    fun startTimer()
+    fun stopTimer()
+    interface AudioConsumer {
+        fun consumer()
+    }
+
+}
