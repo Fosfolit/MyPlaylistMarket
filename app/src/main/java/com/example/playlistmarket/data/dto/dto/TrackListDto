@@ -1,0 +1,5 @@
+package com.example.playlistmarket.data.dto.dto
+
+data class TrackListDto(
+    val trackSearchList : List<DataMusicDto>
+)

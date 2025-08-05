@@ -1,0 +1,6 @@
+package com.example.playlistmarket.domain.api 
+
+interface TrackListRepository {
+    fun saveListTrack(track: DataMusic)
+    fun loadListTrack(): List<DataMusic>
+}
