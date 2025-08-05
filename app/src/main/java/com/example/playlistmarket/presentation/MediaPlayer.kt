@@ -5,7 +5,7 @@ import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.TrackPosition
 import com.google.android.material.button.MaterialButton
 
-class MediaPlayer( val track : TrackPosition, val buttonPause: MaterialButton) {
+class MediaPlayer(var track : TrackPosition, private val buttonPause: MaterialButton, ) {
     private var mediaPlayer = MediaPlayer()
     private var playerState = PlayerState.STATE_DEFAULT
     enum class PlayerState  {
@@ -16,6 +16,7 @@ class MediaPlayer( val track : TrackPosition, val buttonPause: MaterialButton) {
     }//Виды состояния медиа плеера
     init{
         preparePlayer()
+        mediaPlayer.seekTo(track.position)
     }
     private fun preparePlayer() {
         mediaPlayer.setDataSource(track.trackUrl)
@@ -27,7 +28,6 @@ class MediaPlayer( val track : TrackPosition, val buttonPause: MaterialButton) {
         mediaPlayer.setOnCompletionListener {
             playerState = PlayerState.STATE_PREPARED
         }
-
     }// Функция подготовки проигрывателя
     private fun stopPlay(){
         playerState = PlayerState.STATE_PAUSED

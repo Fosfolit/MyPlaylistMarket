@@ -1,26 +1,20 @@
 package com.example.playlistmarket.domain.lmpl
 
-//class AudioInteractorImpl(private val medio: MediaPlayer) : AudioInteractor {
-//    override fun AudioSwitch(medio: MediaPlayer) {
-//        medio.musicSwitch()
-//    }
-//
-//    override fun startTimer(consumer : AudioInteractor.AudioConsumer) {
-//        val t = Thread {
-//            consumerTrack.consume(repository.loadTrack())
-//        }
-//        t.start()
-//        timeFun = Runnable{timerQdt()}
-//        handler.postDelayed(timeFun , 100L)
-//    }
-//
-//    override fun stopTimer() {
-//        TODO("Not yet implemented")
-//    }
-//    override fun loadTrack(consumerTrack: StorageInteractor.TrackConsumer) {
-//        val t = Thread {
-//            consumerTrack.consume(repository.loadTrack())
-//        }
-//        t.start()
-//    }
-//}
+import com.example.playlistmarket.domain.api.AudioInteractor
+import com.example.playlistmarket.presentation.MediaPlayer
+
+class AudioInteractorImpl (): AudioInteractor {
+    
+    override fun AudioSwitch(medio: MediaPlayer) {
+        TODO("Not yet implemented")
+    }
+
+    override fun startTimer() {
+        TODO("Not yet implemented")
+    }
+
+    override fun stopTimer() {
+        TODO("Not yet implemented")
+    }
+
+}
