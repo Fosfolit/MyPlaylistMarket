@@ -39,6 +39,7 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var activTrack : ActivTrackInteractor
     private  var chekplay : Boolean = false
     var url = "755"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -58,9 +59,10 @@ class AudioPlayer : AppCompatActivity() {
         buttonAddInPlaylist = findViewById(R.id.buttonAddInPlaylist)
         buttonLike = findViewById(R.id.buttonLike)
         activTrack = provideActivTrackInteractor(this)
+        d = provideStorageInteractor(this)
         dataSet()
         funSet()
-        d = provideStorageInteractor(this)
+
 
     }
 

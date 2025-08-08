@@ -1,7 +1,0 @@
-package com.example.playlistmarket.data.interfaceClient
-
-interface TrackListClient {
-    fun saveTrack(track: DataMusicDto)
-    fun loadListTrack(): List<DataMusicDto>
-
-}

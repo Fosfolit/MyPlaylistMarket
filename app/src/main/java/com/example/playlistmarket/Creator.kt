@@ -9,6 +9,8 @@ import com.example.playlistmarket.data.network.SharedPrefsStorageClient
 import com.example.playlistmarket.data.network.StorageRepositoryImpl
 import com.example.playlistmarket.data.network.theme.StorageThemeClient
 import com.example.playlistmarket.data.network.theme.ThemeRepositoryImpl
+import com.example.playlistmarket.data.network.trackList.StorageListTrackClient
+import com.example.playlistmarket.data.network.trackList.TrackListRepositoryImpl
 import com.example.playlistmarket.domain.lmpl.ActivTrackInteractorImpl
 import com.example.playlistmarket.domain.lmpl.MusicInteractImpl
 import com.example.playlistmarket.domain.lmpl.StorageInteractImpl
@@ -21,6 +23,9 @@ import com.example.playlistmarket.domain.api.StorageInteractor
 import com.example.playlistmarket.domain.api.StorageRepository
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 import com.example.playlistmarket.domain.api.theme.ThemeRepository
+import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
+import com.example.playlistmarket.domain.api.trackList.TrackListRepository
+import com.example.playlistmarket.domain.lmpl.TrackListInteractorImpl
 
 
 object Creator {
@@ -54,5 +59,14 @@ object Creator {
     fun provideActivTrackInteractor(context : Context): ActivTrackInteractor {
         return ActivTrackInteractorImpl(getActivTrackRepository(context))
     }
+
+    private fun getTrackListRepository(context : Context): TrackListRepository {
+        return TrackListRepositoryImpl(StorageListTrackClient(context))
+    }
+
+    fun provideTrackListInteractor(context : Context): TrackListInteractor {
+        return TrackListInteractorImpl(getTrackListRepository(context))
+    }
+
 
 }

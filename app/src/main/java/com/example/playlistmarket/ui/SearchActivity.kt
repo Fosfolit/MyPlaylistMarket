@@ -21,14 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.Creator.provideActivTrackInteractor
 import com.example.playlistmarket.Creator.provideMusicInteractor
+import com.example.playlistmarket.Creator.provideTrackListInteractor
 import com.example.playlistmarket.R
-import com.example.playlistmarket.presentation.RecentlyViewed
 import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.searchMusic.MusicInteractor
+import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
+import java.util.LinkedList
 
 
 class SearchActivity : AppCompatActivity() {
@@ -37,26 +39,27 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var recentlyViewed: RecentlyViewed
     private lateinit var progressBar: ProgressBar
-
+    private lateinit var v : TrackListInteractor
+    private lateinit var d : MusicInteractor
     private lateinit var activTrack : ActivTrackInteractor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        v = provideTrackListInteractor(this)
+        d = provideMusicInteractor()
         activTrack = provideActivTrackInteractor(this)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recentlyViewed = RecentlyViewed(this)
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
-            searchDebounce(Runnable{
+
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 textFind(inputEditText.text.toString())
                 true
-            }})
+            }
             false
         }
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
@@ -68,24 +71,9 @@ class SearchActivity : AppCompatActivity() {
         buttonClear()
         toolFinish()
     }
-    private fun searchDebounce(run:Runnable) {
-        handler.removeCallbacks(run)
-        handler.postDelayed(run, 2000L)
-    }
 
-    private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
-    private fun clickDebounce() : Boolean {
-        val current = isClickAllowed
-        if (isClickAllowed) {
-            isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, 2000L)
-        }
-        return current
-    }
     fun textFind(textFind : String){
         progressBarOn(true)
-        val d = provideMusicInteractor()
         d.searchMusic(textFind, object : MusicInteractor.MusicConsumer {
             override fun consume(foundMusic: List<DataMusic>) {
                 runOnUiThread {
@@ -102,7 +90,7 @@ class SearchActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
             recyclerView.adapter = MusicAdapter(response) {
                 DataMusic ->
-                recentlyViewed.addItem(DataMusic)
+                v.addItem(DataMusic)
                 viewTrack(DataMusic)
             }
         }
@@ -197,27 +185,50 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun displayRecentlyViewed(){
         progressBarOn(false)
-        if(!recentlyViewed.isEmpty()) {
-            recyclerView.visibility = View.VISIBLE
-            recyclerView.adapter = ConcatAdapter(
-                SearchedQueriesTextAdapter(listOf("Вы искали")),
-                MusicAdapter(recentlyViewed.dataMusic())
-                { DataMusic ->
-                    if(clickDebounce()) {
-                        recentlyViewed.addItem(DataMusic)
-                        viewTrack(DataMusic)
+        v.isEmpty(object : TrackListInteractor.EmptyTrackList{
+            override fun consume(list: Boolean) {
+                runOnUiThread {
+                    if(!list) {
+                        recyclerView.visibility = View.VISIBLE
+                        v.loadListTrack(object : TrackListInteractor.LoadTrackList{
+                            override fun consume(list: LinkedList<DataMusic>) {
+                                runOnUiThread {
+                                    recyclerView.adapter = ConcatAdapter(
+                                        SearchedQueriesTextAdapter(listOf("Вы искали")),
+                                    MusicAdapter(list)
+                                    { DataMusic ->
+                                        d.clickDebounce(object :MusicInteractor.BoolMusicConsumer{
+                                            override fun consume(click: Boolean) {
+                                                runOnUiThread {
+                                                if(click){
+                                                    v.addItem(DataMusic)
+                                                    viewTrack(DataMusic)
+                                                }
+                                                }
+                                            }
+
+                                        })
+
+                                            v.addItem(DataMusic)
+                                            viewTrack(DataMusic)
+
+                                    },
+                                        SearchedQueriesButtonAdapter(listOf("Очистить историю"))
+                                        {
+                                            v.saveListTrack(LinkedList<DataMusic>())
+                                            recyclerView.visibility = View.INVISIBLE
+                                        }
+                                    )
+                                }
+                            }
+                        } )}
+                    else{
+                        recyclerView.visibility = View.INVISIBLE
                     }
-                },
-                SearchedQueriesButtonAdapter(listOf("Очистить историю"))
-                {
-                    recentlyViewed.clearPreferencesAll()
-                    recyclerView.visibility = View.INVISIBLE
                 }
-            )
-        }else{
-            recyclerView.visibility = View.INVISIBLE
-        }
-    }
+            }
+        })}
+
     private fun viewTrack(dataForSave : DataMusic){
         activTrack.saveTrack(dataForSave)
         val displayIntent = Intent(this, AudioPlayer::class.java)
