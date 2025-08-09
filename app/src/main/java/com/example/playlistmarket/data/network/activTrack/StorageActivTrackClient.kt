@@ -20,11 +20,22 @@ class StorageActivTrackClient(context: Context):ActivTrackClient{
             .apply()
     }
 
-    override fun loadTrack(): DataMusicDto? {
+    override fun loadTrack(): DataMusicDto {
         if(sharedPrefs.contains("TrackSave")) {
-            val json =  sharedPrefs.getString("TrackSave", null) ?: return null
+            val json =  sharedPrefs.getString("TrackSave", null)
             return Gson().fromJson(json, DataMusicDto::class.java)
+        } else {
+            return DataMusicDto(
+                "",
+                "zer0",
+                "zer0",
+                0,
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
         }
-        return null
     }
 }

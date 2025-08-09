@@ -4,5 +4,5 @@ import com.example.playlistmarket.data.dto.dto.DataMusicDto
 
 interface ActivTrackClient {
     fun saveTrack(track: DataMusicDto)
-    fun loadTrack(): DataMusicDto?
+    fun loadTrack(): DataMusicDto
 }

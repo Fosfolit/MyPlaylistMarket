@@ -1,13 +1,12 @@
 package com.example.playlistmarket.domain.api
 
-import com.example.playlistmarket.domain.DataMusic
-
-import com.example.playlistmarket.presentation.MediaPlayer
+import com.example.playlistmarket.presentation.MediaPlayerMy
 
 interface AudioInteractor {
-    fun AudioSwitch (medio :MediaPlayer)
-    fun startTimer()
-    fun stopTimer()
+    fun AudioSwitch (consumer: AudioConsumer)
+    fun startPlay()
+    fun stopPlay()
+    fun prepare(media: MediaPlayerMy)
     interface AudioConsumer {
         fun consumer()
     }

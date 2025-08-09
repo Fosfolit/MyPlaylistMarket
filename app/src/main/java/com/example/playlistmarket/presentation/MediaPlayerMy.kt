@@ -1,11 +1,12 @@
 package com.example.playlistmarket.presentation
 
 import android.media.MediaPlayer
+import android.widget.TextView
 import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.TrackPosition
 import com.google.android.material.button.MaterialButton
 
-class MediaPlayer(var track : TrackPosition, private val buttonPause: MaterialButton, ) {
+class MediaPlayerMy(var track : TrackPosition, private val buttonPause: MaterialButton, private val timer: TextView) {
     private var mediaPlayer = MediaPlayer()
     private var playerState = PlayerState.STATE_DEFAULT
     enum class PlayerState  {
@@ -17,6 +18,7 @@ class MediaPlayer(var track : TrackPosition, private val buttonPause: MaterialBu
     init{
         preparePlayer()
         mediaPlayer.seekTo(track.position)
+        setTimer()
     }
     private fun preparePlayer() {
         mediaPlayer.setDataSource(track.trackUrl)
@@ -29,12 +31,12 @@ class MediaPlayer(var track : TrackPosition, private val buttonPause: MaterialBu
             playerState = PlayerState.STATE_PREPARED
         }
     }// Функция подготовки проигрывателя
-    private fun stopPlay(){
+    fun stopPlay(){
         playerState = PlayerState.STATE_PAUSED
         buttonPause.setIconResource(R.drawable.button_play)
         mediaPlayer.pause()
     }
-    private fun startPlay(){
+    fun startPlay(){
         playerState = PlayerState.STATE_PLAYING
         buttonPause.setIconResource(R.drawable.button_pause)
         mediaPlayer.start()
@@ -51,4 +53,9 @@ class MediaPlayer(var track : TrackPosition, private val buttonPause: MaterialBu
         }
     }
 
+    fun setTimer(){
+        val seconds = (mediaPlayer.currentPosition/ 1000) % 60
+        val minutes = (mediaPlayer.currentPosition / (1000 * 60)) % 60
+        timer.text = "%02d:%02d".format(minutes, seconds)
+    }
 }

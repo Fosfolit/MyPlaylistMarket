@@ -1,16 +1,15 @@
-package com.example.playlistmarket.data.network
+package com.example.playlistmarket.data.network.trackPosition
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
-import com.example.playlistmarket.data.interfaceClient.StorageClient
-import com.example.playlistmarket.data.dto.dto.DataMusicDto
+import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
 
 import com.google.gson.Gson
 
-class SharedPrefsStorageClient(context: Context) : StorageClient {
+class SharedPrefsTrackPositionClient(context: Context) : TrackPositionClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE
