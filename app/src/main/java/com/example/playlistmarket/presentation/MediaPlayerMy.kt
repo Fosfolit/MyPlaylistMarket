@@ -15,12 +15,10 @@ class MediaPlayerMy(var track : TrackPosition, private val buttonPause: Material
         STATE_PLAYING ,
         STATE_PAUSED
     }//Виды состояния медиа плеера
-    init{
-        preparePlayer()
-        mediaPlayer.seekTo(track.position)
-        setTimer()
+    fun getTime():Int{
+        return mediaPlayer.currentPosition
     }
-    private fun preparePlayer() {
+    fun preparePlayer() {
         mediaPlayer.setDataSource(track.trackUrl)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
@@ -30,6 +28,8 @@ class MediaPlayerMy(var track : TrackPosition, private val buttonPause: Material
         mediaPlayer.setOnCompletionListener {
             playerState = PlayerState.STATE_PREPARED
         }
+        mediaPlayer.seekTo(track.position)
+        setTimer()
     }// Функция подготовки проигрывателя
     fun stopPlay(){
         playerState = PlayerState.STATE_PAUSED
