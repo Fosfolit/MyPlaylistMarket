@@ -5,15 +5,20 @@ import android.os.Bundle
     import androidx.appcompat.app.AppCompatActivity
     import androidx.appcompat.widget.Toolbar
 import com.example.playlistmarket.R
+import com.example.playlistmarket.databinding.ActivityMainBinding
+import com.example.playlistmarket.databinding.ActivityNewEmptyBinding
+import com.example.playlistmarket.databinding.ActivitySettingsBinding
 
 class NewEmptyActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityNewEmptyBinding
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             enableEdgeToEdge()
-            setContentView(R.layout.activity_new_empty)
-            val toolbar: Toolbar = findViewById(R.id.buttonBack)
-            toolbar.setOnClickListener {
+            binding = ActivityNewEmptyBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            binding.buttonBack.setOnClickListener {
                 finish()
             }
         }

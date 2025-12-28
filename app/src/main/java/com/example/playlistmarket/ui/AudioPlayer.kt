@@ -1,9 +1,7 @@
 package com.example.playlistmarket.ui
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -16,41 +14,29 @@ import com.example.playlistmarket.Creator.provideAudioInteractor
 import com.example.playlistmarket.Creator.provideStorageInteractor
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.R
-import com.example.playlistmarket.data.dto.dto.DataMusicDto
+import com.example.playlistmarket.databinding.ActivityMediaBinding
 import com.example.playlistmarket.domain.TrackPosition
 import com.example.playlistmarket.domain.api.AudioInteractor
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
 import com.example.playlistmarket.presentation.MediaPlayerMy
-import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayer : AppCompatActivity() {
 
     private lateinit var plaer : AudioInteractor
-
+    private lateinit var binding: ActivityMediaBinding
     private lateinit var thisTrack: DataMusic
-
-
-
-    private lateinit var buttonPause: MaterialButton
-    private lateinit var buttonAddInPlaylist: Button
-    private lateinit var buttonLike: Button
     private lateinit var trackPositionInteractor: TrackPositionInteractor
     private lateinit var trackPosition : TrackPosition
     private lateinit var activTrack : ActivTrackInteractor
-    private  var chekplay : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_media)
-
-        buttonPause = findViewById(R.id.buttonPause)
-        buttonAddInPlaylist = findViewById(R.id.buttonAddInPlaylist)
-        buttonLike = findViewById(R.id.buttonLike)
-
+        binding = ActivityMediaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         load()
 
         setButtonPause()
@@ -80,31 +66,27 @@ class AudioPlayer : AppCompatActivity() {
 
 
     private fun setInfo(){
-        val timerText: TextView = findViewById(R.id.timerText)
-        val albumText: TextView = findViewById(R.id.albumText)
-        val yearText: TextView = findViewById(R.id.yearText)
-        val genreText: TextView = findViewById(R.id.genreText)
-        val countryText: TextView = findViewById(R.id.countryText)
-        val trackName: TextView = findViewById(R.id.trackName)
-        val artistName: TextView = findViewById(R.id.artistName)
-        trackName.text = thisTrack.trackName
-        artistName.text = thisTrack.artistName
-        timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(thisTrack.trackTime)
-        albumText.visibility = View.INVISIBLE
-        if (thisTrack.collectionName.isNotEmpty()){
-            albumText.text = thisTrack.collectionName
+        binding.apply {
+            trackName.text = thisTrack.trackName
+            artistName.text = thisTrack.artistName
+            timerText.text =
+                SimpleDateFormat("mm:ss", Locale.getDefault()).format(thisTrack.trackTime)
+            albumText.visibility = View.INVISIBLE
+            if (thisTrack.collectionName.isNotEmpty()) {
+                albumText.text = thisTrack.collectionName
+            }
+            albumText.visibility = View.VISIBLE
+            yearText.text = thisTrack.releaseDate.substring(0, 4)
+            genreText.text = thisTrack.primaryGenreName
+            countryText.text = thisTrack.country
+            val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
+            Glide.with(this)
+                .load(thisTrack.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
+                .placeholder(R.drawable.music_base)
+                .centerCrop()
+                .transform(RoundedCorners(8))
+                .into(artworkUrl100)
         }
-        albumText.visibility = View.VISIBLE
-        yearText.text =  thisTrack.releaseDate.substring(0, 4)
-        genreText.text = thisTrack.primaryGenreName
-        countryText.text = thisTrack.country
-        val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
-        Glide.with(this)
-            .load(thisTrack.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
-            .placeholder(R.drawable.music_base)
-            .centerCrop()
-            .transform(RoundedCorners(8))
-            .into(artworkUrl100)
     }//Установка данных
 
 
@@ -112,7 +94,7 @@ class AudioPlayer : AppCompatActivity() {
 
 
     private fun setButtonPause(){
-        buttonPause.setOnClickListener{
+        binding.buttonPause.setOnClickListener{
 
                 plaer.AudioSwitch()
 
@@ -127,8 +109,7 @@ class AudioPlayer : AppCompatActivity() {
 
 
     private fun setToolbarFunc(){
-        val toolbar: Toolbar = findViewById(R.id.buttonBack)
-        toolbar.setOnClickListener {
+        binding.buttonBack.setOnClickListener {
             plaer.stopPlay()
             saveTrac()
             finish()
@@ -156,7 +137,7 @@ class AudioPlayer : AppCompatActivity() {
                  if (thisTrack.previewUrl!=track.trackUrl){
                      trackPosition = TrackPosition(thisTrack.previewUrl , 0)
                  }
-                 plaer.prepare(MediaPlayerMy(trackPosition,buttonPause,findViewById(R.id.timer)))
+                 plaer.prepare(MediaPlayerMy(trackPosition,binding.buttonPause,binding.timer))
              }
          }
      }
