@@ -1,17 +1,15 @@
 package com.example.playlistmarket.domain.lmpl
 
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import com.example.playlistmarket.domain.api.AudioInteractor
 import com.example.playlistmarket.presentation.MediaPlayerMy
-import com.example.playlistmarket.presentation.MediaPlayerMy.PlayerState
 
 class AudioInteractorImpl (): AudioInteractor {
     private lateinit var medio: MediaPlayerMy
     private var play: Boolean =false
     private var tik :Runnable = Runnable{
-        medio.setTimer()
+        //medio.setTimer()
         tak.run()
     }
     private var tak :Runnable = Runnable{
@@ -30,21 +28,23 @@ class AudioInteractorImpl (): AudioInteractor {
     override fun AudioSwitch() {
         medio.musicSwitch()
         if (play){
-            play = true
+            play = false
+          //  medio.setTimer()
             tik.run()
         }else{
-            play = false
+            play = true
+            handler.removeCallbacks(tak)
             handler.removeCallbacks(tik)
-            medio.setTimer()
+          //  medio.setTimer()
         }
     }
 
     override fun startPlay() {
-     // val t = Thread {
+      val t = Thread {
             medio.startPlay()
             tik.run()
-    // //  }
-    // /   t.start()
+      }
+     t.start()
     }
 
     override fun stopPlay() {

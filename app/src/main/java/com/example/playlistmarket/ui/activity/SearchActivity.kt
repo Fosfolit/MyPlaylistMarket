@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui
+package com.example.playlistmarket.ui.activity
 
 import android.app.Activity
 import android.content.Context
@@ -14,20 +14,20 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmarket.Creator.provideActivTrackInteractor
-import com.example.playlistmarket.Creator.provideMusicInteractor
-import com.example.playlistmarket.Creator.provideTrackListInteractor
 import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.ButtonVisibility
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.ErrorAdapter
 import com.example.playlistmarket.domain.ErrorData
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
-import com.example.playlistmarket.domain.api.searchMusic.MusicInteractor
-import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
+import com.example.playlistmarket.ui.AudioPlayer
+import com.example.playlistmarket.ui.MusicAdapter
+import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
+import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
+import com.example.playlistmarket.ui.viewModel.SearchViewModel
 import java.util.LinkedList
 
 
@@ -38,19 +38,18 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var clearButton: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var trackListInteractor : TrackListInteractor
-    private lateinit var musicInteractor : MusicInteractor
-    private lateinit var activTrack : ActivTrackInteractor
+    private lateinit var viewModel: SearchViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        trackListInteractor = provideTrackListInteractor(this)
-        musicInteractor = provideMusicInteractor()
-        activTrack = provideActivTrackInteractor(this)
         clearButton = findViewById(R.id.clearIcon)
         inputEditText = findViewById(R.id.inputEditText)
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
+
+        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+        viewModel.setContext(this)
+        progressBarOn()
         recyclerView.layoutManager = LinearLayoutManager(this)
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
 
@@ -71,24 +70,19 @@ class SearchActivity : AppCompatActivity() {
     }
 
     fun textFind(textFind : String){
-        progressBarOn(true)
-        musicInteractor.searchMusic(textFind, object : MusicInteractor.MusicConsumer {
-            override fun consume(foundMusic: List<DataMusic>) {
-                runOnUiThread {
-                    successfulСall(foundMusic)
-                    recyclerView.visibility = View.VISIBLE
-                    }
-                }
-        })
+        viewModel.musicSearch(textFind)
+        viewModel.observeMusic.observe(this){foundMusic->
+            successfulСall(foundMusic)
+            recyclerView.visibility = View.VISIBLE
+        }
     }
 
     private  fun successfulСall(response: List<DataMusic>){
-        progressBarOn(false)
         if (response.isNotEmpty()) {
             progressBar.visibility = View.GONE
             recyclerView.adapter = MusicAdapter(response) {
                 DataMusic ->
-                trackListInteractor.addItem(DataMusic)
+                viewModel.trackListAdd(DataMusic)
                 viewTrack(DataMusic)
             }
         }
@@ -107,7 +101,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
     private  fun unsuccessfulСall(){
-        progressBarOn(false)
+       // viewModel.observeProgressBar.postValue(false)
         recyclerView.adapter = ErrorAdapter(listOf(
         ErrorData(
             imageError = R.drawable.search_error_internet,
@@ -181,66 +175,55 @@ class SearchActivity : AppCompatActivity() {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-    private fun displayRecentlyViewed(){
-        progressBarOn(false)
-        trackListInteractor.isEmpty(object : TrackListInteractor.EmptyTrackList{
-            override fun consume(list: Boolean) {
-                runOnUiThread {
-                    if(!list) {
-                        recyclerView.visibility = View.VISIBLE
-                        trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList{
-                            override fun consume(list: LinkedList<DataMusic>) {
-                                runOnUiThread {
-                                    recyclerView.adapter = ConcatAdapter(
-                                        SearchedQueriesTextAdapter(listOf("Вы искали")),
-                                    MusicAdapter(list)
-                                    { DataMusic ->
-                                        musicInteractor.clickDebounce(object :MusicInteractor.BoolMusicConsumer{
-                                            override fun consume(click: Boolean) {
-                                                runOnUiThread {
-                                                if(click){
-                                                    trackListInteractor.addItem(DataMusic)
-                                                    viewTrack(DataMusic)
-                                                }
-                                                }
-                                            }
-
-                                        })
-
-                                            trackListInteractor.addItem(DataMusic)
-                                            viewTrack(DataMusic)
-
-                                    },
-                                        SearchedQueriesButtonAdapter(listOf("Очистить историю"))
-                                        {
-                                            trackListInteractor.saveListTrack(LinkedList<DataMusic>())
-                                            recyclerView.visibility = View.INVISIBLE
-                                        }
-                                    )
+    private fun displayRecentlyViewed() {
+        viewModel.observeTrackIsEmpty.observe(this) { list ->
+            if (!list) {
+                recyclerView.visibility = View.VISIBLE
+                viewModel.observetrackLoadList.observe(this@SearchActivity) { list ->
+                    recyclerView.adapter = ConcatAdapter(
+                        SearchedQueriesTextAdapter(listOf("Вы искали")),
+                        MusicAdapter(list)
+                        { DataMusic ->
+                            viewModel.musicClick()
+                            viewModel.observeMusicClick.observe(this@SearchActivity) { click ->
+                                if (click) {
+                                    viewModel.trackListAdd(DataMusic)
+                                    viewTrack(DataMusic)
                                 }
                             }
-                        } )}
-                    else{
-                        recyclerView.visibility = View.INVISIBLE
-                    }
+                        },
+                        SearchedQueriesButtonAdapter(listOf("Очистить историю"))
+                        {
+                            viewModel.trackListSave(LinkedList<DataMusic>())
+                            recyclerView.visibility = View.INVISIBLE
+                        }
+                    )
+
                 }
+            } else {
+                recyclerView.visibility = View.INVISIBLE
             }
-        })}
+
+        }
+    }
 
     private fun viewTrack(dataForSave : DataMusic){
-        activTrack.saveTrack(dataForSave)
+        viewModel.activSave(dataForSave)
         val displayIntent = Intent(this, AudioPlayer::class.java)
         startActivity(displayIntent)
 
     }
-    private fun progressBarOn(tri: Boolean) {
-        if (tri){
-            progressBar.visibility = View.VISIBLE
-            recyclerView.visibility = View.INVISIBLE
-        }
-        else{
-            progressBar.visibility = View.INVISIBLE
-            recyclerView.visibility = View.VISIBLE
+
+    private fun progressBarOn() {
+        viewModel.observeProgressBar.observe(this) { progressBarOn ->
+            if (progressBarOn){
+                progressBar.visibility = View.VISIBLE
+                recyclerView.visibility = View.INVISIBLE
+            }
+            else{
+                progressBar.visibility = View.INVISIBLE
+                recyclerView.visibility = View.VISIBLE
+            }
         }
     }//функция отображения progressBar
 }

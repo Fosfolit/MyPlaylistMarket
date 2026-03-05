@@ -1,13 +1,9 @@
-package com.example.playlistmarket.ui
+package com.example.playlistmarket.ui.activity
 
 import android.os.Bundle
     import androidx.activity.enableEdgeToEdge
     import androidx.appcompat.app.AppCompatActivity
-    import androidx.appcompat.widget.Toolbar
-import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.ActivityMainBinding
 import com.example.playlistmarket.databinding.ActivityNewEmptyBinding
-import com.example.playlistmarket.databinding.ActivitySettingsBinding
 
 class NewEmptyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewEmptyBinding

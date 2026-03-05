@@ -3,145 +3,93 @@ package com.example.playlistmarket.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmarket.Creator.provideActivTrackInteractor
-import com.example.playlistmarket.Creator.provideAudioInteractor
-import com.example.playlistmarket.Creator.provideStorageInteractor
-import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivityMediaBinding
-import com.example.playlistmarket.domain.TrackPosition
-import com.example.playlistmarket.domain.api.AudioInteractor
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
-import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
 import com.example.playlistmarket.presentation.MediaPlayerMy
+import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayer : AppCompatActivity() {
 
-    private lateinit var plaer : AudioInteractor
+
     private lateinit var binding: ActivityMediaBinding
-    private lateinit var thisTrack: DataMusic
-    private lateinit var trackPositionInteractor: TrackPositionInteractor
-    private lateinit var trackPosition : TrackPosition
-    private lateinit var activTrack : ActivTrackInteractor
+    private lateinit var viewModel: AudioPlayerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMediaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this)[AudioPlayerViewModel::class.java]
+        viewModel.setContext(this)
+        setInfo()
         load()
-
+        viewModel.trackLoad()
         setButtonPause()
-        setToolbarFunc()
-
-
+     //   setToolbarFunc()
     }
 
 
 
     private fun load(){
-        activTrack = provideActivTrackInteractor(this)
-        trackLoad()
-        plaer = provideAudioInteractor()
-        trackPositionInteractor = provideStorageInteractor(this)
-        loadTracPosition()
-
-
+        viewModel.observeTrackPosition.observe(this){track ->
+            viewModel.plaerPrepare(MediaPlayerMy(track,binding.buttonPause,binding.timer))
+        }
     }
 
 
     override fun onDestroy() {
-        plaer.stopPlay()
-        saveTrac()
+    //    viewModel.plaerStop()
+     //   viewModel.saveTrac()
         super.onDestroy()
     }
 
 
-    private fun setInfo(){
-        binding.apply {
-            trackName.text = thisTrack.trackName
-            artistName.text = thisTrack.artistName
-            timerText.text =
-                SimpleDateFormat("mm:ss", Locale.getDefault()).format(thisTrack.trackTime)
-            albumText.visibility = View.INVISIBLE
-            if (thisTrack.collectionName.isNotEmpty()) {
-                albumText.text = thisTrack.collectionName
+    private fun setInfo() {
+        viewModel.observeThisTrack.observe(this) { thisTrack ->
+            binding.apply {
+                trackName.text = thisTrack.trackName
+                artistName.text = thisTrack.artistName
+                timerText.text =
+                    SimpleDateFormat("mm:ss", Locale.getDefault()).format(thisTrack.trackTime)
+                albumText.visibility = View.INVISIBLE
+                if (thisTrack.collectionName.isNotEmpty()) {
+                    albumText.text = thisTrack.collectionName
+                }
+                albumText.visibility = View.VISIBLE
+                yearText.text = thisTrack.releaseDate.substring(0, 4)
+                genreText.text = thisTrack.primaryGenreName
+                countryText.text = thisTrack.country
+                val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
+                Glide.with(this@AudioPlayer)
+                    .load(thisTrack.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
+                    .placeholder(R.drawable.music_base)
+                    .centerCrop()
+                    .transform(RoundedCorners(8))
+                    .into(artworkUrl100)
             }
-            albumText.visibility = View.VISIBLE
-            yearText.text = thisTrack.releaseDate.substring(0, 4)
-            genreText.text = thisTrack.primaryGenreName
-            countryText.text = thisTrack.country
-            val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
-            Glide.with(this)
-                .load(thisTrack.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
-                .placeholder(R.drawable.music_base)
-                .centerCrop()
-                .transform(RoundedCorners(8))
-                .into(artworkUrl100)
-        }
-    }//Установка данных
 
-
-
-
+        }//Установка данных
+    }
 
     private fun setButtonPause(){
         binding.buttonPause.setOnClickListener{
-
-                plaer.AudioSwitch()
-
+            viewModel.plaerAudioSwitch()
         }
     }//Функционал кнопки "пауза"
 
-
-
-
-
-
-
-
     private fun setToolbarFunc(){
         binding.buttonBack.setOnClickListener {
-            plaer.stopPlay()
-            saveTrac()
+            viewModel.plaerStop()
+            viewModel.saveTrac()
             finish()
         }
     }//Функционал Toolbar
-
- private fun trackLoad(){
-     activTrack.loadTrack(object : ActivTrackInteractor. ActivTrackConsumer {
-         override fun consume(expression: DataMusic) {
-             runOnUiThread {
-                 thisTrack = expression
-                 setInfo()
-             }
-         }
-     })
- }//Загрузка данных трека
- private fun saveTrac() {
-     trackPositionInteractor.saveTrackPosition(TrackPosition(thisTrack.previewUrl,plaer.getTime()))
- }//Функция сохраненого позиции трека
- private fun loadTracPosition() {
-     trackPositionInteractor.loadTrackPosition(object : TrackPositionInteractor.StorageConsumer {
-         override fun consume(track: TrackPosition) {
-             runOnUiThread {
-                 trackPosition = track
-                 if (thisTrack.previewUrl!=track.trackUrl){
-                     trackPosition = TrackPosition(thisTrack.previewUrl , 0)
-                 }
-                 plaer.prepare(MediaPlayerMy(trackPosition,binding.buttonPause,binding.timer))
-             }
-         }
-     }
-     )
- }//Функция загрузка позиции трека
 
 }
