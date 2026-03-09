@@ -3,6 +3,7 @@ package com.example.playlistmarket.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivityMediaBinding
-import com.example.playlistmarket.presentation.MediaPlayerMy
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,24 +29,14 @@ class AudioPlayer : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[AudioPlayerViewModel::class.java]
         viewModel.setContext(this)
         setInfo()
-        load()
-        viewModel.trackLoad()
         setButtonPause()
-     //   setToolbarFunc()
+        setToolbarFunc()
     }
 
-
-
-    private fun load(){
-        viewModel.observeTrackPosition.observe(this){track ->
-            viewModel.plaerPrepare(MediaPlayerMy(track,binding.buttonPause,binding.timer))
-        }
-    }
 
 
     override fun onDestroy() {
-    //    viewModel.plaerStop()
-     //   viewModel.saveTrac()
+        viewModel.saveTrac(this)
         super.onDestroy()
     }
 
@@ -76,18 +66,40 @@ class AudioPlayer : AppCompatActivity() {
             }
 
         }//Установка данных
+        viewModel.observeTimerText.observe(this){time ->
+            val seconds = (time/ 1000) % 60
+            val minutes = (time/ (1000 * 60)) % 60
+            binding.timer.text = "%02d:%02d".format(minutes, seconds)
+            Toast.makeText(this, ("%02d:%02d".format(minutes, seconds)), Toast.LENGTH_SHORT).show()
+
     }
+
+
+}
 
     private fun setButtonPause(){
         binding.buttonPause.setOnClickListener{
-            viewModel.plaerAudioSwitch()
+            viewModel.mediaPlayerSwitch ()
+        }
+
+        viewModel.observePlayerState.observe(this){ state->
+            when (state) {
+                AudioPlayerViewModel.PlayerState.STATE_PREPARED ->{
+                    binding.buttonPause.setIconResource(R.drawable.button_play)
+                    binding.buttonPause.isEnabled = true}
+                AudioPlayerViewModel.PlayerState.STATE_PLAYING ->
+                    binding.buttonPause.setIconResource(R.drawable.button_pause)
+                AudioPlayerViewModel.PlayerState.STATE_PAUSED ->
+                    binding.buttonPause.setIconResource(R.drawable.button_play)
+                else -> {}
+            }
         }
     }//Функционал кнопки "пауза"
 
     private fun setToolbarFunc(){
         binding.buttonBack.setOnClickListener {
-            viewModel.plaerStop()
-            viewModel.saveTrac()
+            viewModel.medioStop()
+            viewModel.saveTrac(this)
             finish()
         }
     }//Функционал Toolbar
