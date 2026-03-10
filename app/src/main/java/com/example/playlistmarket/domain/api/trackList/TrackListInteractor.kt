@@ -8,13 +8,11 @@ interface TrackListInteractor {
     fun saveListTrack(list:LinkedList<DataMusic>)
     fun loadListTrack(consume: LoadTrackList)
 
-    fun isEmpty(consume: EmptyTrackList)
+
     interface LoadTrackList {
         fun consume(list: LinkedList<DataMusic>)
     }
-    interface EmptyTrackList {
-        fun consume(list: Boolean)
-    }
+
 
 
 }

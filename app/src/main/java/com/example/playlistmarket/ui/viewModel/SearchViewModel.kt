@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.Creator.provideActivTrackInteractor
 import com.example.playlistmarket.Creator.provideMusicInteractor
 import com.example.playlistmarket.Creator.provideThemeInteractor
@@ -25,65 +26,124 @@ import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
 import java.util.LinkedList
 
 class SearchViewModel() : ViewModel(){
-    private lateinit var activTrack : ActivTrackInteractor
-    private val progressBar = MutableLiveData<Boolean>()
-    var observeProgressBar: LiveData<Boolean> = progressBar
-    fun setContext(context: Context){
-        activTrack = provideActivTrackInteractor(context)
-        trackListInteractor = provideTrackListInteractor(context)
-    }
-    fun activSave(dataForSave : DataMusic){
-        activTrack.saveTrack(dataForSave)
-    }
+    private val adapter = MutableLiveData<RecyclerView.Adapter<*>>()
+    var observeAdapter: LiveData<RecyclerView.Adapter<*>> = adapter
 
-    private  var musicInteractor : MusicInteractor = provideMusicInteractor()
-    private val music = MutableLiveData<List<DataMusic>>()
-    var observeMusic: LiveData<List<DataMusic>> = music
-    fun musicSearch(string: String){
-        progressBar.postValue(true)
-        musicInteractor.searchMusic(string, object : MusicInteractor.MusicConsumer {
-            override fun consume(foundMusic: List<DataMusic>) {
-                    progressBar.postValue(true)
-                    music.postValue(foundMusic)
-            }
-        })
-    }
+
+    private val adapterVisibility = MutableLiveData<Int>()
+    var observeAdapterVisibility: LiveData<Int> = adapterVisibility
+
+
+    private val progressBarVisibility = MutableLiveData<Int>()
+    var observeProgressBarVisibility: LiveData<Int> = progressBarVisibility
+
+
+
+
+    private lateinit var activTrack : ActivTrackInteractor
+
+
+
+
+
+
+
+
+    val errorInetAdapter = ErrorAdapter(listOf(
+        ErrorData(
+            imageError = R.drawable.search_error_internet,
+            nameError = R.string.notInternetError1,
+            commentError = R.string.notInternetError2,
+            buttonErrorVisibility =  ButtonVisibility.VISIBLE,
+            buttonErrorText = R.string.notInternetError3,
+        )
+    )){adapterVisibility.postValue(View.VISIBLE) }
+    val errorNothingAdapter = ErrorAdapter(listOf(
+        ErrorData(
+            imageError = R.drawable.search_error_notfound,
+            nameError = R.string.notFoundError1,
+            commentError =  R.string.notFoundError2,
+            buttonErrorVisibility = ButtonVisibility.GONE ,
+            buttonErrorText = R.string.notFoundError3
+        )
+    )){ musicSearch(textWork)
+        adapterVisibility.postValue(View.VISIBLE)}
+
+
     private val musicClick = MutableLiveData<Boolean>()
     var observeMusicClick: LiveData<Boolean> = musicClick
-    fun musicClick(){
-        musicInteractor.clickDebounce(object :MusicInteractor.BoolMusicConsumer{
-            override fun consume(click: Boolean) {
-                musicClick.postValue(click)
-            }
-        })
-    }
 
+
+
+
+    // Загрузка истории просмотра
     private lateinit var trackListInteractor : TrackListInteractor
-    fun trackListAdd (dataMusic: DataMusic){
-        trackListInteractor.addItem(dataMusic)
+    fun loadHistoryListTrack (){
+        try {
+            trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList {
+                override fun consume(list: LinkedList<DataMusic>) {
+                    if (list.isNotEmpty()) {
+                        adapter.postValue(ConcatAdapter(
+                            SearchedQueriesTextAdapter(listOf("Вы искали")),
+                            MusicAdapter(list) {
+                                musicInteractor.clickDebounce(object :
+                                    MusicInteractor.BoolMusicConsumer {
+                                    override fun consume(click: Boolean) {
+                                        trackListInteractor.addItem(it)
+                                        activTrack.saveTrack(it)
+                                        musicClick.postValue(click)
+                                    }
+                                })
+                            },
+                            SearchedQueriesButtonAdapter(listOf("Очистить историю")) {
+                                trackListInteractor.saveListTrack(LinkedList<DataMusic>())
+                                adapterVisibility.postValue(View.INVISIBLE)
+                            }
+                        ))
+                    }
+                }
+            })
+        }
+        catch (e: Exception){
+            adapter.postValue(errorInetAdapter)///не работает
+        }
+
+        adapterVisibility.postValue(View.VISIBLE)
     }
-    fun trackListSave (dataMusic: LinkedList<DataMusic>){
-        trackListInteractor.saveListTrack(dataMusic)
+
+    fun setContext(context: Context){
+        trackListInteractor = provideTrackListInteractor(context)
+        activTrack = provideActivTrackInteractor(context)
     }
-    private val trackLoadList = MutableLiveData<LinkedList<DataMusic>>()
-    var observetrackLoadList: LiveData<LinkedList<DataMusic>> = trackLoadList
-    fun loadListTrack (){
-        trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList{
-            override fun consume(list: LinkedList<DataMusic>) {
-                trackLoadList.postValue(list)
-            }
-        } )}
-    private val trackIsEmpty = MutableLiveData<Boolean>()
-    var observeTrackIsEmpty: LiveData<Boolean> = trackIsEmpty
-    fun trackListIsEmpty (){
-        progressBar.postValue(false)
-        trackListInteractor.isEmpty(object : TrackListInteractor.EmptyTrackList {
-            override fun consume(list: Boolean) {
-                trackIsEmpty.postValue(list)
+
+    // Загрузка треков по тексту
+    private var musicInteractor : MusicInteractor = provideMusicInteractor()
+    var textWork:String =""
+    fun musicSearch(string: String){
+        progressBarVisibility.postValue(View.VISIBLE)
+        adapterVisibility.postValue(View.INVISIBLE)
+        textWork = string
+        musicInteractor.searchMusic(string, object : MusicInteractor.MusicConsumer {
+            override fun consume(foundMusic: List<DataMusic>) {
+                if (foundMusic.isNotEmpty()) {
+                    adapter.postValue(
+                        MusicAdapter(foundMusic) {
+                            trackListInteractor.addItem(it)
+                            activTrack.saveTrack(it)
+                            musicClick.postValue(true)
+                    })
+                } else {
+                    adapter.postValue(errorNothingAdapter)
+                }
+                progressBarVisibility.postValue(View.INVISIBLE)
+                adapterVisibility.postValue(View.VISIBLE)
             }
         })
-
     }
+
+
+
+
 
 }
 

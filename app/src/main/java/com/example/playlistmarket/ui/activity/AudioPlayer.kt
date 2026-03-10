@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui
+package com.example.playlistmarket.ui.activity
 
 import android.os.Bundle
 import android.view.View
