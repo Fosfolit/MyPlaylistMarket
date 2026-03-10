@@ -174,7 +174,6 @@ class AudioPlayerViewModel: ViewModel() {
                    handler.post(runnable)
                 }
                 else ->{
-                 //  Toast.makeText(context, playerState.value.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
     }

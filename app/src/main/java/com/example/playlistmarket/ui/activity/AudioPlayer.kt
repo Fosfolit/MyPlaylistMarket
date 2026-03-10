@@ -3,7 +3,6 @@ package com.example.playlistmarket.ui.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -70,8 +69,6 @@ class AudioPlayer : AppCompatActivity() {
             val seconds = (time/ 1000) % 60
             val minutes = (time/ (1000 * 60)) % 60
             binding.timer.text = "%02d:%02d".format(minutes, seconds)
-            Toast.makeText(this, ("%02d:%02d".format(minutes, seconds)), Toast.LENGTH_SHORT).show()
-
     }
 
 
