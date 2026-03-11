@@ -1,31 +1,61 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMarket" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
-    <style name="MenuButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:backgroundTint">@color/menuBackgroundButton</item>
-        <item name="android:textColor">@color/menuTextButton</item>
-        <item name="iconTint">@color/menuIconButton</item>
-    </style>
-    <style name="MenuMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:backgroundTint">@color/menuBackgroundMain</item>
-        <item name="android:textColor">@color/menuTextMain</item>
-        <item name="iconTint">@color/menuIconMain</item>
-    </style>
-    <style name="SettingButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:backgroundTint">@color/settingBackgroundButton</item>
-        <item name="android:textColor">@color/settingTextButton</item>
-        <item name="iconTint">@color/settingIconButton</item>
-        <item name="drawableTint">@color/settingIconButton</item>
-    </style>
-    <style name="SettingMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:backgroundTint">@color/settingBackgroundMain</item>
-        <item name="android:textColor">@color/settingTextMain</item>
-        <item name="iconTint">@color/settingIconMain</item>
-        <item name="drawableTint">@color/settingIconMain</item>
-
+    <style name="Menu.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_Blue</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_White</item><!-- Кнопки -->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_White</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Black</item><!-- Текст кнопок-->
+        <item name="colorOnSecondary">@color/YP_Black</item>
+        <!-- Customize your theme here. -->
     </style>
 
+    <style name="Setting.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_Text_Gray</item><!-- Иконки -->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Light_Gray</item><!-- Swich овал -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Swich круг -->
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Empty.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item>
+        <item name="colorOnPrimary">@color/YP_Black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Black</item>
+        <item name="colorOnSecondary">@color/YP_Black</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Search.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон --><!-- Текст на кнопке -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item><!-- Кнопка и Картинки ошибки-->
+        <item name="colorOnPrimary">@color/YP_Light_Gray</item><!-- Фон поля для ввода-->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Text_Gray</item><!-- Текст низ datamusic -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текстна на поле для ввода-->
+        <!-- Customize your theme here.  -->
+    </style>
+    <style name="Music.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_White</item><!-- Фон --><!-- Текст на кнопке -->
+        <item name="colorPrimaryVariant">@color/YP_Black</item><!-- Кнопка и Картинки ошибки-->
+        <item name="colorOnPrimary">@color/YP_Light_Gray</item><!-- Фон поля для ввода-->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_Text_Gray</item><!-- Текст низ datamusic -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текст характеристик datamusic-->
+        <!-- Customize your theme here.  -->
+    </style>
 </resources>
