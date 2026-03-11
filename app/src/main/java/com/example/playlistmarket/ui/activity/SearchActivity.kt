@@ -57,6 +57,7 @@ class SearchActivity : AppCompatActivity() {
                 viewModel.loadHistoryListTrack()
             }
         }
+
         viewTrack()
 
     }
