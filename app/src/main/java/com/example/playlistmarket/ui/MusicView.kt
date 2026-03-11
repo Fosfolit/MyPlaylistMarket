@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.R
 import java.text.SimpleDateFormat
 import java.util.Locale
-
 
 class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -20,8 +21,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val artistName: TextView = itemView.findViewById(R.id.artistName)
     private val artworkUrl100: ImageView = itemView.findViewById(R.id.artworkUrl100)
     private val trackMain: LinearLayout = itemView.findViewById(R.id.trackMain)
-
-    fun bind(model: DataMusic,retryClickListener: (DataMusic) -> Unit) {
+    fun bind(model: DataMusic, retryClickListener: (DataMusic) -> Unit) {
         trackName.text = model.trackName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
         artistName.text = model.artistName
@@ -39,7 +39,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 }
 
-class MusicAdapter(private val news: List<DataMusic>,private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
+class MusicAdapter(private val news: List<DataMusic>, private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
@@ -48,6 +48,7 @@ class MusicAdapter(private val news: List<DataMusic>,private val retryClickListe
 
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
         holder.bind(news[position],retryClickListener)
+
     }
 
     override fun getItemCount(): Int {
