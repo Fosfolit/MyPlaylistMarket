@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,48 +7,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:theme="@style/Menu.Theme"
-    android:background="?attr/colorPrimary"
+    style="@style/MenuMainBackStyle"
+    android:background="@color/menuBackgroundMain"
 
     >
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/littlePadding"
+        android:layout_marginBottom="@dimen/menuSmallPadding"
         android:orientation="vertical"
         >
 
         <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/SettingMainToolbarStyle">
 
             <TextView
-                android:text="@string/app_name"
                 style="@style/MenuMainStyle"
+                android:text="@string/app_name"
                 />
 
         </androidx.appcompat.widget.Toolbar>
 
         <Button
             android:id="@+id/buttonSearch"
-            android:text="@string/search"
-            app:icon="@drawable/search"
             style="@style/MenuButtonStyle"
+            android:text="@string/menubuttonText1"
+            app:icon="@drawable/search"
             />
 
         <Button
             android:id="@+id/buttonMedia"
+            style="@style/MenuButtonStyle"
             android:text="@string/menubuttonText2"
             app:icon="@drawable/music_library"
-            style="@style/MenuButtonStyle"
             />
 
         <Button
             android:id="@+id/buttonSetting"
+            style="@style/MenuButtonStyle"
             android:text="@string/setting"
             app:icon="@drawable/setting"
-            style="@style/MenuButtonStyle"
             />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

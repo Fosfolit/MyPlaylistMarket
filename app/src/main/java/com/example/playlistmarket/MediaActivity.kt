@@ -1,18 +1,19 @@
 package com.example.playlistmarket
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class SettingsActivity : AppCompatActivity() {
+class MediaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        val toolbar: Toolbar = findViewById(R.id.buttonBackMain)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_media)
+        val toolbar: Toolbar = findViewById(R.id.buttonBack)
         toolbar.setOnClickListener {
             finish()
         }
     }
 }
+
