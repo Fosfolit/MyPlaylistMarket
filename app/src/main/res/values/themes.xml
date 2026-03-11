@@ -47,15 +47,4 @@
         <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текстна на поле для ввода-->
         <!-- Customize your theme here.  -->
     </style>
-    <style name="Music.Theme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/YP_White</item><!-- Фон --><!-- Текст на кнопке -->
-        <item name="colorPrimaryVariant">@color/YP_Black</item><!-- Кнопка и Картинки ошибки-->
-        <item name="colorOnPrimary">@color/YP_Light_Gray</item><!-- Фон поля для ввода-->
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
-        <item name="colorSecondaryVariant">@color/YP_Text_Gray</item><!-- Текст низ datamusic -->
-        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текст характеристик datamusic-->
-        <!-- Customize your theme here.  -->
-    </style>
 </resources>
