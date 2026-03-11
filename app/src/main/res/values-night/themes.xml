@@ -47,4 +47,38 @@
         <item name="colorOnSecondary">@color/YP_Black</item><!-- Текстна на поле для ввода-->
         <!-- Customize your theme here. -->
     </style>
+    <style name="Music.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/YP_Black</item><!-- Фон --><!-- Текст на кнопке -->
+        <item name="colorPrimaryVariant">@color/YP_White</item><!-- Кнопка -->
+        <item name="colorOnPrimary">@color/YP_White</item><!-- Фон поля для ввода-->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/YP_White</item><!-- Текст на фоне -->
+        <item name="colorSecondaryVariant">@color/YP_White</item><!-- Текст низ datamusic -->
+        <item name="colorOnSecondary">@color/YP_Text_Gray</item><!-- Текст характеристик datamusic-->
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="MenuButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundButtonNight</item>
+        <item name="android:textColor">@color/menuTextButtonNight</item>
+        <item name="iconTint">@color/menuIconButtonNight</item>
+    </style>
+    <style name="MenuMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/menuBackgroundMainNight</item>
+        <item name="android:textColor">@color/menuTextMainNight</item>
+
+    </style>
+    <style name="SettingButtonTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundButtonNight</item>
+        <item name="android:textColor">@color/settingTextButtonNight</item>
+        <item name="iconTint">@color/settingIconButtonNight</item>
+        <item name="drawableTint">@color/settingIconButtonNight</item>
+    </style>
+    <style name="SettingMainTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:backgroundTint">@color/settingBackgroundMainNight</item>
+        <item name="android:textColor">@color/settingTextMainNight</item>
+        <item name="iconTint">@color/settingIconMainNight</item>
+        <item name="drawableTint">@color/settingIconMainNight</item>
+
+    </style>
 </resources>

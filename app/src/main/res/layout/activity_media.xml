@@ -92,7 +92,7 @@
                     app:layout_constraintBottom_toTopOf="@id/infoBlock"
                     app:layout_constraintTop_toBottomOf="@id/artistName">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/buttonPause"
                             style="@style/MusicViewButton"
                             android:layout_width="83dp"
@@ -105,8 +105,9 @@
                             app:layout_constraintStart_toEndOf="@id/buttonAddInPlaylist"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_chainStyle="packed"
+                            android:contentDescription="пауза"
                             />
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/buttonAddInPlaylist"
                             style="@style/MusicViewButton"
                             android:layout_width="51dp"
@@ -116,9 +117,11 @@
                             app:layout_constraintEnd_toStartOf="@id/buttonPause"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="пауза"
+                            />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/buttonLike"
                             style="@style/MusicViewButton"
                             android:layout_width="51dp"
@@ -127,7 +130,9 @@
                             app:layout_constraintBottom_toBottomOf="@+id/buttonPause"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/buttonPause"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="пауза"
+                            />
 
                         <TextView
                             android:id="@+id/timer"

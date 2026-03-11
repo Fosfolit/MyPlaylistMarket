@@ -3,6 +3,7 @@ package com.example.playlistmarket
 import com.google.gson.annotations.SerializedName
 
 data class DataMusic(
+    @SerializedName("previewUrl")val previewUrl: String,
     @SerializedName("trackName")val trackName: String, // Название композиции
     @SerializedName("artistName")val artistName: String, // Имя исполнителя
     @SerializedName("trackTimeMillis")val trackTime: Long, // Продолжительность трека

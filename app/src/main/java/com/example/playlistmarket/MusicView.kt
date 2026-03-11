@@ -25,6 +25,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         trackName.text = model.trackName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
         artistName.text = model.artistName
+
         Glide.with(itemView)
             .load(model.artworkUrl100)
             .placeholder(R.drawable.music_base)
