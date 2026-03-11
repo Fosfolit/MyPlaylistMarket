@@ -11,7 +11,6 @@ import com.example.playlistmarket.data.network.theme.StorageThemeClient
 import com.example.playlistmarket.data.network.theme.ThemeRepositoryImpl
 import com.example.playlistmarket.data.network.trackList.StorageListTrackClient
 import com.example.playlistmarket.data.network.trackList.TrackListRepositoryImpl
-import com.example.playlistmarket.domain.api.AudioInteractor
 import com.example.playlistmarket.domain.lmpl.ActivTrackInteractorImpl
 import com.example.playlistmarket.domain.lmpl.MusicInteractImpl
 import com.example.playlistmarket.domain.lmpl.TrackPositionInteractImpl
@@ -26,7 +25,6 @@ import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 import com.example.playlistmarket.domain.api.theme.ThemeRepository
 import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
 import com.example.playlistmarket.domain.api.trackList.TrackListRepository
-import com.example.playlistmarket.domain.lmpl.AudioInteractorImpl
 import com.example.playlistmarket.domain.lmpl.TrackListInteractorImpl
 
 
@@ -70,8 +68,5 @@ object Creator {
         return TrackListInteractorImpl(getTrackListRepository(context))
     }
 
-    fun provideAudioInteractor(): AudioInteractor {
-        return AudioInteractorImpl()
-    }
 
 }

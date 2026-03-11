@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
 
 
 data class ErrorData(
     val imageError: Int,
-    val nameError: String,
-    val commentError: String,
+    @StringRes val nameError: Int,
+    @StringRes val commentError: Int,
     val buttonErrorVisibility: ButtonVisibility,
-    val buttonErrorText: String,
+    @StringRes  val buttonErrorText: Int,
 )
 enum class ButtonVisibility {
     INVISIBLE,  // 0
@@ -50,9 +51,9 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
     private fun loadText(error: ErrorData){
-        nameError.text = error.nameError
-        commentError.text = error.commentError
-        buttonError.text = error.buttonErrorText
+        nameError.setText(error.nameError)
+        commentError.setText(error.commentError)
+        buttonError.setText(error.buttonErrorText)
     }
 
     private fun loadImage(error: ErrorData){
@@ -60,7 +61,7 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
     private fun loadButton(error: ErrorData, retryClickListener: (ErrorData) -> Unit){
-        buttonError.text = error.buttonErrorText
+        buttonError.setText(error.buttonErrorText)
         when(error.buttonErrorVisibility){
             ButtonVisibility.INVISIBLE -> View.INVISIBLE
             ButtonVisibility.VISIBLE -> View.VISIBLE
