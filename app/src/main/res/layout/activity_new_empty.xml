@@ -10,7 +10,7 @@
     android:theme="@style/Empty.Theme"
     android:backgroundTint="?attr/colorPrimary"
     android:orientation="vertical"
-    tools:context=".ui.activity.AudioPlayer">
+    tools:context=".ui.AudioPlayer">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/buttonBack"
         android:layout_width="match_parent"

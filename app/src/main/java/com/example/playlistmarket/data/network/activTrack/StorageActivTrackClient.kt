@@ -8,7 +8,6 @@ import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
 import com.google.gson.Gson
 
 class StorageActivTrackClient(context: Context):ActivTrackClient{
-
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE
