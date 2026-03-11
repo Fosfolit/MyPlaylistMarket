@@ -1,0 +1,61 @@
+package com.example.playlistmarket.presentation
+
+import android.media.MediaPlayer
+import android.widget.TextView
+import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.TrackPosition
+import com.google.android.material.button.MaterialButton
+
+class MediaPlayerMy(var track : TrackPosition, private val buttonPause: MaterialButton, private val timer: TextView) {
+    private var mediaPlayer = MediaPlayer()
+    private var playerState = PlayerState.STATE_DEFAULT
+    enum class PlayerState  {
+        STATE_DEFAULT ,
+        STATE_PREPARED ,
+        STATE_PLAYING ,
+        STATE_PAUSED
+    }//Виды состояния медиа плеера
+    fun getTime():Int{
+        return mediaPlayer.currentPosition
+    }
+    fun preparePlayer() {
+        mediaPlayer.setDataSource(track.trackUrl)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            buttonPause.isEnabled = true
+            playerState = PlayerState.STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+            playerState = PlayerState.STATE_PREPARED
+        }
+        mediaPlayer.seekTo(track.position)
+        setTimer()
+    }// Функция подготовки проигрывателя
+    fun stopPlay(){
+        playerState = PlayerState.STATE_PAUSED
+        buttonPause.setIconResource(R.drawable.button_play)
+        mediaPlayer.pause()
+    }
+    fun startPlay(){
+        playerState = PlayerState.STATE_PLAYING
+        buttonPause.setIconResource(R.drawable.button_pause)
+        mediaPlayer.start()
+    }
+    fun musicSwitch () {
+        when(playerState) {
+            PlayerState.STATE_PLAYING -> {
+                stopPlay()
+            }
+            PlayerState.STATE_PREPARED, PlayerState.STATE_PAUSED -> {
+                startPlay()
+            }
+            else ->{}
+        }
+    }
+
+    fun setTimer(){
+        val seconds = (mediaPlayer.currentPosition/ 1000) % 60
+        val minutes = (mediaPlayer.currentPosition / (1000 * 60)) % 60
+        timer.text = "%02d:%02d".format(minutes, seconds)
+    }
+}

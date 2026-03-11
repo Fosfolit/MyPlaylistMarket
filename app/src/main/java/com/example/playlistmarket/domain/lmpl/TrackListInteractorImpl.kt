@@ -39,5 +39,13 @@ class TrackListInteractorImpl(private val repository: TrackListRepository): Trac
         t.start()
     }
 
+    override fun isEmpty(consume: TrackListInteractor.EmptyTrackList) {
+        val t = Thread {
+            consume.consume(repository.loadListTrack().isEmpty())
+        }
+        t.start()
+    }
+
+
 
 }
