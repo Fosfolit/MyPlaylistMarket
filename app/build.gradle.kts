@@ -45,12 +45,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.material.v161)
-    implementation(libs.glide)
-    implementation (libs.retrofit)
-    implementation (libs.gson)
-    annotationProcessor(libs.compiler)
-    implementation (libs.androidx.recyclerview)
-    implementation (libs.converter.gson)
-    implementation (libs.gson.v288)
 }
