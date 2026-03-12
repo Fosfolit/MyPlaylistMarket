@@ -2,6 +2,7 @@ package com.example.playlistmarket
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +14,7 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class MediaActivity : AppCompatActivity() {
+class AudioPlayer : AppCompatActivity() {
     private lateinit var sharedPrefs: SharedPreferences
     private lateinit var track: DataMusic
 
@@ -23,10 +24,13 @@ class MediaActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_media)
         dataSet()
-        managerTrack()
-        setToolbarFunc()
+        funSet()
     }
 
+    private fun funSet(){
+        setToolbarFunc()
+        managerTrack()
+    }//Установка функционала
     private fun dataSet(){
         dataLoad()
         setImage()
@@ -35,10 +39,9 @@ class MediaActivity : AppCompatActivity() {
     }//Установка всех данных трека
     private fun dataLoad(){
         sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
-        val json = sharedPrefs.getString("lisneng", null) ?: return
+        val json =  sharedPrefs.getString("lisneng", null) ?: return
         track = Gson().fromJson(json, DataMusic::class.java)
-    }//загрузка данных
-
+    }//Загрузка данных
     private fun setImage(){
         val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
         Glide.with(this)
@@ -48,14 +51,12 @@ class MediaActivity : AppCompatActivity() {
             .transform(RoundedCorners(8))
             .into(artworkUrl100)
     }//Установка обложки трека
-
     private fun setMainText(){
         val trackName: TextView = findViewById(R.id.trackName)
         val artistName: TextView = findViewById(R.id.artistName)
         trackName.text = track.trackName
         artistName.text = track.artistName
     }//Установка названия и исполниьеля трека
-
     private fun setInfoText(){
         val timerText: TextView = findViewById(R.id.timerText)
         val albumText: TextView = findViewById(R.id.albumText)
@@ -63,11 +64,15 @@ class MediaActivity : AppCompatActivity() {
         val genreText: TextView = findViewById(R.id.genreText)
         val countryText: TextView = findViewById(R.id.countryText)
         timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime)
-        albumText.text = track.collectionName
-        yearText.text = track.releaseDate.substring(0, 4)
+        albumText.visibility = View.INVISIBLE
+        if (track.collectionName.isNotEmpty()){
+            albumText.text = track.collectionName
+        }
+        albumText.visibility = View.VISIBLE
+        yearText.text =  track.releaseDate.substring(0, 4)
         genreText.text = track.primaryGenreName
         countryText.text = track.country
-    }
+    }//Установка дополнительных данных
     private fun setToolbarFunc(){
         val toolbar: Toolbar = findViewById(R.id.buttonBack)
         toolbar.setOnClickListener {
