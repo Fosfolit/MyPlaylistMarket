@@ -22,17 +22,17 @@ class ActivTrackRepositoryImpl(private val client : ActivTrackClient):ActivTrack
     }
 
     override fun loadTrack(): DataMusic {
-        val out =client.loadTrack()
-        return DataMusic(
-            out.previewUrl,
-            out.trackName,
-            out.artistName,
-            out.trackTime,
-            out.artworkUrl100,
-            out.collectionName,
-            out.releaseDate,
-            out.primaryGenreName,
-            out.country
-        )
-    }
+            val out =  client.loadTrack()
+                return DataMusic(
+                    out.previewUrl,
+                    out.trackName,
+                    out.artistName,
+                    out.trackTime,
+                    out.artworkUrl100,
+                    out.collectionName,
+                    out.releaseDate,
+                    out.primaryGenreName,
+                    out.country)
+
+        }
 }
