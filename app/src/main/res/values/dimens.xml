@@ -16,4 +16,9 @@
 
     <dimen name="smallIconSize">24sp</dimen>
     <dimen name="mediumIconSize">52dp</dimen>
+    <dimen name="player_track_properties_margin">16dp</dimen>
+    <dimen name="player_playlist_n_favorites_buttons">16dp</dimen>
+    <dimen name="player_layout_left_right_space">24dp</dimen>
+    <dimen name="player_track_properties_textSize">13sp</dimen>
+
 </resources>
