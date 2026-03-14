@@ -38,7 +38,6 @@ class RecentlyViewed (var context: Context) {
     }
     private fun saveInPhone() {
         clearload()
-        clearPreferences()
         linkedList.forEachIndexed { index, item ->
             sharedPrefs.edit()
                 .putString((index).toString(), Gson().toJson(item))
@@ -57,7 +56,6 @@ class RecentlyViewed (var context: Context) {
     }
     fun clearPreferencesAll() {
         clearload()
-        clearPreferences()
         linkedList.clear()
     }
 
