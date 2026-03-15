@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:theme="@style/Search.Theme"
     android:backgroundTint="?attr/colorPrimary"
-    tools:context=".SearchActivity">
+    tools:context=".ui.SearchActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
