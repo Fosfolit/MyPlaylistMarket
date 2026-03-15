@@ -1,4 +1,4 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
-
+import com.example.playlistmarket.R
 
 
 class SearchedQueriesTextAdapter(private val news: List<String>) : RecyclerView.Adapter<SearchedQueriesTextViewHolder> () {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  SearchedQueriesTextViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchedQueriesTextViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.text_description_searched_queries, parent, false)
         return  SearchedQueriesTextViewHolder(view)
     }
@@ -39,7 +38,7 @@ class SearchedQueriesTextViewHolder(itemView: View): RecyclerView.ViewHolder(ite
 
 class SearchedQueriesButtonAdapter(private val news: List<String>,private val retryClickListener: (String) -> Unit) : RecyclerView.Adapter<SearchedQueriesButtonViewHolder> () {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  SearchedQueriesButtonViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchedQueriesButtonViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.button_description_searched_queries, parent, false)
         return  SearchedQueriesButtonViewHolder(view)
     }

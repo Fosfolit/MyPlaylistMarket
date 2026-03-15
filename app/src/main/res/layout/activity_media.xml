@@ -8,23 +8,23 @@
     android:layout_height="match_parent"
     android:theme="@style/Music.Theme"
     android:backgroundTint="?attr/colorPrimary"
-    tools:context=".AudioPlayer">
+    tools:context=".ui.AudioPlayer">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/arrow_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/mainBlock"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/mainBlock"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/arrow_back"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainBlock"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/buttonBack"
+            app:layout_constraintTop_toBottomOf="@+id/buttonBack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="24dp" />
+                    app:layout_constraintGuide_begin="@dimen/normalPadding" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/rightMargin"

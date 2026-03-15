@@ -1,8 +1,8 @@
-package com.example.playlistmarket
+package com.example.playlistmarket.data.dto.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class DataMusic(
+data class DataMusicDto(
     @SerializedName("previewUrl")val previewUrl: String,
     @SerializedName("trackName")val trackName: String, // Название композиции
     @SerializedName("artistName")val artistName: String, // Имя исполнителя
@@ -12,9 +12,4 @@ data class DataMusic(
     @SerializedName("releaseDate")val releaseDate: String,
     @SerializedName("primaryGenreName")val primaryGenreName: String,
     @SerializedName("country")val country: String
-)
-data class ListDataMusic(
-    @SerializedName("resultCount")val resultCount: Int,
-    @SerializedName("results")val results: List<DataMusic>
-
 )
