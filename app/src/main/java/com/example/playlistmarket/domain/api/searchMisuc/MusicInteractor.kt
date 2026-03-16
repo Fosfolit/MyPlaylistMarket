@@ -7,7 +7,7 @@ interface MusicInteractor {
     fun clickDebounce(consume:BoolMusicConsumer)
 
     interface MusicConsumer {
-        fun consume(foundMovies: List<DataMusic>)
+        fun consume(foundMusic: List<DataMusic>)
     }
     interface BoolMusicConsumer {
         fun consume(click: Boolean)

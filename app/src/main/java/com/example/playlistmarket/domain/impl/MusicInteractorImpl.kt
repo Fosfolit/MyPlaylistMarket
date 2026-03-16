@@ -2,8 +2,10 @@ package com.example.playlistmarket.domain.lmpl
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
 import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
+import java.net.SocketTimeoutException
 
 
 class MusicInteractImpl(private val repository: MusicRepository) : MusicInteractor {
@@ -15,9 +17,24 @@ class MusicInteractImpl(private val repository: MusicRepository) : MusicInteract
     override fun searchMusic(expression: String, consumer: MusicInteractor.MusicConsumer) {
         val t = Thread {
             if (clickDebounce()){
-                searchDebounce(Runnable{consumer.consume(repository.searchMusic(expression))})
+                searchDebounce (Runnable{
+                    try {
+                        val result = repository.searchMusic(expression)
+                        consumer.consume(result)
+                    } catch (e: Exception) {
+                        when (e) {
+                            is NullPointerException -> {
+                                Log.e("SearchError", "Null data: ${e.message}")
+                                consumer.consume(emptyList())
+                            }
+                            else -> {
+                                Log.e("SearchError", "Error: ${e.message}")
+                                consumer.consume(emptyList())
+                            }
+                        }
+                    }
+                })
             }
-
         }
         t.start()
     }
@@ -36,6 +53,7 @@ class MusicInteractImpl(private val repository: MusicRepository) : MusicInteract
         }
         return current
     }
+
     private fun searchDebounce(run:Runnable) {
         handler.removeCallbacks(run)
         handler.postDelayed(run, 2000L)

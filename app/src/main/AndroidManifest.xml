@@ -13,17 +13,17 @@
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.AudioPlayer"
+            android:name=".ui.activity.AudioPlayer"
             android:exported="false" />
         <activity
-            android:name=".ui.SearchActivity"
+            android:name=".ui.activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.NewEmptyActivity"
+            android:name=".ui.activity.NewEmptyActivity"
             android:exported="false"
             />
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:exported="true"
             android:label="@string/title_activity_settings"
             >
