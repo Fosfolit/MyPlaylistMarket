@@ -1,18 +1,28 @@
 package com.example.playlistmarket.ui.viewModel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmarket.Creator.provideThemeInteractor
+import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
-class SettingsViewModel  : ViewModel(){
-    private lateinit var themeInteractor : ThemeInteractor
+class SettingsViewModel (
+    private var themeInteractor : ThemeInteractor
+) : ViewModel(){
+
+    open class Factory(
+        private var themeInteractor : ThemeInteractor
+    ): ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return SettingsViewModel(
+                themeInteractor = themeInteractor
+            ) as T
+        }
+    }
     private val themee = MutableLiveData<Int>()
     val observeTheme: LiveData<Int> = themee
-    fun setContext(context: Context){
-        themeInteractor = provideThemeInteractor(context)
+    fun loadTheme(){
         themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
             override fun consume(theme: Boolean) {
                 if (theme) {
@@ -24,7 +34,7 @@ class SettingsViewModel  : ViewModel(){
         }
         )
     }
-    fun settheme(theme: Boolean){
+    fun setTheme(theme: Boolean){
         themeInteractor.saveTheme(theme)
         if (theme){
             themee.postValue(2)

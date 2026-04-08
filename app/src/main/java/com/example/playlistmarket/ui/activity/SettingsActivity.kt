@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.example.playlistmarket.App
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivitySettingsBinding
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
@@ -26,8 +27,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-        viewModel.setContext(this)
+        val factory = SettingsViewModel.Factory(
+            themeInteractor = App.getInstance().themeInteractor
+        )
+
+        viewModel = ViewModelProvider(this,factory)[SettingsViewModel::class.java]
+        viewModel.loadTheme()
         viewModel.observeTheme.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
             if (nightMode == 2) {
@@ -40,7 +45,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun myStyle() {
         binding.textViewStyle.setOnClickListener {
-            viewModel.settheme(binding.textViewStyle.isChecked)
+            viewModel.setTheme(binding.textViewStyle.isChecked)
         }
     }
 

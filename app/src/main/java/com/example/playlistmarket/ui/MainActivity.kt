@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmarket.R
 import androidx.lifecycle.ViewModelProvider
+import com.example.playlistmarket.App
 import com.example.playlistmarket.databinding.ActivityMainBinding
 import com.example.playlistmarket.ui.activity.NewEmptyActivity
 import com.example.playlistmarket.ui.activity.SearchActivity
@@ -24,8 +25,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.setContext(this)
+        val factory = MainViewModel.Factory(
+            themeInteractor = App.getInstance().themeInteractor
+        )
+        viewModel = ViewModelProvider(this,factory)[MainViewModel::class.java]
+        viewModel.setTheme()
         viewModel.observeTheme.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
         }

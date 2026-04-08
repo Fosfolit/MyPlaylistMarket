@@ -15,10 +15,20 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmarket.App
+import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.ButtonVisibility
+import com.example.playlistmarket.domain.ErrorAdapter
+import com.example.playlistmarket.domain.ErrorData
+import com.example.playlistmarket.ui.MusicAdapter
+import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
+import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
+
 
 
 class SearchActivity : AppCompatActivity() {
@@ -37,11 +47,10 @@ class SearchActivity : AppCompatActivity() {
         initViews()
         recyclerView.layoutManager = LinearLayoutManager(this)
         initViewModel()
-        recyclerViewReact()
         inputEditTextWatcher()
-        progressBarReact()
         toolFinish()
         buttonClear()
+        observOut ()
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.musicSearch(inputEditText.text.toString())
@@ -50,7 +59,7 @@ class SearchActivity : AppCompatActivity() {
                 false
         }
 
-        viewTrack()
+
     }
 
     private fun initViews() {
@@ -61,8 +70,12 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
-        viewModel.setContext(this)
+        val factory = SearchViewModel.Factory(
+            trackListInteractor = App.getInstance().trackListInteractor,
+            activTrack = App.getInstance().activTrack ,
+            musicInteractor = App.getInstance().musicInteractor
+        )
+        viewModel = ViewModelProvider(this,factory )[SearchViewModel::class.java]
     }
 
 
@@ -71,15 +84,14 @@ class SearchActivity : AppCompatActivity() {
     private fun inputEditTextWatcher() {
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (count == 0) {
-                    viewModel.loadHistoryListTrack()
-                }
+
             }
 
             override fun afterTextChanged(s: Editable?) {
+
                 searchQuery = inputEditText.text.toString()
                 if (searchQuery.isEmpty()) {
-                    viewModel.loadHistoryListTrack()
+                    viewModel.swichHistoryListTrack()
                 } else {
                     viewModel.musicSearch(searchQuery)
                 }
@@ -87,7 +99,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (count == 0) {
-                    viewModel.loadHistoryListTrack()
+                    viewModel.swichHistoryListTrack()
                 }
                 clearButton.visibility = clearButtonVisibility(s)
             }
@@ -95,32 +107,6 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.addTextChangedListener(simpleTextWatcher)
     }
 
-    private fun viewTrack() {
-        viewModel.observeMusicClick.observe(this) {
-            if (it) {
-                val displayIntent = Intent(this, AudioPlayer::class.java)
-                startActivity(displayIntent)
-            }
-        }
-    }
-
-    //Реакция на данные о recyclerView
-    private fun progressBarReact() {
-        viewModel.observeProgressBarVisibility.observe(this) { it ->
-            progressBar.visibility = it
-        }
-    }//функция отображения progressBar
-
-
-    //Реакция на данные о recyclerView
-    private fun recyclerViewReact() {
-        viewModel.observeAdapter.observe(this) { it ->
-            recyclerView.adapter = it
-        }
-        viewModel.observeAdapterVisibility.observe(this) {
-            recyclerView.visibility = it
-        }
-    }
 
     // Кнопка назад
     private fun toolFinish() {
@@ -165,6 +151,105 @@ class SearchActivity : AppCompatActivity() {
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+
+    private fun observOut () {
+        viewModel.observeViewCondition.observe(this) {
+          //  Toast.makeText(this, "провекра на бомжа", Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                if (it.musicClick) {
+                    val displayIntent = Intent(this, AudioPlayer::class.java)
+                    startActivity(displayIntent)
+                }
+                when (it.pr) {
+                    Constants.sostoinWie.START -> {
+                        recyclerView.visibility = View.INVISIBLE
+                        progressBar.visibility = View.INVISIBLE
+                    }
+
+                    Constants.sostoinWie.LOAD -> {
+                        recyclerView.visibility = View.INVISIBLE
+                        progressBar.visibility = View.VISIBLE
+                    }
+
+                    Constants.sostoinWie.HISTORY -> {
+                            recyclerView.adapter = ConcatAdapter(
+                            SearchedQueriesTextAdapter(listOf("Вы искали")),
+                                MusicAdapter(it.listHistoryResult) {
+                                    viewModel.clickSearchObject(it)
+                                },
+                            SearchedQueriesButtonAdapter(listOf("Очистить историю")) {
+                                viewModel.clearHistoryTrack()
+                            }
+                        )
+
+                        recyclerView.visibility = View.VISIBLE
+                        progressBar.visibility = View.INVISIBLE
+                    }
+
+                    Constants.sostoinWie.RESULT -> {
+                        recyclerView.adapter =
+                            MusicAdapter(it.listSearchResult) {
+                                viewModel.vlil(it)
+                            }
+                        recyclerView.visibility = View.VISIBLE
+                        progressBar.visibility = View.INVISIBLE
+
+                    }
+
+                    Constants.sostoinWie.ERR_FIND -> {
+                        recyclerView.visibility = View.VISIBLE
+                        progressBar.visibility = View.INVISIBLE
+                        recyclerView.adapter = errorNothingAdapter
+                    }
+
+                    Constants.sostoinWie.ERR_INET -> {
+                        recyclerView.visibility = View.VISIBLE
+                        progressBar.visibility = View.INVISIBLE
+                        recyclerView.adapter = errorInetAdapter
+                    }
+
+                    else -> {
+                        recyclerView.visibility = View.INVISIBLE
+                        progressBar.visibility = View.INVISIBLE
+                    }
+
+                }
+            } else{
+              //  Toast.makeText(this, "не пройдено", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+
+    val errorInetAdapter = ErrorAdapter(
+        listOf(
+            ErrorData(
+                imageError = R.drawable.search_error_internet,
+                nameError = R.string.notInternetError1,
+                commentError = R.string.notInternetError2,
+                buttonErrorVisibility = ButtonVisibility.VISIBLE,
+                buttonErrorText = R.string.notInternetError3,
+            )
+        )
+    ) {viewModel.musicSearch(searchQuery)}
+
+    val errorNothingAdapter = ErrorAdapter(
+        listOf(
+            ErrorData(
+                imageError = R.drawable.search_error_notfound,
+                nameError = R.string.notFoundError1,
+                commentError = R.string.notFoundError2,
+                buttonErrorVisibility = ButtonVisibility.GONE,
+                buttonErrorText = R.string.notFoundError3
+            )
+        )
+    ) {viewModel.musicSearch(searchQuery)}
+
+
+
+
 }
 
 

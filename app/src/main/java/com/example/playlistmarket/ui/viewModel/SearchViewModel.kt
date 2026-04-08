@@ -1,138 +1,114 @@
 package com.example.playlistmarket.ui.viewModel
 
-import android.content.Context
-import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmarket.Creator.provideActivTrackInteractor
-import com.example.playlistmarket.Creator.provideMusicInteractor
-import com.example.playlistmarket.Creator.provideTrackListInteractor
-import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.ButtonVisibility
+import androidx.lifecycle.ViewModelProvider
+import com.example.playlistmarket.Constants
 import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.ErrorAdapter
-import com.example.playlistmarket.domain.ErrorData
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
 import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
-import com.example.playlistmarket.ui.MusicAdapter
-import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
-import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
 import java.util.LinkedList
 
-class SearchViewModel() : ViewModel() {
-    private val adapter = MutableLiveData<RecyclerView.Adapter<*>>()
-    var observeAdapter: LiveData<RecyclerView.Adapter<*>> = adapter
-
-
-    private val adapterVisibility = MutableLiveData<Int>()
-    var observeAdapterVisibility: LiveData<Int> = adapterVisibility
-
-
-    private val progressBarVisibility = MutableLiveData<Int>()
-    var observeProgressBarVisibility: LiveData<Int> = progressBarVisibility
-    private lateinit var activTrack: ActivTrackInteractor
-
-
-    val errorInetAdapter = ErrorAdapter(
-        listOf(
-            ErrorData(
-                imageError = R.drawable.search_error_internet,
-                nameError = R.string.notInternetError1,
-                commentError = R.string.notInternetError2,
-                buttonErrorVisibility = ButtonVisibility.VISIBLE,
-                buttonErrorText = R.string.notInternetError3,
-            )
-        )
-    ) {musicSearch(textWork)
-        adapterVisibility.postValue(View.VISIBLE) }
-    val errorNothingAdapter = ErrorAdapter(
-        listOf(
-            ErrorData(
-                imageError = R.drawable.search_error_notfound,
-                nameError = R.string.notFoundError1,
-                commentError = R.string.notFoundError2,
-                buttonErrorVisibility = ButtonVisibility.GONE,
-                buttonErrorText = R.string.notFoundError3
-            )
-        )
-    ) {
-        musicSearch(textWork)
-        adapterVisibility.postValue(View.VISIBLE)
+class SearchViewModel(
+    private var activTrack: ActivTrackInteractor,
+    private var trackListInteractor: TrackListInteractor,
+    private var musicInteractor: MusicInteractor
+) : ViewModel() {
+    open class Factory(
+        private var musicInteractor: MusicInteractor,
+        private var activTrack: ActivTrackInteractor,
+        private var trackListInteractor: TrackListInteractor
+    ): ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return SearchViewModel(
+                activTrack = activTrack,
+                trackListInteractor = trackListInteractor,
+                musicInteractor = musicInteractor
+            ) as T
+        }
+    }
+    private val сondition = SearchState()
+    private val viewCondition = MutableLiveData<SearchState>()
+    val observeViewCondition: LiveData<SearchState> = viewCondition
+    init {
+        viewCondition.postValue(SearchState())
+        loadHistoryListTrack()
     }
 
 
-    private val musicClick = MutableLiveData<Boolean>()
-    var observeMusicClick: LiveData<Boolean> = musicClick
-
-
-    // Загрузка истории просмотра
-    private lateinit var trackListInteractor: TrackListInteractor
-    fun loadHistoryListTrack() {
-
-            trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList {
-                override fun consume(list: LinkedList<DataMusic>) {
-                    if (list.isNotEmpty()) {
-                        adapter.postValue(ConcatAdapter(
-                            SearchedQueriesTextAdapter(listOf("Вы искали")),
-                            MusicAdapter(list) {
-                                musicInteractor.clickDebounce(object :
-                                    MusicInteractor.BoolMusicConsumer {
-                                    override fun consume(click: Boolean) {
-                                        trackListInteractor.addItem(it)
-                                        activTrack.saveTrack(it)
-                                        musicClick.postValue(click)
-                                    }
-                                })
-                            },
-                            SearchedQueriesButtonAdapter(listOf("Очистить историю")) {
-                                trackListInteractor.saveListTrack(LinkedList<DataMusic>())
-                                adapterVisibility.postValue(View.INVISIBLE)
-                            }
-                        ))
-                    }
-                }
-            })
-
-        adapterVisibility.postValue(View.VISIBLE)
+    fun vlil(it: DataMusic){
+        musicInteractor.clickDebounce(object :
+            MusicInteractor.BoolMusicConsumer {
+            override fun consume(click: Boolean) {
+                clickSearchObject(it)
+                сondition.musicClick = click
+                viewCondition.postValue(сondition)
+            }
+        })
     }
 
-    fun setContext(context: Context) {
-        trackListInteractor = provideTrackListInteractor(context)
-        activTrack = provideActivTrackInteractor(context)
+    fun loadHistoryListTrack(){
+        trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList {
+            override fun consume(list: LinkedList<DataMusic>) {
+                сondition.listHistoryResult = list
+                viewCondition.postValue(сondition)
+            }
+        })
     }
 
-    private var musicInteractor: MusicInteractor = provideMusicInteractor()
-    var textWork: String = ""
+    fun swichHistoryListTrack(){
+        сondition.pr = Constants.sostoinWie.HISTORY
+        viewCondition.postValue(сondition)
+    }
+
+    fun clearHistoryTrack(){
+        сondition.pr = Constants.sostoinWie.START
+        viewCondition.postValue(сondition)
+        trackListInteractor.saveListTrack(LinkedList<DataMusic>())
+    }
 
 
     fun musicSearch(string: String) {
-        progressBarVisibility.postValue(View.VISIBLE)
-        adapterVisibility.postValue(View.INVISIBLE)
-        textWork = string
-        musicInteractor.searchMusic(string, object : MusicInteractor.MusicConsumer {
+        сondition.pr = Constants.sostoinWie.LOAD
+        viewCondition.postValue(сondition)
+        try {
+            musicInteractor.searchMusic(string, object : MusicInteractor.MusicConsumer {
                 override fun consume(foundMusic: List<DataMusic>) {
                     if (foundMusic.isNotEmpty()) {
-                        adapter.postValue(
-                            MusicAdapter(foundMusic) {
-                                trackListInteractor.addItem(it)
-                                activTrack.saveTrack(it)
-                                musicClick.postValue(true)
-                            })
+                        сondition.pr = Constants.sostoinWie.RESULT
+                        сondition.listSearchResult = foundMusic
+                        viewCondition.postValue(сondition)
                     } else {
-                        adapter.postValue(errorNothingAdapter)
+                        сondition.pr = Constants.sostoinWie.ERR_FIND
+                        viewCondition.postValue(сondition)
                     }
-                    progressBarVisibility.postValue(View.INVISIBLE)
-                    adapterVisibility.postValue(View.VISIBLE)
                 }
             })
+        } catch (e: Exception){
+            сondition.pr = Constants.sostoinWie.ERR_INET
+            viewCondition.postValue(сondition)
+        }
     }
+
+
+    fun clickSearchObject(it: DataMusic){
+        trackListInteractor.addItem(it)
+        activTrack.saveTrack(it)
+        сondition.musicClick =true
+        viewCondition.postValue(сondition)
+    }
+
+
+
 }
-
-
+data class SearchState (
+    var musicClick: Boolean = false,
+    var listHistoryResult :List<DataMusic> = LinkedList<DataMusic>(),
+    var listSearchResult :List<DataMusic> = LinkedList<DataMusic>(),
+    var pr :Constants.sostoinWie = Constants.sostoinWie.START
+)
 
 

@@ -14,26 +14,31 @@ class MusicInteractImpl(private val repository: MusicRepository) : MusicInteract
         HandlerThread("MyBackgroundThread").apply
         { start() }.looper
     )
+    private var lastSearchRunnable: Runnable? = null
     override fun searchMusic(expression: String, consumer: MusicInteractor.MusicConsumer) {
-        val t = Thread {
-            if (clickDebounce()){
-                searchDebounce (Runnable{
-                    try {
-                        val result = repository.searchMusic(expression)
-                        consumer.consume(result)
-                    } catch (e: Exception) {
-                        when (e) {
-                            is NullPointerException -> {
-                                Log.e("SearchError", "Null data: ${e.message}")
-                                consumer.consume(emptyList())
-                            }
-                            else -> {
-                                Log.e("SearchError", "Error: ${e.message}")
-                                consumer.consume(emptyList())
-                            }
-                        }
+
+        val newSearchRunnable = Runnable{
+            try {
+                val result = repository.searchMusic(expression)
+                consumer.consume(result)
+            } catch (e: Exception) {
+                when (e) {
+                    is NullPointerException -> {
+                        Log.e("SearchError", "Null data: ${e.message}")
+                        consumer.consume(emptyList())
                     }
-                })
+                    else -> {
+                        Log.e("SearchError", "Error: ${e.message}")
+                        consumer.consume(emptyList())
+                    }
+                }
+            }
+        }
+        val t = Thread {
+            if (clickDebounce() || (newSearchRunnable != lastSearchRunnable)) {
+                lastSearchRunnable?.let { handler.removeCallbacks(it) }
+                lastSearchRunnable = newSearchRunnable
+                handler.postDelayed(lastSearchRunnable!!, 2000L)
             }
         }
         t.start()

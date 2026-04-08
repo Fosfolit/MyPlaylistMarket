@@ -1,19 +1,32 @@
 package com.example.playlistmarket.ui.viewModel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmarket.Creator.provideThemeInteractor
+import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
-class MainViewModel  : ViewModel(){
-    private lateinit var themeInteractor : ThemeInteractor
+class MainViewModel(
+    private var themeInteractor : ThemeInteractor
+) : ViewModel(){
     private val themee = MutableLiveData<Int>()
     val observeTheme: LiveData<Int> = themee
 
-    fun setContext(context: Context){
-        themeInteractor = provideThemeInteractor(context)
+
+    open class Factory(
+        private var themeInteractor : ThemeInteractor
+    ): ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(
+                themeInteractor = themeInteractor
+            ) as T
+        }
+    }
+
+
+
+    fun setTheme(){
         themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
             override fun consume(theme: Boolean) {
                 if (theme) {
