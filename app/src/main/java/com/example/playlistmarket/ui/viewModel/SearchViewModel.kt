@@ -57,10 +57,14 @@ class SearchViewModel(
                 viewCondition.postValue(сondition)
             }
         })
+        сondition.musicClick = false
+        viewCondition.postValue(сondition)
     }
 
     fun swichHistoryListTrack(){
         сondition.pr = Constants.sostoinWie.HISTORY
+        viewCondition.postValue(сondition)
+        сondition.musicClick = false
         viewCondition.postValue(сondition)
     }
 
@@ -68,6 +72,8 @@ class SearchViewModel(
         сondition.pr = Constants.sostoinWie.START
         viewCondition.postValue(сondition)
         trackListInteractor.saveListTrack(LinkedList<DataMusic>())
+        сondition.musicClick = false
+        viewCondition.postValue(сondition)
     }
 
 
@@ -91,13 +97,15 @@ class SearchViewModel(
             сondition.pr = Constants.sostoinWie.ERR_INET
             viewCondition.postValue(сondition)
         }
+        сondition.musicClick = false
+        viewCondition.postValue(сondition)
     }
 
 
     fun clickSearchObject(it: DataMusic){
         trackListInteractor.addItem(it)
         activTrack.saveTrack(it)
-        сondition.musicClick =true
+        сondition.musicClick = true
         viewCondition.postValue(сondition)
     }
 

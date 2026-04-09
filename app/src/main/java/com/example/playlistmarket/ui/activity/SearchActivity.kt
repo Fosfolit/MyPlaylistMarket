@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.App
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.ButtonVisibility
-import com.example.playlistmarket.domain.ErrorAdapter
-import com.example.playlistmarket.domain.ErrorData
+import com.example.playlistmarket.ui.ButtonVisibility
+import com.example.playlistmarket.ui.ErrorAdapter
+import com.example.playlistmarket.ui.ErrorData
 import com.example.playlistmarket.ui.MusicAdapter
 import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
 import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
@@ -51,7 +51,7 @@ class SearchActivity : AppCompatActivity() {
         toolFinish()
         buttonClear()
         observOut ()
-        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+       inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.musicSearch(inputEditText.text.toString())
                 true
@@ -155,7 +155,6 @@ class SearchActivity : AppCompatActivity() {
 
     private fun observOut () {
         viewModel.observeViewCondition.observe(this) {
-          //  Toast.makeText(this, "провекра на бомжа", Toast.LENGTH_SHORT).show()
             if (it != null) {
                 if (it.musicClick) {
                     val displayIntent = Intent(this, AudioPlayer::class.java)
@@ -216,7 +215,6 @@ class SearchActivity : AppCompatActivity() {
 
                 }
             } else{
-              //  Toast.makeText(this, "не пройдено", Toast.LENGTH_SHORT).show()
             }
         }
     }

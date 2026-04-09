@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain
+package com.example.playlistmarket.ui
 
 import android.view.LayoutInflater
 import android.view.View
