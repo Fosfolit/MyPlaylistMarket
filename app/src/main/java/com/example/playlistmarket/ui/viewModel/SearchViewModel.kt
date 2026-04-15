@@ -12,111 +12,114 @@ import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
 import java.util.LinkedList
 
 class SearchViewModel(
-    private var activTrack: ActivTrackInteractor,
-    private var trackListInteractor: TrackListInteractor,
-    private var musicInteractor: MusicInteractor
+    private val activeTrack: ActivTrackInteractor,
+    private val trackListInteraction: TrackListInteractor,
+    private val musicInteraction: MusicInteractor
 ) : ViewModel() {
     open class Factory(
-        private var musicInteractor: MusicInteractor,
-        private var activTrack: ActivTrackInteractor,
-        private var trackListInteractor: TrackListInteractor
+        private val musicInteraction: MusicInteractor,
+        private val activeTrack: ActivTrackInteractor,
+        private val trackListInteraction: TrackListInteractor
     ): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return SearchViewModel(
-                activTrack = activTrack,
-                trackListInteractor = trackListInteractor,
-                musicInteractor = musicInteractor
+                activeTrack = activeTrack,
+                trackListInteraction = trackListInteraction,
+                musicInteraction = musicInteraction
             ) as T
         }
     }
-    private val сondition = SearchState()
-    private val viewCondition = MutableLiveData<SearchState>()
-    val observeViewCondition: LiveData<SearchState> = viewCondition
+
+    private val searchViewState = SearchState()
+    private val searchState = MutableLiveData<SearchState>()
+    val observeSearchState: LiveData<SearchState> = searchState
+
     init {
-        viewCondition.postValue(SearchState())
-        loadHistoryListTrack()
+        searchState.postValue(SearchState())
+        loadSearchHistory()
     }
 
-
-    fun vlil(it: DataMusic){
-        musicInteractor.clickDebounce(object :
+    fun handleTrackClick(track: DataMusic){
+        musicInteraction.clickDebounce(object :
             MusicInteractor.BoolMusicConsumer {
             override fun consume(click: Boolean) {
-                clickSearchObject(it)
-                сondition.musicClick = click
-                viewCondition.postValue(сondition)
+                clickOnTrack(track)
+                updateClickStatus(click)
             }
         })
     }
 
-    fun loadHistoryListTrack(){
-        trackListInteractor.loadListTrack(object : TrackListInteractor.LoadTrackList {
+    private fun loadSearchHistory(){
+        trackListInteraction.loadListTrack(object : TrackListInteractor.LoadTrackList {
             override fun consume(list: LinkedList<DataMusic>) {
-                сondition.listHistoryResult = list
-                viewCondition.postValue(сondition)
+                updateListHistory(list)
             }
         })
-        сondition.musicClick = false
-        viewCondition.postValue(сondition)
+        updateClickStatus(false)
     }
 
-    fun swichHistoryListTrack(){
-        сondition.pr = Constants.sostoinWie.HISTORY
-        viewCondition.postValue(сondition)
-        сondition.musicClick = false
-        viewCondition.postValue(сondition)
+    fun switchToHistory(){
+        updateModelStatus(Constants.sostoinWie.HISTORY)
+        updateClickStatus(false)
     }
 
-    fun clearHistoryTrack(){
-        сondition.pr = Constants.sostoinWie.START
-        viewCondition.postValue(сondition)
-        trackListInteractor.saveListTrack(LinkedList<DataMusic>())
-        сondition.musicClick = false
-        viewCondition.postValue(сondition)
+    fun clearSearchHistory(){
+        updateModelStatus(Constants.sostoinWie.START)
+        trackListInteraction.clearListTrack()
+        updateClickStatus(false)
     }
 
-
-    fun musicSearch(string: String) {
-        сondition.pr = Constants.sostoinWie.LOAD
-        viewCondition.postValue(сondition)
+    fun searchMusic(query: String) {
+        updateModelStatus(Constants.sostoinWie.LOAD)
         try {
-            musicInteractor.searchMusic(string, object : MusicInteractor.MusicConsumer {
-                override fun consume(foundMusic: List<DataMusic>) {
-                    if (foundMusic.isNotEmpty()) {
-                        сondition.pr = Constants.sostoinWie.RESULT
-                        сondition.listSearchResult = foundMusic
-                        viewCondition.postValue(сondition)
+            musicInteraction.searchMusic(query, object : MusicInteractor.MusicConsumer {
+                override fun consume(foundMusicList: List<DataMusic>) {
+                    if (foundMusicList.isNotEmpty()) {
+                        updateListSearch(foundMusicList)
+                        updateModelStatus(Constants.sostoinWie.RESULT)
                     } else {
-                        сondition.pr = Constants.sostoinWie.ERR_FIND
-                        viewCondition.postValue(сondition)
+                        updateModelStatus(Constants.sostoinWie.ERR_FIND)
                     }
                 }
+
             })
         } catch (e: Exception){
-            сondition.pr = Constants.sostoinWie.ERR_INET
-            viewCondition.postValue(сondition)
+            updateModelStatus(Constants.sostoinWie.ERR_INET)
         }
-        сondition.musicClick = false
-        viewCondition.postValue(сondition)
+        updateClickStatus(false)
     }
 
-
-    fun clickSearchObject(it: DataMusic){
-        trackListInteractor.addItem(it)
-        activTrack.saveTrack(it)
-        сondition.musicClick = true
-        viewCondition.postValue(сondition)
+    fun clickOnTrack(clickedTrack: DataMusic){
+        trackListInteraction.addItem(clickedTrack)
+        activeTrack.saveTrack(clickedTrack)
+        updateClickStatus(true)
     }
 
-
+    private fun updateModelStatus (status :Constants.sostoinWie){
+        searchViewState.modelStatus = status
+        searchState.postValue(searchViewState)
+    }
+    private fun updateClickStatus (status :Boolean){
+        searchViewState.clickStatus = status
+        searchState.postValue(searchViewState)
+    }
+    private fun updateListHistory (status :List<DataMusic>){
+        searchViewState.listHistory = status
+        searchState.postValue(searchViewState)
+    }
+    private fun updateListSearch (status :List<DataMusic>){
+        searchViewState.listSearch = status
+        searchState.postValue(searchViewState)
+    }
 
 }
 data class SearchState (
-    var musicClick: Boolean = false,
-    var listHistoryResult :List<DataMusic> = LinkedList<DataMusic>(),
-    var listSearchResult :List<DataMusic> = LinkedList<DataMusic>(),
-    var pr :Constants.sostoinWie = Constants.sostoinWie.START
+    var clickStatus: Boolean = false,
+    var listHistory :List<DataMusic> = LinkedList<DataMusic>(),
+    var listSearch :List<DataMusic> = LinkedList<DataMusic>(),
+    var modelStatus :Constants.sostoinWie = Constants.sostoinWie.START
 )
+
 
 

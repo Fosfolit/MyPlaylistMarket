@@ -26,41 +26,44 @@ class AudioPlayer : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMediaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initViewModel()
 
+        observeViewModel()
+        setupPlayButton()
+        setupBackButton()
+    }
+
+
+    private fun initViewModel(){
         val factory = AudioPlayerViewModel.Factory(
-            trackPositionInteractor = App.getInstance().trackPositionInteractor,
-            activTrack = App.getInstance().activTrack,
+            trackPositionInteraction = App.getInstance().trackPositionInteractor,
+            activeTrack = App.getInstance().activTrack,
             mediaPlayer = App.getInstance().mediaPlayer
         )
         viewModel = ViewModelProvider(this,factory)[AudioPlayerViewModel::class.java]
-        viewModel.viewActiv()
-
-        observViewww()
-        setButtonPause()
-        setToolbarFunc()
     }
 
     override fun onDestroy() {
-        viewModel.saveTrac()
+        viewModel.saveTrackPosition()
         super.onDestroy()
     }
 
-    private fun setButtonPause() {
+    private fun setupPlayButton() {
         binding.buttonPause.setOnClickListener {
-            viewModel.mediaPlayerSwitch()
+            viewModel.togglePlayback()
         }
     } // Функционал кнопки "пауза"
 
-    private fun setToolbarFunc() {
+    private fun setupBackButton() {
         binding.buttonBack.setOnClickListener {
-            viewModel.medioStop()
-            viewModel.saveTrac()
+            viewModel.stopPlayback()
+            viewModel.saveTrackPosition()
             finish()
         }
     } // Функционал Toolbar
 
-    fun observViewww(){
-        viewModel.observeViewCondition.observe(this) {
+    private fun observeViewModel(){
+        viewModel.observePlayerUiState.observe(this) {
             binding.apply {
                 trackName.text = it.thisTrack.trackName
                 artistName.text = it.thisTrack.artistName
@@ -85,8 +88,8 @@ class AudioPlayer : AppCompatActivity() {
                     .transform(RoundedCorners(8))
                     .into(artworkUrl100)
             }
-            val seconds = (it.timerText / 1000) % 60
-            val minutes = (it.timerText / (1000 * 60)) % 60
+            val seconds = (it.currentPosition / 1000) % 60
+            val minutes = (it.currentPosition / (1000 * 60)) % 60
             binding.timer.text = "%02d:%02d".format(minutes, seconds)
 
             when (it.playerState) {
@@ -108,4 +111,5 @@ class AudioPlayer : AppCompatActivity() {
             }
         }
     }
+
 }

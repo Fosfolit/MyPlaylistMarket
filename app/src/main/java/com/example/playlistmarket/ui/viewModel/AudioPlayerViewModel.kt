@@ -1,6 +1,5 @@
 package com.example.playlistmarket.ui.viewModel
 
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
@@ -15,49 +14,55 @@ import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
 
 class AudioPlayerViewModel(
-    private val trackPositionInteractor: TrackPositionInteractor,
-    private var activTrack : ActivTrackInteractor,
-    private var mediaPlayer : MediaPlayer
+    private val trackPositionInteraction: TrackPositionInteractor,
+    private val activeTrack : ActivTrackInteractor,
+    private val mediaPlayer : MediaPlayer
 ): ViewModel() {
 
     open class Factory(
-        private val trackPositionInteractor: TrackPositionInteractor,
-        private val activTrack: ActivTrackInteractor,
-        private var mediaPlayer : MediaPlayer
+        private val trackPositionInteraction: TrackPositionInteractor,
+        private val activeTrack: ActivTrackInteractor,
+        private val mediaPlayer : MediaPlayer
     ): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return AudioPlayerViewModel(
-                trackPositionInteractor = trackPositionInteractor,
-                activTrack = activTrack,
+                trackPositionInteraction = trackPositionInteraction,
+                activeTrack = activeTrack,
                 mediaPlayer = mediaPlayer
             ) as T
         }
     }
-    private val сondition = PlayerState()
-    private val viewCondition = MutableLiveData<PlayerState>()
-    val observeViewCondition: LiveData<PlayerState> = viewCondition
+
+    private val condition = PlayerUiState()
+    private val playerUiState = MutableLiveData<PlayerUiState>()
+    val observePlayerUiState: LiveData<PlayerUiState> = playerUiState
+    private lateinit var currentTrackUrl : String
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var timerUpdateRunnable: Runnable
+
+
     init {
-        viewCondition.postValue(PlayerState())
+        playerUiState.postValue(PlayerUiState())
+        updatePlayerState(Constants.PlayerState.STATE_DEFAULT)
+        loadTrack()
+        timerUpdateRunnable = Runnable {
+            updateCurrentPosition(mediaPlayer.currentPosition)
+            handler.postDelayed( timerUpdateRunnable, 1000)
+        }
     }
 
 
 
-
-    private lateinit var url : String
-
     private fun loadTrack(){
-        activTrack.loadTrack(object : ActivTrackInteractor. ActivTrackConsumer {
-            override fun consume(expression: DataMusic) {
-                сondition.thisTrack = expression
-                viewCondition.postValue(сondition)
-                url = expression.previewUrl
-                trackPositionInteractor.loadTrackPosition(object : TrackPositionInteractor.StorageConsumer {
-                    override fun consume(track: TrackPosition) {
-                        сondition.trackPosition = track
-                        viewCondition.postValue(сondition)
-                            // Toast.makeText(context, сondition.trackPosition.trackUrl, Toast.LENGTH_SHORT).show()
-                        prepareMedia(track, expression)
+        activeTrack.loadTrack(object : ActivTrackInteractor. ActivTrackConsumer {
+            override fun consume(savedTrack: DataMusic) {
+                updateCurrentTrack(savedTrack)
+                currentTrackUrl = savedTrack.previewUrl
+                trackPositionInteraction.loadTrackPosition(object : TrackPositionInteractor.StorageConsumer {
+                    override fun consume(savedPosition: TrackPosition) {
+                        updateTrackPosition(savedPosition)
+                        prepareMedia(savedPosition, savedTrack)
                     }
                 })
             }
@@ -68,80 +73,77 @@ class AudioPlayerViewModel(
 
 
 
-    private fun prepareMedia(nowTrackPosition :TrackPosition,nowThisTrack: DataMusic){
+    private fun prepareMedia(savedPosition :TrackPosition, savedTrack: DataMusic){
         mediaPlayer.reset()
-        mediaPlayer.setDataSource(nowThisTrack.previewUrl)
+        mediaPlayer.setDataSource(savedTrack.previewUrl)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            сondition.playerState = Constants.PlayerState.STATE_PREPARED
-            viewCondition.postValue(сondition)
-            if (nowTrackPosition.trackUrl != nowThisTrack.previewUrl){
+            updatePlayerState(Constants.PlayerState.STATE_PREPARED)
+            if (savedPosition.trackUrl != savedTrack.previewUrl){
                 mediaPlayer.seekTo(0)
             } else{
-                mediaPlayer.seekTo(nowTrackPosition.position)
+                mediaPlayer.seekTo(savedPosition.position)
             }
-            сondition.timerText = mediaPlayer.currentPosition
-            viewCondition.postValue(сondition)
+            updateCurrentPosition(mediaPlayer.currentPosition)
         }
         mediaPlayer.setOnCompletionListener {
-            сondition.playerState = Constants.PlayerState.STATE_PREPARED
-            viewCondition.postValue(сondition)
+            updatePlayerState(Constants.PlayerState.STATE_PREPARED)
             mediaPlayer.seekTo(0)
         }
     }
 
 
 
-
-    private val handler = Handler(Looper.getMainLooper())
-    private lateinit var runnable: Runnable
-    fun viewActiv(){
-        сondition.playerState = Constants.PlayerState.STATE_DEFAULT
-        viewCondition.postValue(сondition)
-        loadTrack()
-        runnable = Runnable {
-            сondition.timerText = mediaPlayer.currentPosition
-            viewCondition.postValue(сondition)
-            handler.postDelayed( runnable, 1000)
+    fun saveTrackPosition(){
+        stopPlayback()
+        if (currentTrackUrl.isNotEmpty()){
+            trackPositionInteraction.saveTrackPosition(TrackPosition(currentTrackUrl,mediaPlayer.currentPosition))
         }
     }
 
-
-    fun saveTrac(){
-        medioStop()
-        if (url.isNotEmpty()){
-            trackPositionInteractor.saveTrackPosition(TrackPosition(url,mediaPlayer.currentPosition))
-        }
-    }
-    fun mediaPlayerSwitch (){
-        when(сondition.playerState) {
+    fun togglePlayback (){
+        when(condition.playerState) {
             Constants.PlayerState.STATE_PLAYING -> {
-                сondition.playerState = Constants.PlayerState.STATE_PAUSED
-                viewCondition.postValue(сondition)
-                handler.removeCallbacks(runnable)
+                updatePlayerState(Constants.PlayerState.STATE_PAUSED)
+                handler.removeCallbacks(timerUpdateRunnable)
                 mediaPlayer.pause()
             }
             Constants.PlayerState.STATE_PREPARED, Constants.PlayerState.STATE_PAUSED -> {
-                сondition.playerState = Constants.PlayerState.STATE_PLAYING
-                viewCondition.postValue(сondition)
+                updatePlayerState(Constants.PlayerState.STATE_PLAYING)
                 mediaPlayer.start()
-                handler.post(runnable)
+                handler.post(timerUpdateRunnable)
             }
             else ->{
                 //  Toast.makeText(context, playerState.value.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
-    fun medioStop(){
-        handler.removeCallbacks(runnable)
+
+    fun stopPlayback(){
+        handler.removeCallbacks(timerUpdateRunnable)
         mediaPlayer.stop()
     }
 
-
+    private fun updateCurrentPosition(positionMs: Int){
+        condition.currentPosition = positionMs
+        playerUiState.postValue(condition)
+    }
+    private fun updatePlayerState(state: Constants.PlayerState){
+        condition.playerState = state
+        playerUiState.postValue(condition)
+    }
+    private fun updateCurrentTrack(track: DataMusic){
+        condition.thisTrack = track
+        playerUiState.postValue(condition)
+    }
+    private fun updateTrackPosition(position: TrackPosition){
+        condition.trackPosition = position
+        playerUiState.postValue(condition)
+    }
 }
 
-data class PlayerState (
-    var timerText: Int = 0,
+data class PlayerUiState (
+    var currentPosition: Int = 0,
     var playerState :Constants.PlayerState = Constants.PlayerState.STATE_DEFAULT,
     var thisTrack: DataMusic  = DataMusic("","","",0,"","","","",""),
     var trackPosition: TrackPosition = TrackPosition("",0)

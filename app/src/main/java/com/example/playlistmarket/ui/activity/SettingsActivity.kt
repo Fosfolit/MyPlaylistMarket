@@ -18,22 +18,26 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setViewModel()
-        myStyle()
-        myBack()
-        myShare()
-        myHelper()
-        myUserText()
+        initViewModel()
+
+        observeViewModel()
+        setupThemeSwitch()
+        setupBackButton()
+        setupShareButton()
+        setupUserAgreementLink()
+        setupSupportEmail()
+
     }
 
-    private fun setViewModel() {
+    private fun initViewModel() {
         val factory = SettingsViewModel.Factory(
             themeInteractor = App.getInstance().themeInteractor
         )
-
         viewModel = ViewModelProvider(this,factory)[SettingsViewModel::class.java]
-        viewModel.loadTheme()
-        viewModel.observeTheme.observe(this) { nightMode ->
+    }
+
+    private fun observeViewModel(){
+        viewModel.themeMode.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
             if (nightMode == 2) {
                 binding.textViewStyle.isChecked = true
@@ -43,19 +47,21 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun myStyle() {
+
+
+    private fun setupThemeSwitch() {
         binding.textViewStyle.setOnClickListener {
-            viewModel.setTheme(binding.textViewStyle.isChecked)
+            viewModel.saveUpdateTheme(binding.textViewStyle.isChecked)
         }
     }
 
-    private fun myBack() {
+    private fun setupBackButton()  {
         binding.buttonBack.setOnClickListener {
             finish()
         }
     }
 
-    private fun myShare() {
+    private fun setupShareButton() {
         binding.textViewShare.setOnClickListener {
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -66,7 +72,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun myUserText() {
+    private fun setupUserAgreementLink() {
         binding.buttonUserText.setOnClickListener {
             val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.titleYandexText)))
@@ -74,7 +80,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun myHelper() {
+    private fun setupSupportEmail() {
         binding.buttonHelper.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
             emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.mailMain))

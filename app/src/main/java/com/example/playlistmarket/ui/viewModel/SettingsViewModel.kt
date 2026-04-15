@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
 class SettingsViewModel (
-    private var themeInteractor : ThemeInteractor
+    private val themeInteractor : ThemeInteractor
 ) : ViewModel(){
 
     open class Factory(
-        private var themeInteractor : ThemeInteractor
+        private val themeInteractor : ThemeInteractor
     ): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
@@ -20,28 +20,39 @@ class SettingsViewModel (
             ) as T
         }
     }
-    private val themee = MutableLiveData<Int>()
-    val observeTheme: LiveData<Int> = themee
-    fun loadTheme(){
-        themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
-            override fun consume(theme: Boolean) {
-                if (theme) {
-                    themee.postValue(2)
-                } else {
-                    themee.postValue(1)
-                }
-            }
-        }
-        )
-    }
-    fun setTheme(theme: Boolean){
-        themeInteractor.saveTheme(theme)
-        if (theme){
-            themee.postValue(2)
-        } else{
-            themee.postValue(1)
-        }
 
+
+    private val theme = MutableLiveData<Int>()
+    val themeMode: LiveData<Int> = theme
+
+    init{
+        loadTheme()
+    }
+
+    companion object {
+        private const val LIGHT_THEME = 1
+        private const val DARK_THEME = 2
+    }
+
+    private fun loadTheme(){
+        themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
+            override fun consume(isDarkMode: Boolean) {
+                updateTheme(isDarkMode)
+            }
+        })
+    }
+
+    fun saveUpdateTheme(isDarkMode: Boolean){
+        themeInteractor.saveTheme(isDarkMode)
+        updateTheme(isDarkMode)
+    }
+
+    fun updateTheme(isDarkMode: Boolean){
+        if (isDarkMode){
+            theme.postValue(DARK_THEME)
+        } else{
+            theme.postValue(LIGHT_THEME)
+        }
     }
 
 }

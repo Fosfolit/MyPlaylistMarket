@@ -39,5 +39,12 @@ class TrackListInteractorImpl(private val repository: TrackListRepository): Trac
         t.start()
     }
 
+    override fun clearListTrack(){
+        val t = Thread {
+            repository.saveListTrack(LinkedList<DataMusic>())
+        }
+        t.start()
+    }
+
 
 }

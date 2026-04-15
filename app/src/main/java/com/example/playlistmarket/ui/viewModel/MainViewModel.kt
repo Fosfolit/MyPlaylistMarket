@@ -7,36 +7,47 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
 
 class MainViewModel(
-    private var themeInteractor : ThemeInteractor
+    private val themeInteraction : ThemeInteractor
 ) : ViewModel(){
-    private val themee = MutableLiveData<Int>()
-    val observeTheme: LiveData<Int> = themee
-
 
     open class Factory(
-        private var themeInteractor : ThemeInteractor
+        private val themeInteraction : ThemeInteractor
     ): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return MainViewModel(
-                themeInteractor = themeInteractor
+                themeInteraction = themeInteraction
             ) as T
         }
     }
 
+    private val theme = MutableLiveData<Int>()
+    val themeMode: LiveData<Int> = theme
 
+    init{
+        loadTheme()
+    }
 
-    fun setTheme(){
-        themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
-            override fun consume(theme: Boolean) {
-                if (theme) {
-                    themee.postValue(2)
-                } else {
-                    themee.postValue(1)
-                }
+    private fun loadTheme(){
+        themeInteraction.loadTheme(object : ThemeInteractor.ThemeConsumer {
+            override fun consume(isDarkMode: Boolean) {
+                updateTheme(isDarkMode)
             }
         }
         )
+    }
+
+    companion object {
+        private const val LIGHT_THEME = 1
+        private const val DARK_THEME = 2
+    }
+
+    fun updateTheme(isDarkMode: Boolean){
+        if (isDarkMode){
+            theme.postValue(DARK_THEME)
+        } else{
+            theme.postValue(LIGHT_THEME)
+        }
     }
 
 }

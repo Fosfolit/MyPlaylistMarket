@@ -26,11 +26,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val factory = MainViewModel.Factory(
-            themeInteractor = App.getInstance().themeInteractor
+            themeInteraction = App.getInstance().themeInteractor
         )
         viewModel = ViewModelProvider(this,factory)[MainViewModel::class.java]
-        viewModel.setTheme()
-        viewModel.observeTheme.observe(this) { nightMode ->
+        viewModel.themeMode.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
         }
 

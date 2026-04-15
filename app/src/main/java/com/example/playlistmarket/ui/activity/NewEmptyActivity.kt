@@ -16,10 +16,10 @@ class NewEmptyActivity : AppCompatActivity() {
         binding = ActivityNewEmptyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupToolbar()
+        setupBackButton()
     }
 
-    private fun setupToolbar() {
+    private fun setupBackButton() {
         binding.buttonBack.setOnClickListener {
             finish()
         }
