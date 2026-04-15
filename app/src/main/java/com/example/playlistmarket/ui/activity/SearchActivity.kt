@@ -14,6 +14,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,12 +48,15 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         initViews()
         initViewModel()
         setupSearchInputWatcher()
         setupBackButton()
         setupClearButton()
         observeViewModel ()
+
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.searchMusic(inputEditText.text.toString())
@@ -111,6 +118,10 @@ class SearchActivity : AppCompatActivity() {
         toolbar.setOnClickListener {
             finish()
         }
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { view, insets ->
+            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.updatePadding(top = statusBar.top)
+            insets }
     }
 
     // Кнопка для очиски поиска

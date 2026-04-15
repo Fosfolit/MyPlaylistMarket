@@ -5,6 +5,10 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.App
 import com.example.playlistmarket.R
@@ -16,6 +20,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var viewModel: SettingsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
@@ -59,6 +64,10 @@ class SettingsActivity : AppCompatActivity() {
         binding.buttonBack.setOnClickListener {
             finish()
         }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
+            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.updatePadding(top = statusBar.top)
+            insets }
     }
 
     private fun setupShareButton() {

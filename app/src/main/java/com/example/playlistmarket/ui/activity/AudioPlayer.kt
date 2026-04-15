@@ -5,6 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -25,6 +29,7 @@ class AudioPlayer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMediaBinding.inflate(layoutInflater)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(binding.root)
         initViewModel()
 
@@ -60,6 +65,10 @@ class AudioPlayer : AppCompatActivity() {
             viewModel.saveTrackPosition()
             finish()
         }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
+            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.updatePadding(top = statusBar.top)
+            insets }
     } // Функционал Toolbar
 
     private fun observeViewModel(){

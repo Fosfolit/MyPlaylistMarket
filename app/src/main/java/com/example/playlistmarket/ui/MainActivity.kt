@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmarket.R
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         val factory = MainViewModel.Factory(
             themeInteraction = App.getInstance().themeInteractor
         )
