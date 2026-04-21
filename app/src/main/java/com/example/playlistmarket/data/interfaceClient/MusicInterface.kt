@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.searchMusic
+package com.example.playlistmarket.data.interfaceClient
 
 
 import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchResponse

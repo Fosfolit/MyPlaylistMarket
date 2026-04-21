@@ -5,32 +5,24 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmarket.App
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivityMediaBinding
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
-import com.example.playlistmarket.ui.viewModel.MainViewModel
-import com.example.playlistmarket.ui.viewModel.SearchViewModel
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.Locale
-import javax.inject.Inject
 
 class AudioPlayer : AppCompatActivity() {
 
     private lateinit var binding: ActivityMediaBinding
-
-    @Inject
-    lateinit var viewModelFactory: AudioPlayerViewModel.Factory
-    private lateinit var viewModel: AudioPlayerViewModel
+    private val viewModel: AudioPlayerViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +31,6 @@ class AudioPlayer : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContentView(binding.root)
-        initViewModel()
 
         observeViewModel()
         setupPlayButton()
@@ -47,10 +38,6 @@ class AudioPlayer : AppCompatActivity() {
     }
 
 
-    private fun initViewModel(){
-        (application as App).appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[AudioPlayerViewModel::class.java]
-    }
 
     override fun onDestroy() {
         viewModel.saveTrackPosition()

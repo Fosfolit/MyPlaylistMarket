@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.trackList
+package com.example.playlistmarket.data.network.Repository
 
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.dto.dto.TrackListDto
@@ -8,7 +8,7 @@ import com.example.playlistmarket.domain.api.trackList.TrackListRepository
 import java.util.LinkedList
 import javax.inject.Inject
 
-class TrackListRepositoryImpl @Inject constructor(
+class TrackListRepositoryImpl (
      private val client : TrackListClient
 ) : TrackListRepository {
     override fun saveListTrack(list: LinkedList<DataMusic>) {

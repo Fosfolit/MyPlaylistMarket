@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.trackPosition
+package com.example.playlistmarket.data.network.Repository
 
 import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.domain.TrackPosition
@@ -6,7 +6,7 @@ import com.example.playlistmarket.domain.api.trackPosition.TrackPositionReposito
 import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
 import javax.inject.Inject
 
-class TrackPositionRepositoryImpl @Inject constructor(
+class TrackPositionRepositoryImpl (
     private val trackPositionClient : TrackPositionClient
 ) : TrackPositionRepository {
     override fun saveTrackPosition(track: TrackPosition) {

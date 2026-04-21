@@ -1,10 +1,10 @@
-package com.example.playlistmarket.data.network.theme
+package com.example.playlistmarket.data.network.Repository
 
 import com.example.playlistmarket.data.interfaceClient.ThemeClient
 import com.example.playlistmarket.domain.api.theme.ThemeRepository
 import javax.inject.Inject
 
-class ThemeRepositoryImpl @Inject constructor(
+class ThemeRepositoryImpl (
     private val themeClient: ThemeClient
 ): ThemeRepository {
 

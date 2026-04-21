@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.searchMusic
+package com.example.playlistmarket.data.network.Repository
 
 import android.os.Handler
 import android.os.HandlerThread
@@ -10,7 +10,7 @@ import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
 import javax.inject.Inject
 
 
-class MusicRepositoryImpl @Inject constructor(
+class MusicRepositoryImpl (
     private val networkClient: NetworkClient
 ) : MusicRepository {
 

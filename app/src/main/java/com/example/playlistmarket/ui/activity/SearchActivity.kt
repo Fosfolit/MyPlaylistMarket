@@ -18,11 +18,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmarket.App
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
 import com.example.playlistmarket.ui.ButtonVisibility
@@ -31,10 +29,8 @@ import com.example.playlistmarket.ui.ErrorData
 import com.example.playlistmarket.ui.MusicAdapter
 import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
 import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
-import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
-import com.example.playlistmarket.ui.viewModel.MainViewModel
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
 class SearchActivity : AppCompatActivity() {
@@ -46,8 +42,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
 
 
-    @Inject lateinit var viewModelFactory: SearchViewModel.Factory
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by inject()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +52,6 @@ class SearchActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         initViews()
-        initViewModel()
         setupSearchInputWatcher()
         setupBackButton()
         setupClearButton()
@@ -65,7 +60,6 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.searchMusic(inputEditText.text.toString())
-                true
             }
                 false
         }
@@ -79,11 +73,6 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         progressBar = findViewById(R.id.progressBar)
-    }
-
-    private fun initViewModel() {
-        (application as App).appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
     }
 
 

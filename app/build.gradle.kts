@@ -62,6 +62,6 @@ dependencies {
     implementation (libs.androidx.recyclerview)
     implementation (libs.converter.gson)
     implementation (libs.gson.v288)
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler.v248)
+    implementation (libs.koin.android)
+    implementation (libs.koin.core)
 }

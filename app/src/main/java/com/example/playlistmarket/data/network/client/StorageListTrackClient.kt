@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.trackList
+package com.example.playlistmarket.data.network.client
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import java.util.LinkedList
 import javax.inject.Inject
 
-class StorageListTrackClient @Inject constructor(
+class StorageListTrackClient (
     private val context: Context
 ) : TrackListClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(

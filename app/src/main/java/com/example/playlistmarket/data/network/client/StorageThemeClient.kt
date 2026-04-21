@@ -1,17 +1,14 @@
-package com.example.playlistmarket.data.network.theme
+package com.example.playlistmarket.data.network.client
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
 import com.example.playlistmarket.data.interfaceClient.ThemeClient
-import com.example.playlistmarket.data.network.searchMusic.RetrofitNetworkClient
-import dagger.Module
-import dagger.Provides
 import javax.inject.Inject
 
-class StorageThemeClient @Inject constructor(
+class StorageThemeClient (
     private val context: Context
-):ThemeClient {
+) : ThemeClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE

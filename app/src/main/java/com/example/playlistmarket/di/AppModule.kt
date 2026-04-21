@@ -1,0 +1,118 @@
+package com.example.playlistmarket.di
+
+import android.media.MediaPlayer
+import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
+import com.example.playlistmarket.data.interfaceClient.NetworkClient
+import com.example.playlistmarket.data.interfaceClient.ThemeClient
+import com.example.playlistmarket.data.interfaceClient.TrackListClient
+import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
+import com.example.playlistmarket.data.network.Repository.ActivTrackRepositoryImpl
+import com.example.playlistmarket.data.network.Repository.MusicRepositoryImpl
+import com.example.playlistmarket.data.network.Repository.ThemeRepositoryImpl
+import com.example.playlistmarket.data.network.Repository.TrackListRepositoryImpl
+import com.example.playlistmarket.data.network.Repository.TrackPositionRepositoryImpl
+import com.example.playlistmarket.data.network.client.RetrofitNetworkClient
+import com.example.playlistmarket.data.network.client.SharedPrefsTrackPositionClient
+import com.example.playlistmarket.data.network.client.StorageActivTrackClient
+import com.example.playlistmarket.data.network.client.StorageListTrackClient
+import com.example.playlistmarket.data.network.client.StorageThemeClient
+import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.activTrack.ActivTrackRepository
+import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
+import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
+import com.example.playlistmarket.domain.api.theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.theme.ThemeRepository
+import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
+import com.example.playlistmarket.domain.api.trackList.TrackListRepository
+import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
+import com.example.playlistmarket.domain.api.trackPosition.TrackPositionRepository
+import com.example.playlistmarket.domain.impl.ThemeInteractorImpl
+import com.example.playlistmarket.domain.impl.TrackPositionInteractImpl
+import com.example.playlistmarket.domain.lmpl.ActivTrackInteractorImpl
+import com.example.playlistmarket.domain.lmpl.MusicInteractImpl
+import com.example.playlistmarket.domain.lmpl.TrackListInteractorImpl
+import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
+import com.example.playlistmarket.ui.viewModel.MainViewModel
+import com.example.playlistmarket.ui.viewModel.SearchViewModel
+import com.example.playlistmarket.ui.viewModel.SettingsViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+
+
+
+
+
+val clientModule = module {
+    factory<NetworkClient> {
+        RetrofitNetworkClient()
+    }
+    factory<TrackPositionClient> {
+        SharedPrefsTrackPositionClient(get())
+    }
+    factory<ActivTrackClient> {
+        StorageActivTrackClient(get())
+    }
+    factory<TrackListClient> {
+        StorageListTrackClient(get())
+    }
+    factory<ThemeClient> {
+        StorageThemeClient(get())
+    }
+}
+
+
+val repositoryModule = module {
+    factory<ActivTrackRepository> {
+        ActivTrackRepositoryImpl(get())
+    }
+    factory<MusicRepository> {
+        MusicRepositoryImpl(get())
+    }
+    factory<ThemeRepository> {
+        ThemeRepositoryImpl(get())
+    }
+    factory<TrackListRepository> {
+        TrackListRepositoryImpl(get())
+    }
+    factory<TrackPositionRepository> {
+        TrackPositionRepositoryImpl(get())
+    }
+}
+
+
+val interactorModule = module {
+    single<ActivTrackInteractor> {
+        ActivTrackInteractorImpl(get())
+    }
+    single<MusicInteractor> {
+        MusicInteractImpl(get())
+    }
+    single<ThemeInteractor> {
+        ThemeInteractorImpl(get())
+    }
+    single<TrackListInteractor> {
+        TrackListInteractorImpl(get())
+    }
+    single<TrackPositionInteractor> {
+        TrackPositionInteractImpl(get())
+    }
+    single {
+        MediaPlayer()
+    }
+}
+
+
+val viewModelModule = module {
+    viewModel {
+        AudioPlayerViewModel(get(),get(),get())
+    }
+    viewModel {
+        MainViewModel(get())
+    }
+    viewModel {
+        SearchViewModel(get(),get(),get())
+    }
+    viewModel {
+        SettingsViewModel(get())
+    }
+}

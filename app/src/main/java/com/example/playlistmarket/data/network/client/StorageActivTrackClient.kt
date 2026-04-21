@@ -1,4 +1,4 @@
-package com.example.playlistmarket.data.network.activTrack
+package com.example.playlistmarket.data.network.client
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,7 +8,7 @@ import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
 import com.google.gson.Gson
 import javax.inject.Inject
 
-class StorageActivTrackClient @Inject constructor(
+class StorageActivTrackClient (
     private val context: Context
 ):ActivTrackClient{
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
