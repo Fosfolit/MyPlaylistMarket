@@ -2,9 +2,12 @@ package com.example.playlistmarket.domain.lmpl
 
 import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
 import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
+import javax.inject.Inject
 
 
-class MusicInteractImpl(private val repository: MusicRepository) : MusicInteractor {
+class MusicInteractImpl @Inject constructor(
+    private val repository: MusicRepository
+) : MusicInteractor {
     private var isClickAllowed = true
     private var lastSearchRunnable: Runnable? = null
     override fun searchMusic(expression: String, consumer: MusicInteractor.MusicConsumer) {

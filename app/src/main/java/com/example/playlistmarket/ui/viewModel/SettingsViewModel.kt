@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.domain.api.theme.ThemeInteractor
+import javax.inject.Inject
 
-class SettingsViewModel (
+class SettingsViewModel  @Inject constructor(
     private val themeInteractor : ThemeInteractor
 ) : ViewModel(){
 
-    open class Factory(
+    open class Factory @Inject constructor(
         private val themeInteractor : ThemeInteractor
     ): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

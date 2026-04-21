@@ -10,13 +10,14 @@ import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
 import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
 import java.util.LinkedList
+import javax.inject.Inject
 
-class SearchViewModel(
+class SearchViewModel @Inject constructor(
     private val activeTrack: ActivTrackInteractor,
     private val trackListInteraction: TrackListInteractor,
     private val musicInteraction: MusicInteractor
 ) : ViewModel() {
-    open class Factory(
+    open class Factory @Inject constructor(
         private val musicInteraction: MusicInteractor,
         private val activeTrack: ActivTrackInteractor,
         private val trackListInteraction: TrackListInteractor

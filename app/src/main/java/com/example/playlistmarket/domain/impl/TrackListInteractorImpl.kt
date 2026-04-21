@@ -5,8 +5,11 @@ import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
 import com.example.playlistmarket.domain.api.trackList.TrackListRepository
 import java.util.LinkedList
+import javax.inject.Inject
 
-class TrackListInteractorImpl(private val repository: TrackListRepository): TrackListInteractor {
+class TrackListInteractorImpl @Inject constructor(
+    private val repository: TrackListRepository
+): TrackListInteractor {
     private val maxListSize :Int = 10
     override fun addItem(track: DataMusic) {
         val t = Thread {

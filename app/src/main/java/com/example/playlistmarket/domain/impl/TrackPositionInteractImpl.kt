@@ -3,8 +3,11 @@ package com.example.playlistmarket.domain.impl
 import com.example.playlistmarket.domain.TrackPosition
 import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
 import com.example.playlistmarket.domain.api.trackPosition.TrackPositionRepository
+import javax.inject.Inject
 
-class TrackPositionInteractImpl(private val repository: TrackPositionRepository): TrackPositionInteractor {
+class TrackPositionInteractImpl @Inject constructor(
+    private val repository: TrackPositionRepository
+): TrackPositionInteractor {
     override fun saveTrackPosition(expression: TrackPosition) {
         val t = Thread {
             repository.saveTrackPosition(expression)

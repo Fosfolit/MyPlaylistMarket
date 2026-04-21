@@ -6,8 +6,11 @@ import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class StorageActivTrackClient(context: Context):ActivTrackClient{
+class StorageActivTrackClient @Inject constructor(
+    private val context: Context
+):ActivTrackClient{
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE

@@ -14,9 +14,12 @@ import com.example.playlistmarket.App
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivitySettingsBinding
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
+import javax.inject.Inject
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
+    @Inject
+    lateinit var viewModelFactory: SettingsViewModel.Factory
     private lateinit var viewModel: SettingsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +38,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        val factory = SettingsViewModel.Factory(
-            themeInteractor = App.getInstance().themeInteractor
-        )
-        viewModel = ViewModelProvider(this,factory)[SettingsViewModel::class.java]
+        (application as App).appComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SettingsViewModel::class.java]
     }
 
     private fun observeViewModel(){

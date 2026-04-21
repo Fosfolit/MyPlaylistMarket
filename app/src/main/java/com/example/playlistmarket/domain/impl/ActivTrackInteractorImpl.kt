@@ -3,8 +3,11 @@ package com.example.playlistmarket.domain.lmpl
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackRepository
+import javax.inject.Inject
 
-class ActivTrackInteractorImpl(private val repository: ActivTrackRepository):ActivTrackInteractor {
+class ActivTrackInteractorImpl @Inject constructor(
+    private val repository: ActivTrackRepository
+):ActivTrackInteractor {
     override fun saveTrack(expression: DataMusic) {
         val t = Thread {
             repository.saveTrack(expression)

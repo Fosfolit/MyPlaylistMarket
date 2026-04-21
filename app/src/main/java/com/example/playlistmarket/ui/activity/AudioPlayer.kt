@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,12 +18,18 @@ import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivityMediaBinding
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
+import com.example.playlistmarket.ui.viewModel.MainViewModel
+import com.example.playlistmarket.ui.viewModel.SearchViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 class AudioPlayer : AppCompatActivity() {
 
     private lateinit var binding: ActivityMediaBinding
+
+    @Inject
+    lateinit var viewModelFactory: AudioPlayerViewModel.Factory
     private lateinit var viewModel: AudioPlayerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +37,7 @@ class AudioPlayer : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMediaBinding.inflate(layoutInflater)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContentView(binding.root)
         initViewModel()
 
@@ -40,12 +48,8 @@ class AudioPlayer : AppCompatActivity() {
 
 
     private fun initViewModel(){
-        val factory = AudioPlayerViewModel.Factory(
-            trackPositionInteraction = App.getInstance().trackPositionInteractor,
-            activeTrack = App.getInstance().activTrack,
-            mediaPlayer = App.getInstance().mediaPlayer
-        )
-        viewModel = ViewModelProvider(this,factory)[AudioPlayerViewModel::class.java]
+        (application as App).appComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[AudioPlayerViewModel::class.java]
     }
 
     override fun onDestroy() {

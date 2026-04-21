@@ -7,8 +7,11 @@ import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class SharedPrefsTrackPositionClient(context: Context) : TrackPositionClient {
+class SharedPrefsTrackPositionClient @Inject constructor(
+    private val context: Context
+) : TrackPositionClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE

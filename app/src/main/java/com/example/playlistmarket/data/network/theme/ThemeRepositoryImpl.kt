@@ -2,8 +2,11 @@ package com.example.playlistmarket.data.network.theme
 
 import com.example.playlistmarket.data.interfaceClient.ThemeClient
 import com.example.playlistmarket.domain.api.theme.ThemeRepository
+import javax.inject.Inject
 
-class ThemeRepositoryImpl(private val themeClient: ThemeClient): ThemeRepository {
+class ThemeRepositoryImpl @Inject constructor(
+    private val themeClient: ThemeClient
+): ThemeRepository {
 
     override fun loadTheme(): Boolean {
         return  themeClient.loadTheme()

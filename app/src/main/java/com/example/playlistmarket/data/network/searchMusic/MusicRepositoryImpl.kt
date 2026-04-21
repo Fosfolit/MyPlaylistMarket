@@ -7,8 +7,14 @@ import com.example.playlistmarket.data.interfaceClient.NetworkClient
 import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchResponse
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
+import javax.inject.Inject
 
-class MusicRepositoryImpl(private val networkClient: NetworkClient) : MusicRepository {
+
+class MusicRepositoryImpl @Inject constructor(
+    private val networkClient: NetworkClient
+) : MusicRepository {
+
+
 
    override val handler = Handler(
         HandlerThread("MyBackgroundThread").apply
@@ -36,3 +42,4 @@ class MusicRepositoryImpl(private val networkClient: NetworkClient) : MusicRepos
         }
     }
 }
+

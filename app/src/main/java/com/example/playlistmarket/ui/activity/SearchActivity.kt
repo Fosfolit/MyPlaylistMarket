@@ -31,8 +31,10 @@ import com.example.playlistmarket.ui.ErrorData
 import com.example.playlistmarket.ui.MusicAdapter
 import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
 import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
+import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
+import com.example.playlistmarket.ui.viewModel.MainViewModel
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
-
+import javax.inject.Inject
 
 
 class SearchActivity : AppCompatActivity() {
@@ -42,6 +44,9 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var clearButton: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
+
+
+    @Inject lateinit var viewModelFactory: SearchViewModel.Factory
     private lateinit var viewModel: SearchViewModel
 
 
@@ -77,12 +82,8 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        val factory = SearchViewModel.Factory(
-            trackListInteraction = App.getInstance().trackListInteractor,
-            activeTrack = App.getInstance().activTrack ,
-            musicInteraction = App.getInstance().musicInteractor
-        )
-        viewModel = ViewModelProvider(this,factory )[SearchViewModel::class.java]
+        (application as App).appComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
     }
 
 

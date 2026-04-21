@@ -12,14 +12,15 @@ import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackPosition
 import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
+import javax.inject.Inject
 
-class AudioPlayerViewModel(
+class AudioPlayerViewModel @Inject constructor(
     private val trackPositionInteraction: TrackPositionInteractor,
     private val activeTrack : ActivTrackInteractor,
     private val mediaPlayer : MediaPlayer
 ): ViewModel() {
 
-    open class Factory(
+    open class Factory @Inject constructor(
         private val trackPositionInteraction: TrackPositionInteractor,
         private val activeTrack: ActivTrackInteractor,
         private val mediaPlayer : MediaPlayer

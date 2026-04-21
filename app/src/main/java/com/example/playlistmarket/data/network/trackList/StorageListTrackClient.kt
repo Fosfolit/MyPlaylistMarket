@@ -8,8 +8,11 @@ import com.example.playlistmarket.data.dto.dto.TrackListDto
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
 import com.google.gson.Gson
 import java.util.LinkedList
+import javax.inject.Inject
 
-class StorageListTrackClient(context: Context) : TrackListClient {
+class StorageListTrackClient @Inject constructor(
+    private val context: Context
+) : TrackListClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
         PRACTICUM_EXAMPLE_PREFERENCES,
         Context.MODE_PRIVATE

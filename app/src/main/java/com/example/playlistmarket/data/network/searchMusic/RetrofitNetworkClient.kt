@@ -7,8 +7,10 @@ import com.example.playlistmarket.data.dto.searchMusic.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Inject
 
-class RetrofitNetworkClient : NetworkClient {
+
+class RetrofitNetworkClient @Inject constructor() : NetworkClient {
 
 
     private val retrofit = Retrofit.Builder()
@@ -30,3 +32,4 @@ class RetrofitNetworkClient : NetworkClient {
         }
     }
 }
+
