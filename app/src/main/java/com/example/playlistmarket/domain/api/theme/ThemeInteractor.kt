@@ -5,6 +5,6 @@ interface ThemeInteractor {
     fun loadTheme(consumeTheme: ThemeConsumer)
     fun saveTheme(theme :Boolean)
     interface ThemeConsumer {
-        fun consume(theme :Boolean)
+        fun consume(isDarkMode :Boolean)
     }
 }

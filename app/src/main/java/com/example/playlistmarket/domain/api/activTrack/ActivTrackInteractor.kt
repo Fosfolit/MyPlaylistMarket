@@ -6,6 +6,6 @@ interface ActivTrackInteractor {
     fun saveTrack(expression: DataMusic)
     fun loadTrack(trackConsumer : ActivTrackConsumer)
     interface ActivTrackConsumer {
-        fun consume(expression: DataMusic)
+        fun consume(savedTrack: DataMusic)
     }
 }

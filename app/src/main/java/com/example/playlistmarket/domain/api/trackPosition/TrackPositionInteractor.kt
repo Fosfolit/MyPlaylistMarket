@@ -6,6 +6,6 @@ interface TrackPositionInteractor {
     fun saveTrackPosition(expression: TrackPosition)
     fun loadTrackPosition(consumer: StorageConsumer)
     interface StorageConsumer {
-        fun consume(track: TrackPosition)
+        fun consume(savedPosition: TrackPosition)
     }
 }

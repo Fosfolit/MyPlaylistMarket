@@ -39,13 +39,12 @@ class TrackListInteractorImpl(private val repository: TrackListRepository): Trac
         t.start()
     }
 
-    override fun isEmpty(consume: TrackListInteractor.EmptyTrackList) {
+    override fun clearListTrack(){
         val t = Thread {
-            consume.consume(repository.loadListTrack().isEmpty())
+            repository.saveListTrack(LinkedList<DataMusic>())
         }
         t.start()
     }
-
 
 
 }
