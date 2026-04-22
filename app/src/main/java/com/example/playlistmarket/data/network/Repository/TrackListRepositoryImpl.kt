@@ -4,9 +4,8 @@ import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.dto.dto.TrackListDto
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
 import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.api.trackList.TrackListRepository
+import com.example.playlistmarket.domain.api.repository.TrackListRepository
 import java.util.LinkedList
-import javax.inject.Inject
 
 class TrackListRepositoryImpl (
      private val client : TrackListClient

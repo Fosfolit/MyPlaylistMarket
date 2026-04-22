@@ -7,9 +7,9 @@ import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
 import com.google.gson.Gson
-import javax.inject.Inject
 
-class SharedPrefsTrackPositionClient @Inject constructor(
+
+class SharedPrefsTrackPositionClient (
     private val context: Context
 ) : TrackPositionClient {
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences(

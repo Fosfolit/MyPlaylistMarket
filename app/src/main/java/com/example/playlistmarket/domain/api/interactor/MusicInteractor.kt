@@ -1,10 +1,10 @@
-package com.example.playlistmarket.domain.api.searchMisuc
+package com.example.playlistmarket.domain.api.interactor
 
 import com.example.playlistmarket.domain.DataMusic
 
 interface MusicInteractor {
     fun searchMusic(expression: String, consumer: MusicConsumer)
-    fun clickDebounce(consume:BoolMusicConsumer)
+    fun clickDebounce(consume: BoolMusicConsumer)
 
     interface MusicConsumer {
         fun consume(foundMusicList: List<DataMusic>)

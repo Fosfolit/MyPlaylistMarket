@@ -3,34 +3,20 @@ package com.example.playlistmarket.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
-import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
-import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
+import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.interactor.MusicInteractor
+import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
 import java.util.LinkedList
-import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+
+class SearchViewModel (
     private val activeTrack: ActivTrackInteractor,
     private val trackListInteraction: TrackListInteractor,
     private val musicInteraction: MusicInteractor
 ) : ViewModel() {
-    open class Factory @Inject constructor(
-        private val musicInteraction: MusicInteractor,
-        private val activeTrack: ActivTrackInteractor,
-        private val trackListInteraction: TrackListInteractor
-    ): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return SearchViewModel(
-                activeTrack = activeTrack,
-                trackListInteraction = trackListInteraction,
-                musicInteraction = musicInteraction
-            ) as T
-        }
-    }
+
 
     private val searchViewState = SearchState()
     private val searchState = MutableLiveData<SearchState>()

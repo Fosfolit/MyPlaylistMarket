@@ -6,34 +6,17 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackPosition
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
-import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
-import javax.inject.Inject
+import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
 
-class AudioPlayerViewModel @Inject constructor(
+class AudioPlayerViewModel (
     private val trackPositionInteraction: TrackPositionInteractor,
     private val activeTrack : ActivTrackInteractor,
     private val mediaPlayer : MediaPlayer
 ): ViewModel() {
-
-    open class Factory @Inject constructor(
-        private val trackPositionInteraction: TrackPositionInteractor,
-        private val activeTrack: ActivTrackInteractor,
-        private val mediaPlayer : MediaPlayer
-    ): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return AudioPlayerViewModel(
-                trackPositionInteraction = trackPositionInteraction,
-                activeTrack = activeTrack,
-                mediaPlayer = mediaPlayer
-            ) as T
-        }
-    }
 
     private val condition = PlayerUiState()
     private val playerUiState = MutableLiveData<PlayerUiState>()

@@ -2,12 +2,11 @@ package com.example.playlistmarket.domain.lmpl
 
 import com.example.playlistmarket.domain.DataMusic
 
-import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
-import com.example.playlistmarket.domain.api.trackList.TrackListRepository
+import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
+import com.example.playlistmarket.domain.api.repository.TrackListRepository
 import java.util.LinkedList
-import javax.inject.Inject
 
-class TrackListInteractorImpl @Inject constructor(
+class TrackListInteractorImpl (
     private val repository: TrackListRepository
 ): TrackListInteractor {
     private val maxListSize :Int = 10

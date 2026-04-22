@@ -1,11 +1,11 @@
 package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
-import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
-import javax.inject.Inject
+import com.example.playlistmarket.domain.api.interactor.MusicInteractor
+import com.example.playlistmarket.domain.api.repository.MusicRepository
 
 
-class MusicInteractImpl @Inject constructor(
+
+class MusicInteractImpl (
     private val repository: MusicRepository
 ) : MusicInteractor {
     private var isClickAllowed = true

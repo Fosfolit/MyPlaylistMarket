@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain.api.trackPosition
+package com.example.playlistmarket.domain.api.interactor
 
 import com.example.playlistmarket.domain.TrackPosition
 

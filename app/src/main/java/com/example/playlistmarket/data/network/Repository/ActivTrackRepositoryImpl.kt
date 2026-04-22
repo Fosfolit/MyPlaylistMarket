@@ -3,12 +3,11 @@ package com.example.playlistmarket.data.network.Repository
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
 import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackRepository
-import javax.inject.Inject
+import com.example.playlistmarket.domain.api.repository.ActivTrackRepository
 
 class ActivTrackRepositoryImpl (
      private val client : ActivTrackClient
-):ActivTrackRepository {
+): ActivTrackRepository {
     override fun saveTrack(track: DataMusic) {
         client.saveTrack(
             DataMusicDto(

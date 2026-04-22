@@ -1,12 +1,11 @@
 package com.example.playlistmarket.domain.impl
 
-import com.example.playlistmarket.domain.api.theme.ThemeInteractor
-import com.example.playlistmarket.domain.api.theme.ThemeRepository
-import javax.inject.Inject
+import com.example.playlistmarket.domain.api.interactor.ThemeInteractor
+import com.example.playlistmarket.domain.api.repository.ThemeRepository
 
-class ThemeInteractorImpl @Inject constructor(
+class ThemeInteractorImpl (
     private val repository: ThemeRepository
-):ThemeInteractor {
+): ThemeInteractor {
     override fun loadTheme(consumeTheme: ThemeInteractor.ThemeConsumer) {
         val t = Thread {
             consumeTheme.consume(repository.loadTheme())

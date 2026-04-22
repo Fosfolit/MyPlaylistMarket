@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain.api.trackList
+package com.example.playlistmarket.domain.api.interactor
 
 import com.example.playlistmarket.domain.DataMusic
 import java.util.LinkedList

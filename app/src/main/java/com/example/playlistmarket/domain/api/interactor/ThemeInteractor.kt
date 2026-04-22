@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain.api.theme
+package com.example.playlistmarket.domain.api.interactor
 
 
 interface ThemeInteractor {

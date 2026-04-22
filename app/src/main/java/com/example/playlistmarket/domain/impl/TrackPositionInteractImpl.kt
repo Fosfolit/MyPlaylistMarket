@@ -1,11 +1,11 @@
 package com.example.playlistmarket.domain.impl
 
 import com.example.playlistmarket.domain.TrackPosition
-import com.example.playlistmarket.domain.api.trackPosition.TrackPositionInteractor
-import com.example.playlistmarket.domain.api.trackPosition.TrackPositionRepository
-import javax.inject.Inject
+import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
+import com.example.playlistmarket.domain.api.repository.TrackPositionRepository
 
-class TrackPositionInteractImpl @Inject constructor(
+
+class TrackPositionInteractImpl (
     private val repository: TrackPositionRepository
 ): TrackPositionInteractor {
     override fun saveTrackPosition(expression: TrackPosition) {
