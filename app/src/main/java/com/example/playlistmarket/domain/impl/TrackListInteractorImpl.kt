@@ -11,19 +11,18 @@ class TrackListInteractorImpl (
     private val repository: TrackListRepository,
     private val maxListSize: Int
 ): TrackListInteractor {
+
     override fun addItem(track: DataMusic) {
         val t = Thread {
-
             val trackList : TrackList = repository.loadListTrack()
-            val list: LinkedList<DataMusic> = trackList.list
-            list.remove(track)
+            trackList.list.remove(track)
 
-            if (list.size >= maxListSize) {
-                list.removeLast()
+            if (trackList.list.size >= maxListSize) {
+                trackList.list.removeLast()
             }
 
-            list.push(track)
-            saveListTrack(TrackList(list))
+            trackList.list.push(track)
+            saveListTrack(trackList)
         }
         t.start()
 
