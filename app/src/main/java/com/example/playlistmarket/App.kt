@@ -1,6 +1,7 @@
 package com.example.playlistmarket
 
 import android.app.Application
+import com.example.playlistmarket.di.clientHelpModule
 import com.example.playlistmarket.di.clientModule
 import com.example.playlistmarket.di.interactorModule
 import com.example.playlistmarket.di.repositoryModule
@@ -15,7 +16,7 @@ class App : Application(){
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(clientModule,repositoryModule,interactorModule,viewModelModule)
+            modules(clientModule,clientHelpModule,repositoryModule,interactorModule,viewModelModule)
         }
     }
 }

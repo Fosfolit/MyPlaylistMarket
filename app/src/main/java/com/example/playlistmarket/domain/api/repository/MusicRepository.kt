@@ -1,9 +1,7 @@
 package com.example.playlistmarket.domain.api.repository
 
-import android.os.Handler
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.TrackList
 
-interface MusicRepository {
-    val handler : Handler
-    fun searchMusic(expression: String): List<DataMusic>
+interface MusicRepository  {
+    fun searchMusic(expression: String): TrackList
 }

@@ -9,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivitySettingsBinding
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel

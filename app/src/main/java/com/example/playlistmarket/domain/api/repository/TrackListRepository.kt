@@ -1,9 +1,8 @@
 package com.example.playlistmarket.domain.api.repository
 
-import com.example.playlistmarket.domain.DataMusic
-import java.util.LinkedList
+import com.example.playlistmarket.domain.TrackList
 
 interface TrackListRepository {
-    fun saveListTrack(list:LinkedList<DataMusic>)
-    fun loadListTrack(): LinkedList<DataMusic>
+    fun saveListTrack(list:TrackList)
+    fun loadListTrack(): TrackList
 }

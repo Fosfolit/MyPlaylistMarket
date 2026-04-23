@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 
 interface TrackPositionClient {
-    fun saveTrackPosition(dto: TrackPositionSaveRequest)
+    fun saveTrackPosition(dto: TrackPositionDto)
     fun loadTrackPosition(): TrackPositionDto
 }

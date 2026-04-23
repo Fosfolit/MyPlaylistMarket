@@ -1,18 +1,21 @@
 package com.example.playlistmarket.domain.lmpl
 
 import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.TrackList
 
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
 import com.example.playlistmarket.domain.api.repository.TrackListRepository
 import java.util.LinkedList
 
 class TrackListInteractorImpl (
-    private val repository: TrackListRepository
+    private val repository: TrackListRepository,
+    private val maxListSize: Int
 ): TrackListInteractor {
-    private val maxListSize :Int = 10
     override fun addItem(track: DataMusic) {
         val t = Thread {
-            val list : LinkedList<DataMusic> = repository.loadListTrack()
+
+            val trackList : TrackList = repository.loadListTrack()
+            val list: LinkedList<DataMusic> = trackList.list
             list.remove(track)
 
             if (list.size >= maxListSize) {
@@ -20,14 +23,14 @@ class TrackListInteractorImpl (
             }
 
             list.push(track)
-            saveListTrack(list)
+            saveListTrack(TrackList(list))
         }
         t.start()
 
 
     }
 
-    override fun saveListTrack(list: LinkedList<DataMusic>) {
+    override fun saveListTrack(list: TrackList) {
         val t = Thread {
             repository.saveListTrack(list)
         }
@@ -43,7 +46,7 @@ class TrackListInteractorImpl (
 
     override fun clearListTrack(){
         val t = Thread {
-            repository.saveListTrack(LinkedList<DataMusic>())
+            repository.saveListTrack(TrackList(LinkedList<DataMusic>()))
         }
         t.start()
     }

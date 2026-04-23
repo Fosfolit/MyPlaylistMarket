@@ -1,12 +1,16 @@
 package com.example.playlistmarket.domain.lmpl
 
+import android.os.Handler
+import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.TrackList
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.repository.MusicRepository
-
+import java.util.LinkedList
 
 
 class MusicInteractImpl (
-    private val repository: MusicRepository
+    private val repository: MusicRepository,
+    private val handler : Handler
 ) : MusicInteractor {
     private var isClickAllowed = true
     private var lastSearchRunnable: Runnable? = null
@@ -19,17 +23,17 @@ class MusicInteractImpl (
             } catch (e: Exception) {
                 when (e) {
                     is NullPointerException -> {
-                       consumer.consume(emptyList())
+                       consumer.consume(TrackList(LinkedList<DataMusic>()))
                     }
                     else -> {
-                         consumer.consume(emptyList())
+                         consumer.consume(TrackList(LinkedList<DataMusic>()))
                     }
                 }
             }
         }
         val t = Thread {
             if (clickDebounce() || (newSearchRunnable != lastSearchRunnable)) {
-                lastSearchRunnable?.let { repository.handler.removeCallbacks(it) }
+                lastSearchRunnable?.let { handler.removeCallbacks(it) }
                 lastSearchRunnable = newSearchRunnable
                 searchDebounce(lastSearchRunnable!!)
             }
@@ -47,13 +51,13 @@ class MusicInteractImpl (
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            repository.handler.postDelayed({ isClickAllowed = true }, 2000L)
+            handler.postDelayed({ isClickAllowed = true }, 2000L)
         }
         return current
     }
 
     private fun searchDebounce(run:Runnable) {
-        repository.handler.removeCallbacks(run)
-        repository.handler.postDelayed(run, 2000L)
+        handler.removeCallbacks(run)
+        handler.postDelayed(run, 2000L)
     }
 }

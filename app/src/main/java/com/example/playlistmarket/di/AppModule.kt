@@ -1,7 +1,14 @@
 package com.example.playlistmarket.di
 
+import android.content.Context
 import android.media.MediaPlayer
+import android.os.Handler
+import android.os.HandlerThread
+import com.example.playlistmarket.Constants.BASE_URL
+import com.example.playlistmarket.Constants.HISTORY_COUNT_LIST
+import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
 import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
+import com.example.playlistmarket.data.interfaceClient.MusicInterface
 import com.example.playlistmarket.data.interfaceClient.NetworkClient
 import com.example.playlistmarket.data.interfaceClient.ThemeClient
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
@@ -35,25 +42,77 @@ import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import com.example.playlistmarket.ui.viewModel.MainViewModel
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 
+val clientHelpModule = module {
+    factory {
+        androidContext().getSharedPreferences(
+            PRACTICUM_EXAMPLE_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+    }
+    factory {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create<MusicInterface>()
+    }
+
+    factory {
+        Handler(
+            HandlerThread("MyBackgroundThread").apply
+            { start() }.looper
+        )
+    }
+
+    factory { DataMusicMapper() }
+
+    factory { TrackListMapper(get()) }
+
+    factory { TrackPositionMapper() }
+
+    factory { GsonMapper() }
+}
+
+val repositoryHelpModule = module {
+    factory<ActivTrackRepository> {
+        ActivTrackRepositoryImpl(get(),get())
+    }
+    factory<MusicRepository> {
+        MusicRepositoryImpl(get(),get())
+    }
+    factory<ThemeRepository> {
+        ThemeRepositoryImpl(get())
+    }
+    factory<TrackListRepository> {
+        TrackListRepositoryImpl(get(),get())
+    }
+    factory<TrackPositionRepository> {
+        TrackPositionRepositoryImpl(get(),get())
+    }
+}
 
 
 
 val clientModule = module {
     factory<NetworkClient> {
-        RetrofitNetworkClient()
+        RetrofitNetworkClient(get())
     }
     factory<TrackPositionClient> {
-        SharedPrefsTrackPositionClient(get())
+        SharedPrefsTrackPositionClient(get(),get())
     }
     factory<ActivTrackClient> {
-        StorageActivTrackClient(get())
+        StorageActivTrackClient(get(),get())
     }
     factory<TrackListClient> {
-        StorageListTrackClient(get())
+        StorageListTrackClient(get(),get())
     }
     factory<ThemeClient> {
         StorageThemeClient(get())
@@ -63,19 +122,19 @@ val clientModule = module {
 
 val repositoryModule = module {
     factory<ActivTrackRepository> {
-        ActivTrackRepositoryImpl(get())
+        ActivTrackRepositoryImpl(get(),get())
     }
     factory<MusicRepository> {
-        MusicRepositoryImpl(get())
+        MusicRepositoryImpl(get(),get())
     }
     factory<ThemeRepository> {
         ThemeRepositoryImpl(get())
     }
     factory<TrackListRepository> {
-        TrackListRepositoryImpl(get())
+        TrackListRepositoryImpl(get(),get())
     }
     factory<TrackPositionRepository> {
-        TrackPositionRepositoryImpl(get())
+        TrackPositionRepositoryImpl(get(),get())
     }
 }
 
@@ -85,13 +144,13 @@ val interactorModule = module {
         ActivTrackInteractorImpl(get())
     }
     single<MusicInteractor> {
-        MusicInteractImpl(get())
+        MusicInteractImpl(get(),get())
     }
     single<ThemeInteractor> {
         ThemeInteractorImpl(get())
     }
     single<TrackListInteractor> {
-        TrackListInteractorImpl(get())
+        TrackListInteractorImpl(get(),HISTORY_COUNT_LIST)
     }
     single<TrackPositionInteractor> {
         TrackPositionInteractImpl(get())

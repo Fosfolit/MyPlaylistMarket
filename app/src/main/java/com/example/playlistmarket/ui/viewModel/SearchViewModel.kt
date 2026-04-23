@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.TrackList
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
@@ -39,7 +40,7 @@ class SearchViewModel (
 
     private fun loadSearchHistory(){
         trackListInteraction.loadListTrack(object : TrackListInteractor.LoadTrackList {
-            override fun consume(list: LinkedList<DataMusic>) {
+            override fun consume(list: TrackList) {
                 updateListHistory(list)
             }
         })
@@ -61,8 +62,8 @@ class SearchViewModel (
         updateModelStatus(Constants.sostoinWie.LOAD)
         try {
             musicInteraction.searchMusic(query, object : MusicInteractor.MusicConsumer {
-                override fun consume(foundMusicList: List<DataMusic>) {
-                    if (foundMusicList.isNotEmpty()) {
+                override fun consume(foundMusicList: TrackList) {
+                    if (foundMusicList.list.isNotEmpty()) {
                         updateListSearch(foundMusicList)
                         updateModelStatus(Constants.sostoinWie.RESULT)
                     } else {
@@ -91,12 +92,12 @@ class SearchViewModel (
         searchViewState.clickStatus = status
         searchState.postValue(searchViewState)
     }
-    private fun updateListHistory (status :List<DataMusic>){
-        searchViewState.listHistory = status
+    private fun updateListHistory (status :TrackList){
+        searchViewState.listHistory = status.list
         searchState.postValue(searchViewState)
     }
-    private fun updateListSearch (status :List<DataMusic>){
-        searchViewState.listSearch = status
+    private fun updateListSearch (status :TrackList){
+        searchViewState.listSearch = status.list
         searchState.postValue(searchViewState)
     }
 

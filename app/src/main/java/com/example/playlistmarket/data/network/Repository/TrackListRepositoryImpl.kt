@@ -1,47 +1,21 @@
 package com.example.playlistmarket.data.network.Repository
 
-import com.example.playlistmarket.data.dto.dto.DataMusicDto
-import com.example.playlistmarket.data.dto.dto.TrackListDto
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.di.TrackListMapper
+import com.example.playlistmarket.domain.TrackList
 import com.example.playlistmarket.domain.api.repository.TrackListRepository
-import java.util.LinkedList
 
 class TrackListRepositoryImpl (
-     private val client : TrackListClient
+    private val client : TrackListClient,
+    private val mapper : TrackListMapper
 ) : TrackListRepository {
-    override fun saveListTrack(list: LinkedList<DataMusic>) {
-        client.saveListTrack(
-            TrackListDto(
-                list.map {
-                    DataMusicDto(
-                        it.previewUrl ?: "",
-                        it.trackName,
-                        it.artistName,
-                        it.trackTime,
-                        it.artworkUrl100,
-                        it.collectionName,
-                        it.releaseDate,
-                        it.primaryGenreName,
-                        it.country
-                    )
-                }.toCollection(LinkedList())
-            )
-        )
+
+    override fun saveListTrack(list: TrackList) {
+        client.saveListTrack(mapper.toDTO(list))
     }
 
-    override fun loadListTrack(): LinkedList<DataMusic> {
-
-        return client.loadListTrack().trackSearchList.map { DataMusic(
-            it.previewUrl,
-            it.trackName,
-            it.artistName,
-            it.trackTime,
-            it.artworkUrl100,
-            it.collectionName,
-            it.releaseDate,
-            it.primaryGenreName,
-            it.country) }.toCollection(LinkedList())
+    override fun loadListTrack(): TrackList {
+        return mapper.fromDTO( client.loadListTrack())
     }
 
 }

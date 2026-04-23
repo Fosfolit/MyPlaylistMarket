@@ -1,39 +1,26 @@
 package com.example.playlistmarket.data.network.client
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.example.playlistmarket.Constants.PRACTICUM_EXAMPLE_PREFERENCES
 import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
-import com.example.playlistmarket.data.dto.request.TrackPositionSaveRequest
-import com.google.gson.Gson
+import com.example.playlistmarket.di.GsonMapper
 
 
 class SharedPrefsTrackPositionClient (
-    private val context: Context
+    private val sharedPrefs: SharedPreferences,
+    private val mapper : GsonMapper
 ) : TrackPositionClient {
-    private val sharedPrefs: SharedPreferences = context.getSharedPreferences(
-        PRACTICUM_EXAMPLE_PREFERENCES,
-        Context.MODE_PRIVATE
-    )
-    override fun saveTrackPosition(dto: TrackPositionSaveRequest) {
+
+    override fun saveTrackPosition(dto: TrackPositionDto) {
         sharedPrefs.edit()
             .remove("TrackPosition")
-            .putString("TrackPosition",
-                Gson().toJson(
-                    TrackPositionDto(
-                        dto.trackUrl,
-                        dto.position
-                    )
-                )
-            )
+            .putString("TrackPosition", mapper.toDTO(dto))
             .apply()
     }
     override fun loadTrackPosition(): TrackPositionDto {
         if(sharedPrefs.contains("TrackPosition")){
             val track = sharedPrefs.getString("TrackPosition", null)
-
-            return Gson().fromJson(track, TrackPositionDto ::class.java)
+            return mapper.fromDTO(track,TrackPositionDto::class.java)
         }
         return TrackPositionDto("",0)
     }
