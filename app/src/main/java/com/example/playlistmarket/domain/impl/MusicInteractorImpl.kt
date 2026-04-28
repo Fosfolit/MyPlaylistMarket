@@ -1,11 +1,13 @@
 package com.example.playlistmarket.domain.lmpl
 
 import android.os.Handler
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackList
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.repository.MusicRepository
-import java.util.LinkedList
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import javax.net.ssl.SSLHandshakeException
 
 
 class MusicInteractImpl (
@@ -19,16 +21,21 @@ class MusicInteractImpl (
         val newSearchRunnable = Runnable{
             try {
                 val result = repository.searchMusic(expression)
-                consumer.consume(result)
+                consumer.consume(Result.success(result))
+            } catch (e: ConnectException) {
+                consumer.consume(Result.failure(IOException("Не удается подключиться к серверу")))
+            } catch (e: NullPointerException) {
+                consumer.consume(Result.failure(IOException("Ошибка данных")))
+            } catch (e: SSLHandshakeException) {
+                consumer.consume(Result.failure(IOException("Ошибка безопасности соединения")))
+            } catch (e: SocketTimeoutException) {
+                consumer.consume(Result.failure(IOException("Сервер не отвечает. Попробуйте позже")))
+            } catch (e: UnknownHostException) {
+                consumer.consume(Result.failure(IOException("Неизвестное исключение серверф")))
+            } catch (e: ClassCastException) {
+                consumer.consume(Result.failure(IOException("Ошибка формата данных")))
             } catch (e: Exception) {
-                when (e) {
-                    is NullPointerException -> {
-                       consumer.consume(TrackList(LinkedList<DataMusic>()))
-                    }
-                    else -> {
-                         consumer.consume(TrackList(LinkedList<DataMusic>()))
-                    }
-                }
+                consumer.consume(Result.failure(IOException("Неизвестная ошибка: ${e.message}")))
             }
         }
         val t = Thread {

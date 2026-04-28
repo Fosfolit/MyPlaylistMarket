@@ -218,4 +218,35 @@
         <item name="android:gravity">end</item>
         <item name="android:layout_marginStart">12dp</item>
     </style>
+
+
+
+    <style name="SearchErrorButton">
+        <item name="android:layout_marginTop">@dimen/mediumPadding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+
+        <item name="android:padding">6dp</item>
+        <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="SearchErrorComment">
+
+    </style>
+
+    <style name="SearchErrorName">
+
+    </style>
+
+    <style name="SearchErrorImage">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:src">@drawable/search_error_notfound</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+
 </resources>

@@ -20,7 +20,7 @@
     <string name="search">Поиск</string>
     <string name="searchSite">https://itunes.apple.com</string>
 
-
+    <string name="searchErrorButton">Обновить</string>
 
     <string name="notFoundError1">Ничего не найдено</string>
     <string name="notFoundError2"> </string>
@@ -28,5 +28,11 @@
     <string name="notInternetError1">Проблемы со связью</string>
     <string name="notInternetError2">Загрузка не удалась. Проверьте подключение к интернету</string>
     <string name="notInternetError3">Обновить</string>
-
+    <string name="nullPointerException">"Ошибка данных</string>
+    <string name="sSLHandshakeException">Ошибка безопасности соединения</string>
+    <string name="socketTimeoutException">Сервер не отвечает. Попробуйте позже</string>
+    <string name="unknownHostException">Не удается подключиться к серверу</string>
+    <string name="classCastException">Ошибка формата данных</string>
+    <string name="exception">Неизвестная ошибка</string>
+    <string name="сonnectException">Не удается подключиться к серверу</string>
 </resources>

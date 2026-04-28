@@ -4,12 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.Constants
+import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.DataMusic
 import com.example.playlistmarket.domain.TrackList
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.LinkedList
+import javax.net.ssl.SSLHandshakeException
 
 
 class SearchViewModel (
@@ -60,21 +65,31 @@ class SearchViewModel (
 
     fun searchMusic(query: String) {
         updateModelStatus(Constants.sostoinWie.LOAD)
-        try {
-            musicInteraction.searchMusic(query, object : MusicInteractor.MusicConsumer {
-                override fun consume(foundMusicList: TrackList) {
-                    if (foundMusicList.list.isNotEmpty()) {
-                        updateListSearch(foundMusicList)
-                        updateModelStatus(Constants.sostoinWie.RESULT)
-                    } else {
-                        updateModelStatus(Constants.sostoinWie.ERR_FIND)
-                    }
+        musicInteraction.searchMusic(query, object : MusicInteractor.MusicConsumer {
+            override fun consume(foundMusicList: Result<TrackList>) {
+                foundMusicList.onSuccess {
+                    if (it.list.isNotEmpty()) {
+                        updateListSearch(it)
+                        updateModelStatus(Constants.sostoinWie.RESULT) }
+                    else {
+                        updateModelStatus(Constants.sostoinWie.ERR_FIND) }
                 }
+                foundMusicList.onFailure {
+                    /*
+                    when (it){
+                        is NullPointerException ->{updateErrorName(R.string.nullPointerException)}
+                        is SSLHandshakeException ->{updateErrorName(R.string.sSLHandshakeException)}
+                        is SocketTimeoutException ->{updateErrorName(R.string.socketTimeoutException)}
+                        is UnknownHostException ->{updateErrorName(R.string.unknownHostException)}
+                        is ClassCastException ->{updateErrorName(R.string.classCastException)}
+                        is ConnectException ->{updateErrorName(R.string.сonnectException)}
+                    }*/
 
-            })
-        } catch (e: Exception){
-            updateModelStatus(Constants.sostoinWie.ERR_INET)
-        }
+                    updateModelStatus(Constants.sostoinWie.ERR_INET)
+
+                }
+            }
+        })
         updateClickStatus(false)
     }
 
@@ -100,13 +115,18 @@ class SearchViewModel (
         searchViewState.listSearch = status.list
         searchState.postValue(searchViewState)
     }
+    private fun updateErrorName (status :Int){
+        searchViewState.errorName = status
+        searchState.postValue(searchViewState)
+    }
 
 }
 data class SearchState (
     var clickStatus: Boolean = false,
     var listHistory :List<DataMusic> = LinkedList<DataMusic>(),
     var listSearch :List<DataMusic> = LinkedList<DataMusic>(),
-    var modelStatus :Constants.sostoinWie = Constants.sostoinWie.START
+    var modelStatus :Constants.sostoinWie = Constants.sostoinWie.START,
+    var errorName : Int = R.string.notInternetError1
 )
 
 

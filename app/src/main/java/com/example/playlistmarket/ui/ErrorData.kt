@@ -12,7 +12,7 @@ import androidx.annotation.StringRes
 
 data class ErrorData(
     val imageError: Int,
-    @StringRes val nameError: Int,
+    val nameError: Int,
     @StringRes val commentError: Int,
     val buttonErrorVisibility: ButtonVisibility,
     @StringRes  val buttonErrorText: Int,
@@ -63,9 +63,9 @@ class ErrorViewHolderError(itemView: View): RecyclerView.ViewHolder(itemView) {
     private fun loadButton(error: ErrorData, retryClickListener: (ErrorData) -> Unit){
         buttonError.setText(error.buttonErrorText)
         when(error.buttonErrorVisibility){
-            ButtonVisibility.INVISIBLE -> View.INVISIBLE
-            ButtonVisibility.VISIBLE -> View.VISIBLE
-            ButtonVisibility.GONE -> View.GONE
+            ButtonVisibility.INVISIBLE -> buttonError.visibility =View.INVISIBLE
+            ButtonVisibility.VISIBLE -> buttonError.visibility =View.VISIBLE
+            ButtonVisibility.GONE -> buttonError.visibility =View.GONE
             else -> buttonError.visibility = View.GONE
         }
         buttonError.setOnClickListener  {

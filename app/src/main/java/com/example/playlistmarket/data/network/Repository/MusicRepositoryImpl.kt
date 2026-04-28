@@ -17,15 +17,17 @@ class MusicRepositoryImpl (
 
 
     override fun searchMusic(expression: String): TrackList {
-        val response = networkClient.doRequest(MusicSearchRequest(expression))
-        if (response.resultCode == 200) {
-            val result = (response as MusicSearchResponse).results
-            return TrackList(result.mapTo(LinkedList()){
-                mapper.fromDTO(it)
-            })
-        } else {
-            return TrackList(LinkedList<DataMusic>())
-        }
+
+            val  response = networkClient.doRequest(MusicSearchRequest(expression))
+            if (response.resultCode == 200) {
+                val result = (response as MusicSearchResponse).results
+                return TrackList(result.mapTo(LinkedList()){
+                    mapper.fromDTO(it)
+                })
+            } else {
+                return TrackList(LinkedList<DataMusic>())
+            }
+
     }
 }
 

@@ -203,7 +203,7 @@ class SearchActivity : AppCompatActivity() {
                     Constants.sostoinWie.ERR_INET -> {
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE
-                        setErrorInetAdapter()
+                        setErrorInetAdapter(it.errorName)
                     }
 
                     else -> {
@@ -217,12 +217,12 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun setErrorInetAdapter(){
+    private fun setErrorInetAdapter(nameError :Int){
      recyclerView.adapter = ErrorAdapter(
          listOf(
              ErrorData(
                  imageError = R.drawable.search_error_internet,
-                 nameError = R.string.notInternetError1,
+                 nameError = nameError,
                  commentError = R.string.notInternetError2,
                  buttonErrorVisibility = ButtonVisibility.VISIBLE,
                  buttonErrorText = R.string.notInternetError3,
@@ -238,8 +238,8 @@ class SearchActivity : AppCompatActivity() {
                     imageError = R.drawable.search_error_notfound,
                     nameError = R.string.notFoundError1,
                     commentError = R.string.notFoundError2,
-                    buttonErrorVisibility = ButtonVisibility.GONE,
-                    buttonErrorText = R.string.notFoundError3
+                    buttonErrorVisibility = ButtonVisibility.INVISIBLE,
+                    buttonErrorText = R.string.searchErrorButton
                 )
             )
             ) {viewModel.searchMusic(searchQuery)}
