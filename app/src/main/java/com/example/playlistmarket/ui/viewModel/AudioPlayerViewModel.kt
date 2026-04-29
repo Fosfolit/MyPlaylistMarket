@@ -7,10 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.Constants
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackPosition
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
+import com.example.playlistmarket.domain.model.PlayerState
 
 class AudioPlayerViewModel (
     private val trackPositionInteraction: TrackPositionInteractor,
@@ -28,7 +29,7 @@ class AudioPlayerViewModel (
 
     init {
         playerUiState.postValue(PlayerUiState())
-        updatePlayerState(Constants.PlayerState.STATE_DEFAULT)
+        updatePlayerState(PlayerState.STATE_DEFAULT)
         loadTrack()
         timerUpdateRunnable = Runnable {
             updateCurrentPosition(mediaPlayer.currentPosition)
@@ -57,12 +58,12 @@ class AudioPlayerViewModel (
 
 
 
-    private fun prepareMedia(savedPosition :TrackPosition, savedTrack: DataMusic){
+    private fun prepareMedia(savedPosition : TrackPosition, savedTrack: DataMusic){
         mediaPlayer.reset()
         mediaPlayer.setDataSource(savedTrack.previewUrl)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            updatePlayerState(Constants.PlayerState.STATE_PREPARED)
+            updatePlayerState(PlayerState.STATE_PREPARED)
             if (savedPosition.trackUrl != savedTrack.previewUrl){
                 mediaPlayer.seekTo(0)
             } else{
@@ -71,7 +72,7 @@ class AudioPlayerViewModel (
             updateCurrentPosition(mediaPlayer.currentPosition)
         }
         mediaPlayer.setOnCompletionListener {
-            updatePlayerState(Constants.PlayerState.STATE_PREPARED)
+            updatePlayerState(PlayerState.STATE_PREPARED)
             mediaPlayer.seekTo(0)
         }
     }
@@ -87,13 +88,13 @@ class AudioPlayerViewModel (
 
     fun togglePlayback (){
         when(condition.playerState) {
-            Constants.PlayerState.STATE_PLAYING -> {
-                updatePlayerState(Constants.PlayerState.STATE_PAUSED)
+            PlayerState.STATE_PLAYING -> {
+                updatePlayerState(PlayerState.STATE_PAUSED)
                 handler.removeCallbacks(timerUpdateRunnable)
                 mediaPlayer.pause()
             }
-            Constants.PlayerState.STATE_PREPARED, Constants.PlayerState.STATE_PAUSED -> {
-                updatePlayerState(Constants.PlayerState.STATE_PLAYING)
+            PlayerState.STATE_PREPARED, PlayerState.STATE_PAUSED -> {
+                updatePlayerState(PlayerState.STATE_PLAYING)
                 mediaPlayer.start()
                 handler.post(timerUpdateRunnable)
             }
@@ -112,7 +113,7 @@ class AudioPlayerViewModel (
         condition.currentPosition = positionMs
         playerUiState.postValue(condition)
     }
-    private fun updatePlayerState(state: Constants.PlayerState){
+    private fun updatePlayerState(state: PlayerState){
         condition.playerState = state
         playerUiState.postValue(condition)
     }
@@ -128,8 +129,8 @@ class AudioPlayerViewModel (
 
 data class PlayerUiState (
     var currentPosition: Int = 0,
-    var playerState :Constants.PlayerState = Constants.PlayerState.STATE_DEFAULT,
-    var thisTrack: DataMusic  = DataMusic("","","",0,"","","","",""),
+    var playerState :PlayerState = PlayerState.STATE_DEFAULT,
+    var thisTrack: DataMusic = DataMusic("","","",0,"","","","",""),
     var trackPosition: TrackPosition = TrackPosition("",0)
 )
 

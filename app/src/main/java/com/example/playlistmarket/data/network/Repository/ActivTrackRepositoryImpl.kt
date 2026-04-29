@@ -2,7 +2,7 @@ package com.example.playlistmarket.data.network.Repository
 
 import com.example.playlistmarket.data.interfaceClient.ActivTrackClient
 import com.example.playlistmarket.di.DataMusicMapper
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.api.repository.ActivTrackRepository
 
 class ActivTrackRepositoryImpl (

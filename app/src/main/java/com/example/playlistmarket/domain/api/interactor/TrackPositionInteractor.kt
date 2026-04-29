@@ -1,6 +1,6 @@
 package com.example.playlistmarket.domain.api.interactor
 
-import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.model.TrackPosition
 
 interface TrackPositionInteractor {
     fun saveTrackPosition(expression: TrackPosition)

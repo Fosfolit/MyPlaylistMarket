@@ -1,6 +1,6 @@
 package com.example.playlistmarket.domain.impl
 
-import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.model.TrackPosition
 import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
 import com.example.playlistmarket.domain.api.repository.TrackPositionRepository
 

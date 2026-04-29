@@ -1,6 +1,6 @@
 package com.example.playlistmarket.domain.api.interactor
 
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.model.DataMusic
 
 interface ActivTrackInteractor {
     fun saveTrack(expression: DataMusic)

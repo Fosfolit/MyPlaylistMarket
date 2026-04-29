@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.ActivityMediaBinding
+import com.example.playlistmarket.domain.model.PlayerState
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
@@ -93,16 +94,16 @@ class AudioPlayer : AppCompatActivity() {
             binding.timer.text = "%02d:%02d".format(minutes, seconds)
 
             when (it.playerState) {
-                Constants.PlayerState.STATE_PREPARED -> {
+                PlayerState.STATE_PREPARED -> {
                     binding.buttonPause.setIconResource(R.drawable.button_play)
                     binding.buttonPause.isEnabled = true
                 }
 
-                Constants.PlayerState.STATE_PLAYING -> {
+                PlayerState.STATE_PLAYING -> {
                     binding.buttonPause.setIconResource(R.drawable.button_pause)
                 }
 
-                Constants.PlayerState.STATE_PAUSED -> {
+                PlayerState.STATE_PAUSED -> {
                     binding.buttonPause.setIconResource(R.drawable.button_play)
                 }
 

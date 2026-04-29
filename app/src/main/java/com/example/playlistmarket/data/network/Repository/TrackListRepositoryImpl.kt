@@ -2,7 +2,7 @@ package com.example.playlistmarket.data.network.Repository
 
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
 import com.example.playlistmarket.di.TrackListMapper
-import com.example.playlistmarket.domain.TrackList
+import com.example.playlistmarket.domain.model.TrackList
 import com.example.playlistmarket.domain.api.repository.TrackListRepository
 
 class TrackListRepositoryImpl (

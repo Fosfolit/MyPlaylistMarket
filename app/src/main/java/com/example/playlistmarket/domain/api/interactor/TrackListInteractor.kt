@@ -1,11 +1,10 @@
 package com.example.playlistmarket.domain.api.interactor
 
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackList
-import java.util.LinkedList
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackList
 
 interface TrackListInteractor {
-    fun addItem(track :DataMusic)
+    fun addItem(track : DataMusic)
     fun saveListTrack(list: TrackList)
     fun loadListTrack(consume: LoadTrackList)
     fun clearListTrack()

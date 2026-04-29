@@ -4,8 +4,8 @@ import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchReques
 import com.example.playlistmarket.data.interfaceClient.NetworkClient
 import com.example.playlistmarket.data.dto.searchMusic.request.MusicSearchResponse
 import com.example.playlistmarket.di.DataMusicMapper
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackList
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackList
 import com.example.playlistmarket.domain.api.repository.MusicRepository
 import java.util.LinkedList
 

@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain
+package com.example.playlistmarket.domain.model
 
 import java.util.LinkedList
 

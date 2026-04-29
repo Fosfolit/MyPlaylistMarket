@@ -1,6 +1,6 @@
 package com.example.playlistmarket.domain.api.interactor
 
-import com.example.playlistmarket.domain.TrackList
+import com.example.playlistmarket.domain.model.TrackList
 
 interface MusicInteractor {
     fun searchMusic(expression: String, consumer: MusicConsumer)

@@ -1,6 +1,6 @@
 package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.repository.ActivTrackRepository
 

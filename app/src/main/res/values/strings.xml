@@ -21,7 +21,8 @@
     <string name="searchSite">https://itunes.apple.com</string>
 
     <string name="searchErrorButton">Обновить</string>
-
+    <string name="textSearchHistory">Вы искали</string>
+    <string name="textSearchButtonDeleteHistory">Очистить историю</string>
     <string name="notFoundError1">Ничего не найдено</string>
     <string name="notFoundError2"> </string>
     <string name="notFoundError3"> </string>

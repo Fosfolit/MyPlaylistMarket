@@ -5,16 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackList
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackList
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
+import com.example.playlistmarket.domain.model.SearchViewModelState
 import java.util.LinkedList
-import javax.net.ssl.SSLHandshakeException
 
 
 class SearchViewModel (
@@ -53,26 +50,26 @@ class SearchViewModel (
     }
 
     fun switchToHistory(){
-        updateModelStatus(Constants.sostoinWie.HISTORY)
+        updateModelStatus(SearchViewModelState.HISTORY)
         updateClickStatus(false)
     }
 
     fun clearSearchHistory(){
-        updateModelStatus(Constants.sostoinWie.START)
+        updateModelStatus(SearchViewModelState.START)
         trackListInteraction.clearListTrack()
         updateClickStatus(false)
     }
 
     fun searchMusic(query: String) {
-        updateModelStatus(Constants.sostoinWie.LOAD)
+        updateModelStatus(SearchViewModelState.LOAD)
         musicInteraction.searchMusic(query, object : MusicInteractor.MusicConsumer {
             override fun consume(foundMusicList: Result<TrackList>) {
                 foundMusicList.onSuccess {
                     if (it.list.isNotEmpty()) {
                         updateListSearch(it)
-                        updateModelStatus(Constants.sostoinWie.RESULT) }
+                        updateModelStatus(SearchViewModelState.RESULT) }
                     else {
-                        updateModelStatus(Constants.sostoinWie.ERR_FIND) }
+                        updateModelStatus(SearchViewModelState.ERR_FIND) }
                 }
                 foundMusicList.onFailure {
                     /*
@@ -85,7 +82,7 @@ class SearchViewModel (
                         is ConnectException ->{updateErrorName(R.string.сonnectException)}
                     }*/
 
-                    updateModelStatus(Constants.sostoinWie.ERR_INET)
+                    updateModelStatus(SearchViewModelState.ERR_INET)
 
                 }
             }
@@ -99,7 +96,7 @@ class SearchViewModel (
         updateClickStatus(true)
     }
 
-    private fun updateModelStatus (status :Constants.sostoinWie){
+    private fun updateModelStatus (status :SearchViewModelState){
         searchViewState.modelStatus = status
         searchState.postValue(searchViewState)
     }
@@ -107,11 +104,11 @@ class SearchViewModel (
         searchViewState.clickStatus = status
         searchState.postValue(searchViewState)
     }
-    private fun updateListHistory (status :TrackList){
+    private fun updateListHistory (status : TrackList){
         searchViewState.listHistory = status.list
         searchState.postValue(searchViewState)
     }
-    private fun updateListSearch (status :TrackList){
+    private fun updateListSearch (status : TrackList){
         searchViewState.listSearch = status.list
         searchState.postValue(searchViewState)
     }
@@ -125,7 +122,7 @@ data class SearchState (
     var clickStatus: Boolean = false,
     var listHistory :List<DataMusic> = LinkedList<DataMusic>(),
     var listSearch :List<DataMusic> = LinkedList<DataMusic>(),
-    var modelStatus :Constants.sostoinWie = Constants.sostoinWie.START,
+    var modelStatus :SearchViewModelState = SearchViewModelState.START,
     var errorName : Int = R.string.notInternetError1
 )
 

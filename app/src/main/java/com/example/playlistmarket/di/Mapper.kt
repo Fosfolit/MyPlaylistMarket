@@ -3,9 +3,9 @@ package com.example.playlistmarket.di
 import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.dto.dto.TrackListDto
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.TrackList
-import com.example.playlistmarket.domain.TrackPosition
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackList
+import com.example.playlistmarket.domain.model.TrackPosition
 import com.google.gson.Gson
 import java.util.LinkedList
 

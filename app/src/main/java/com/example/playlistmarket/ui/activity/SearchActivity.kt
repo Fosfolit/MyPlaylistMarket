@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapter
 import com.example.playlistmarket.ui.ErrorData
@@ -159,23 +160,23 @@ class SearchActivity : AppCompatActivity() {
                     startActivity(displayIntent)
                 }
                 when (it.modelStatus) {
-                    Constants.sostoinWie.START -> {
+                    SearchViewModelState.START -> {
                         recyclerView.visibility = View.INVISIBLE
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    Constants.sostoinWie.LOAD -> {
+                    SearchViewModelState.LOAD -> {
                         recyclerView.visibility = View.INVISIBLE
                         progressBar.visibility = View.VISIBLE
                     }
 
-                    Constants.sostoinWie.HISTORY -> {
+                    SearchViewModelState.HISTORY -> {
                             recyclerView.adapter = ConcatAdapter(
-                            SearchedQueriesTextAdapter(listOf("Вы искали")),
+                            SearchedQueriesTextAdapter(listOf(getString(R.string.textSearchHistory))),
                                 MusicAdapter(it.listHistory) {
                                     viewModel.handleTrackClick(it)
                                 },
-                            SearchedQueriesButtonAdapter(listOf("Очистить историю")) {
+                            SearchedQueriesButtonAdapter(listOf(getString(R.string.textSearchButtonDeleteHistory))) {
                                 viewModel.clearSearchHistory()
                             }
                         )
@@ -184,7 +185,7 @@ class SearchActivity : AppCompatActivity() {
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    Constants.sostoinWie.RESULT -> {
+                    SearchViewModelState.RESULT -> {
                         recyclerView.adapter =
                             MusicAdapter(it.listSearch) {
                                 viewModel.handleTrackClick(it)
@@ -194,13 +195,13 @@ class SearchActivity : AppCompatActivity() {
 
                     }
 
-                    Constants.sostoinWie.ERR_FIND -> {
+                    SearchViewModelState.ERR_FIND -> {
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE
                         setErrorNothingAdapter()
                     }
 
-                    Constants.sostoinWie.ERR_INET -> {
+                    SearchViewModelState.ERR_INET -> {
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE
                         setErrorInetAdapter(it.errorName)

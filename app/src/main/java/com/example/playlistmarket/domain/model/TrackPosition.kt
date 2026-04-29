@@ -1,4 +1,4 @@
-package com.example.playlistmarket.domain
+package com.example.playlistmarket.domain.model
 
 data class TrackPosition(
     val trackUrl: String,
