@@ -1,10 +1,19 @@
 package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.api.searchMisuc.MusicInteractor
-import com.example.playlistmarket.domain.api.searchMisuc.MusicRepository
+import android.os.Handler
+import com.example.playlistmarket.domain.api.interactor.MusicInteractor
+import com.example.playlistmarket.domain.api.repository.MusicRepository
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import javax.net.ssl.SSLHandshakeException
 
 
-class MusicInteractImpl(private val repository: MusicRepository) : MusicInteractor {
+class MusicInteractImpl (
+    private val repository: MusicRepository,
+    private val handler : Handler
+) : MusicInteractor {
     private var isClickAllowed = true
     private var lastSearchRunnable: Runnable? = null
     override fun searchMusic(expression: String, consumer: MusicInteractor.MusicConsumer) {
@@ -12,21 +21,26 @@ class MusicInteractImpl(private val repository: MusicRepository) : MusicInteract
         val newSearchRunnable = Runnable{
             try {
                 val result = repository.searchMusic(expression)
-                consumer.consume(result)
+                consumer.consume(Result.success(result))
+            } catch (e: ConnectException) {
+                consumer.consume(Result.failure(IOException("Не удается подключиться к серверу")))
+            } catch (e: NullPointerException) {
+                consumer.consume(Result.failure(IOException("Ошибка данных")))
+            } catch (e: SSLHandshakeException) {
+                consumer.consume(Result.failure(IOException("Ошибка безопасности соединения")))
+            } catch (e: SocketTimeoutException) {
+                consumer.consume(Result.failure(IOException("Сервер не отвечает. Попробуйте позже")))
+            } catch (e: UnknownHostException) {
+                consumer.consume(Result.failure(IOException("Неизвестное исключение серверф")))
+            } catch (e: ClassCastException) {
+                consumer.consume(Result.failure(IOException("Ошибка формата данных")))
             } catch (e: Exception) {
-                when (e) {
-                    is NullPointerException -> {
-                       consumer.consume(emptyList())
-                    }
-                    else -> {
-                         consumer.consume(emptyList())
-                    }
-                }
+                consumer.consume(Result.failure(IOException("Неизвестная ошибка: ${e.message}")))
             }
         }
         val t = Thread {
             if (clickDebounce() || (newSearchRunnable != lastSearchRunnable)) {
-                lastSearchRunnable?.let { repository.handler.removeCallbacks(it) }
+                lastSearchRunnable?.let { handler.removeCallbacks(it) }
                 lastSearchRunnable = newSearchRunnable
                 searchDebounce(lastSearchRunnable!!)
             }
@@ -44,13 +58,13 @@ class MusicInteractImpl(private val repository: MusicRepository) : MusicInteract
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            repository.handler.postDelayed({ isClickAllowed = true }, 2000L)
+            handler.postDelayed({ isClickAllowed = true }, 2000L)
         }
         return current
     }
 
     private fun searchDebounce(run:Runnable) {
-        repository.handler.removeCallbacks(run)
-        repository.handler.postDelayed(run, 2000L)
+        handler.removeCallbacks(run)
+        handler.postDelayed(run, 2000L)
     }
 }

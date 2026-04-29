@@ -9,28 +9,26 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmarket.R
-import androidx.lifecycle.ViewModelProvider
-import com.example.playlistmarket.App
 import com.example.playlistmarket.databinding.ActivityMainBinding
 import com.example.playlistmarket.ui.activity.NewEmptyActivity
 import com.example.playlistmarket.ui.activity.SearchActivity
 import com.example.playlistmarket.ui.activity.SettingsActivity
 import com.example.playlistmarket.ui.viewModel.MainViewModel
+import org.koin.android.ext.android.inject
 
-private lateinit var viewModel: MainViewModel
+
 private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val factory = MainViewModel.Factory(
-            themeInteraction = App.getInstance().themeInteractor
-        )
-        viewModel = ViewModelProvider(this,factory)[MainViewModel::class.java]
         viewModel.themeMode.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
         }

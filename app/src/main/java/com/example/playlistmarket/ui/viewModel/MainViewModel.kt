@@ -3,23 +3,11 @@ package com.example.playlistmarket.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.playlistmarket.domain.api.theme.ThemeInteractor
+import com.example.playlistmarket.domain.api.interactor.ThemeInteractor
 
-class MainViewModel(
+class MainViewModel (
     private val themeInteraction : ThemeInteractor
 ) : ViewModel(){
-
-    open class Factory(
-        private val themeInteraction : ThemeInteractor
-    ): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return MainViewModel(
-                themeInteraction = themeInteraction
-            ) as T
-        }
-    }
 
     private val theme = MutableLiveData<Int>()
     val themeMode: LiveData<Int> = theme

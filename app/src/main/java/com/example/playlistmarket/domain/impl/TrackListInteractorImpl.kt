@@ -1,31 +1,35 @@
 package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.DataMusic
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.model.TrackList
 
-import com.example.playlistmarket.domain.api.trackList.TrackListInteractor
-import com.example.playlistmarket.domain.api.trackList.TrackListRepository
+import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
+import com.example.playlistmarket.domain.api.repository.TrackListRepository
 import java.util.LinkedList
 
-class TrackListInteractorImpl(private val repository: TrackListRepository): TrackListInteractor {
-    private val maxListSize :Int = 10
+class TrackListInteractorImpl (
+    private val repository: TrackListRepository,
+    private val maxListSize: Int
+): TrackListInteractor {
+
     override fun addItem(track: DataMusic) {
         val t = Thread {
-            val list : LinkedList<DataMusic> = repository.loadListTrack()
-            list.remove(track)
+            val trackList : TrackList = repository.loadListTrack()
+            trackList.list.remove(track)
 
-            if (list.size >= maxListSize) {
-                list.removeLast()
+            if (trackList.list.size >= maxListSize) {
+                trackList.list.removeLast()
             }
 
-            list.push(track)
-            saveListTrack(list)
+            trackList.list.push(track)
+            saveListTrack(trackList)
         }
         t.start()
 
 
     }
 
-    override fun saveListTrack(list: LinkedList<DataMusic>) {
+    override fun saveListTrack(list: TrackList) {
         val t = Thread {
             repository.saveListTrack(list)
         }
@@ -41,7 +45,7 @@ class TrackListInteractorImpl(private val repository: TrackListRepository): Trac
 
     override fun clearListTrack(){
         val t = Thread {
-            repository.saveListTrack(LinkedList<DataMusic>())
+            repository.saveListTrack(TrackList(LinkedList<DataMusic>()))
         }
         t.start()
     }

@@ -18,13 +18,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmarket.App
 import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
+import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapter
 import com.example.playlistmarket.ui.ErrorData
@@ -32,7 +31,7 @@ import com.example.playlistmarket.ui.MusicAdapter
 import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
 import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
-
+import org.koin.android.ext.android.inject
 
 
 class SearchActivity : AppCompatActivity() {
@@ -42,7 +41,10 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var clearButton: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var viewModel: SearchViewModel
+
+
+    private val viewModel: SearchViewModel by inject()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +53,6 @@ class SearchActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         initViews()
-        initViewModel()
         setupSearchInputWatcher()
         setupBackButton()
         setupClearButton()
@@ -60,7 +61,6 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.searchMusic(inputEditText.text.toString())
-                true
             }
                 false
         }
@@ -74,15 +74,6 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         progressBar = findViewById(R.id.progressBar)
-    }
-
-    private fun initViewModel() {
-        val factory = SearchViewModel.Factory(
-            trackListInteraction = App.getInstance().trackListInteractor,
-            activeTrack = App.getInstance().activTrack ,
-            musicInteraction = App.getInstance().musicInteractor
-        )
-        viewModel = ViewModelProvider(this,factory )[SearchViewModel::class.java]
     }
 
 
@@ -169,23 +160,23 @@ class SearchActivity : AppCompatActivity() {
                     startActivity(displayIntent)
                 }
                 when (it.modelStatus) {
-                    Constants.sostoinWie.START -> {
+                    SearchViewModelState.START -> {
                         recyclerView.visibility = View.INVISIBLE
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    Constants.sostoinWie.LOAD -> {
+                    SearchViewModelState.LOAD -> {
                         recyclerView.visibility = View.INVISIBLE
                         progressBar.visibility = View.VISIBLE
                     }
 
-                    Constants.sostoinWie.HISTORY -> {
+                    SearchViewModelState.HISTORY -> {
                             recyclerView.adapter = ConcatAdapter(
-                            SearchedQueriesTextAdapter(listOf("Вы искали")),
+                            SearchedQueriesTextAdapter(listOf(getString(R.string.textSearchHistory))),
                                 MusicAdapter(it.listHistory) {
                                     viewModel.handleTrackClick(it)
                                 },
-                            SearchedQueriesButtonAdapter(listOf("Очистить историю")) {
+                            SearchedQueriesButtonAdapter(listOf(getString(R.string.textSearchButtonDeleteHistory))) {
                                 viewModel.clearSearchHistory()
                             }
                         )
@@ -194,7 +185,7 @@ class SearchActivity : AppCompatActivity() {
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    Constants.sostoinWie.RESULT -> {
+                    SearchViewModelState.RESULT -> {
                         recyclerView.adapter =
                             MusicAdapter(it.listSearch) {
                                 viewModel.handleTrackClick(it)
@@ -204,16 +195,16 @@ class SearchActivity : AppCompatActivity() {
 
                     }
 
-                    Constants.sostoinWie.ERR_FIND -> {
+                    SearchViewModelState.ERR_FIND -> {
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE
                         setErrorNothingAdapter()
                     }
 
-                    Constants.sostoinWie.ERR_INET -> {
+                    SearchViewModelState.ERR_INET -> {
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE
-                        setErrorInetAdapter()
+                        setErrorInetAdapter(it.errorName)
                     }
 
                     else -> {
@@ -227,12 +218,12 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun setErrorInetAdapter(){
+    private fun setErrorInetAdapter(nameError :Int){
      recyclerView.adapter = ErrorAdapter(
          listOf(
              ErrorData(
                  imageError = R.drawable.search_error_internet,
-                 nameError = R.string.notInternetError1,
+                 nameError = nameError,
                  commentError = R.string.notInternetError2,
                  buttonErrorVisibility = ButtonVisibility.VISIBLE,
                  buttonErrorText = R.string.notInternetError3,
@@ -248,8 +239,8 @@ class SearchActivity : AppCompatActivity() {
                     imageError = R.drawable.search_error_notfound,
                     nameError = R.string.notFoundError1,
                     commentError = R.string.notFoundError2,
-                    buttonErrorVisibility = ButtonVisibility.GONE,
-                    buttonErrorText = R.string.notFoundError3
+                    buttonErrorVisibility = ButtonVisibility.INVISIBLE,
+                    buttonErrorText = R.string.searchErrorButton
                 )
             )
             ) {viewModel.searchMusic(searchQuery)}

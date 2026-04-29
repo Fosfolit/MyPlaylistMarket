@@ -1,10 +1,13 @@
 package com.example.playlistmarket.domain.lmpl
 
-import com.example.playlistmarket.domain.DataMusic
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackInteractor
-import com.example.playlistmarket.domain.api.activTrack.ActivTrackRepository
+import com.example.playlistmarket.domain.model.DataMusic
+import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
+import com.example.playlistmarket.domain.api.repository.ActivTrackRepository
 
-class ActivTrackInteractorImpl(private val repository: ActivTrackRepository):ActivTrackInteractor {
+
+class ActivTrackInteractorImpl (
+    private val repository: ActivTrackRepository
+): ActivTrackInteractor {
     override fun saveTrack(expression: DataMusic) {
         val t = Thread {
             repository.saveTrack(expression)
