@@ -127,11 +127,11 @@ class AudioPlayerViewModel (
     }
 }
 
-data class PlayerUiState (
+data class PlayerUiState(
     var currentPosition: Int = 0,
-    var playerState :PlayerState = PlayerState.STATE_DEFAULT,
-    var thisTrack: DataMusic = DataMusic("","","",0,"","","","",""),
-    var trackPosition: TrackPosition = TrackPosition("",0)
+    var playerState: PlayerState = PlayerState.STATE_DEFAULT,
+    var thisTrack: DataMusic = DataMusic("", "", "", 0, "", "", "", "", ""),
+    var trackPosition: TrackPosition = TrackPosition("", 0)
 )
 
 

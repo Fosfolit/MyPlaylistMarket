@@ -1,28 +1,28 @@
-package com.example.playlistmarket.ui.activity
+package com.example.playlistmarket.ui.fragment
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
+import com.example.playlistmarket.databinding.SearchMusicScreenBinding
 import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapter
@@ -31,11 +31,12 @@ import com.example.playlistmarket.ui.MusicAdapter
 import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
 import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
+import com.example.playlistmarket.ui.viewModel.SettingsViewModel
 import org.koin.android.ext.android.inject
 
-
-class SearchActivity : AppCompatActivity() {
-
+class SearchFragment : Fragment() {
+    private var _binding: SearchMusicScreenBinding? = null
+    private val binding get() = _binding!!
     private var searchQuery: String = ""
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
@@ -44,36 +45,57 @@ class SearchActivity : AppCompatActivity() {
 
 
     private val viewModel: SearchViewModel by inject()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = SearchMusicScreenBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initViews()
         setupSearchInputWatcher()
         setupBackButton()
         setupClearButton()
-        observeViewModel ()
-
+        observeViewModel()
+        onRestoreInstanceState(savedInstanceState)
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.searchMusic(inputEditText.text.toString())
             }
-                false
+            false
         }
+    }
+
+    // сохраняем последнее записаное значение
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("search_query", searchQuery)
+    }
 
 
+
+
+    private fun Activity.hideKeyboardAndClearFocus(view: View) {
+        view.clearFocus()
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun initViews() {
-        clearButton = findViewById(R.id.clearIcon)
-        inputEditText = findViewById(R.id.inputEditText)
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        progressBar = findViewById(R.id.progressBar)
+        clearButton =  binding.clearIcon
+        inputEditText =  binding.inputEditText
+        recyclerView =  binding.recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        progressBar =  binding.progressBar
     }
 
 
@@ -105,9 +127,9 @@ class SearchActivity : AppCompatActivity() {
 
     // Кнопка назад
     private fun setupBackButton() {
-        val toolbar: Toolbar = findViewById(R.id.buttonBack)
+        val toolbar: Toolbar = binding.buttonBack
         toolbar.setOnClickListener {
-            finish()
+            parentFragmentManager.popBackStackImmediate()
         }
         ViewCompat.setOnApplyWindowInsetsListener(toolbar) { view, insets ->
             val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
@@ -118,22 +140,18 @@ class SearchActivity : AppCompatActivity() {
     // Кнопка для очиски поиска
     private fun setupClearButton() {
         clearButton.setOnClickListener {
-            hideKeyboardAndClearFocus(inputEditText)
+            requireActivity().hideKeyboardAndClearFocus(inputEditText)
             inputEditText.setText("")
             recyclerView.visibility = View.INVISIBLE
         }
     }
 
-    // сохраняем последнее записаное значение
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("search_query", searchQuery)
-    }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        searchQuery = savedInstanceState.getString("search_query", "")
-        inputEditText.setText(searchQuery)
+    fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null){
+            searchQuery = savedInstanceState.getString("search_query", "")
+            inputEditText.setText(searchQuery)
+        }
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
@@ -144,20 +162,44 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun Activity.hideKeyboardAndClearFocus(view: View) {
-        view.clearFocus()
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    private fun setErrorInetAdapter(nameError :Int){
+        recyclerView.adapter = ErrorAdapter(
+            listOf(
+                ErrorData(
+                    imageError = R.drawable.search_error_internet,
+                    nameError = nameError,
+                    commentError = R.string.notInternetError2,
+                    buttonErrorVisibility = ButtonVisibility.VISIBLE,
+                    buttonErrorText = R.string.notInternetError3,
+                )
+            )
+        ) {viewModel.searchMusic(searchQuery)}
+    }
+
+    private fun setErrorNothingAdapter(){
+        recyclerView.adapter = ErrorAdapter(
+            listOf(
+                ErrorData(
+                    imageError = R.drawable.search_error_notfound,
+                    nameError = R.string.notFoundError1,
+                    commentError = R.string.notFoundError2,
+                    buttonErrorVisibility = ButtonVisibility.INVISIBLE,
+                    buttonErrorText = R.string.searchErrorButton
+                )
+            )
+        ) {viewModel.searchMusic(searchQuery)}
     }
 
 
     private fun observeViewModel () {
-        viewModel.observeSearchState.observe(this) {
+        viewModel.observeSearchState.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.clickStatus) {
-                    val displayIntent = Intent(this, AudioPlayer::class.java)
-                    startActivity(displayIntent)
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, AudioPlayerFragment())
+                        .addToBackStack("my_backstack")
+                        .setReorderingAllowed(true)
+                        .commit()
                 }
                 when (it.modelStatus) {
                     SearchViewModelState.START -> {
@@ -171,11 +213,11 @@ class SearchActivity : AppCompatActivity() {
                     }
 
                     SearchViewModelState.HISTORY -> {
-                            recyclerView.adapter = ConcatAdapter(
+                        recyclerView.adapter = ConcatAdapter(
                             SearchedQueriesTextAdapter(listOf(getString(R.string.textSearchHistory))),
-                                MusicAdapter(it.listHistory) {
-                                    viewModel.handleTrackClick(it)
-                                },
+                            MusicAdapter(it.listHistory) {
+                                viewModel.handleTrackClick(it)
+                            },
                             SearchedQueriesButtonAdapter(listOf(getString(R.string.textSearchButtonDeleteHistory))) {
                                 viewModel.clearSearchHistory()
                             }
@@ -217,38 +259,4 @@ class SearchActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun setErrorInetAdapter(nameError :Int){
-     recyclerView.adapter = ErrorAdapter(
-         listOf(
-             ErrorData(
-                 imageError = R.drawable.search_error_internet,
-                 nameError = nameError,
-                 commentError = R.string.notInternetError2,
-                 buttonErrorVisibility = ButtonVisibility.VISIBLE,
-                 buttonErrorText = R.string.notInternetError3,
-             )
-         )
-     ) {viewModel.searchMusic(searchQuery)}
- }
-
-    private fun setErrorNothingAdapter(){
-    recyclerView.adapter = ErrorAdapter(
-            listOf(
-                ErrorData(
-                    imageError = R.drawable.search_error_notfound,
-                    nameError = R.string.notFoundError1,
-                    commentError = R.string.notFoundError2,
-                    buttonErrorVisibility = ButtonVisibility.INVISIBLE,
-                    buttonErrorText = R.string.searchErrorButton
-                )
-            )
-            ) {viewModel.searchMusic(searchQuery)}
 }
-
-
-
-
-}
-
-

@@ -36,4 +36,13 @@
     <string name="classCastException">Ошибка формата данных</string>
     <string name="exception">Неизвестная ошибка</string>
     <string name="сonnectException">Не удается подключиться к серверу</string>
+
+    <string name="mediaLibraryName">Медиотека</string>
+    <string name="mediaLibraryPlaylists">Плейлисты</string>
+    <string name="mediaLibrarySelectedTracks">Избранные треки</string>
+    <string name="mediaLibraryNewPlaylists">Новый плейлист</string>
+    <string name="mediaLibraryErrorEmptyMediaLibrary">Ваша медиатека пуста</string>
+    <string name="mediaLibraryErrorMissingPlaylists">Вы не создали ни одного плейлиста</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

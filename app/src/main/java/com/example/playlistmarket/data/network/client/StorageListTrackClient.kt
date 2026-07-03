@@ -14,17 +14,19 @@ class StorageListTrackClient (
 ) : TrackListClient {
 
 
-    override fun loadListTrack(): TrackListDto {
-        if(sharedPrefs.contains("ListTrack")) {
-            val json =  sharedPrefs.getString("ListTrack", null)
+    override fun loadListTrack(nameType: String): TrackListDto {
+        if(sharedPrefs.contains(nameType)) {
+            val json =  sharedPrefs.getString(nameType, null)
             return mapper.fromDTO(json, TrackListDto::class.java)
         }
         return TrackListDto(LinkedList<DataMusicDto>())
     }
-    override fun saveListTrack(list : TrackListDto) {
+    override fun saveListTrack(nameType: String,list : TrackListDto) {
         sharedPrefs.edit()
-            .remove("ListTrack")
-            .putString("ListTrack",mapper.toDTO(list))
+            .remove(nameType)
+            .putString(nameType,mapper.toDTO(list))
             .apply()
     }
+
+
 }

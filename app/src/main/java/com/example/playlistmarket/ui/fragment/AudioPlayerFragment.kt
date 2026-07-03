@@ -1,61 +1,61 @@
-package com.example.playlistmarket.ui.activity
+package com.example.playlistmarket.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.ActivityMediaBinding
+import com.example.playlistmarket.databinding.MediaScreenBinding
 import com.example.playlistmarket.domain.model.PlayerState
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayer : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMediaBinding
+class AudioPlayerFragment: Fragment()  {
+    private  var _binding: MediaScreenBinding? = null
+    private  val binding get() = _binding!!
     private val viewModel: AudioPlayerViewModel by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMediaBinding.inflate(layoutInflater)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        setContentView(binding.root)
-
-        observeViewModel()
-        setupPlayButton()
-        setupBackButton()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = MediaScreenBinding.inflate(inflater,container,false)
+        return binding.root
     }
-
-
 
     override fun onDestroy() {
         viewModel.saveTrackPosition()
         super.onDestroy()
+        _binding = null
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupBackButton()
+        setupPlayButton()
+        observeViewModel()
+    }
+
 
     private fun setupPlayButton() {
         binding.buttonPause.setOnClickListener {
             viewModel.togglePlayback()
         }
-    } // Функционал кнопки "пауза"
+    }
 
     private fun setupBackButton() {
         binding.buttonBack.setOnClickListener {
             viewModel.stopPlayback()
             viewModel.saveTrackPosition()
-            finish()
+            parentFragmentManager.popBackStackImmediate()
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
             val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
@@ -64,7 +64,7 @@ class AudioPlayer : AppCompatActivity() {
     } // Функционал Toolbar
 
     private fun observeViewModel(){
-        viewModel.observePlayerUiState.observe(this) {
+        viewModel.observePlayerUiState.observe(viewLifecycleOwner) {
             binding.apply {
                 trackName.text = it.thisTrack.trackName
                 artistName.text = it.thisTrack.artistName
@@ -81,13 +81,12 @@ class AudioPlayer : AppCompatActivity() {
                 genreText.text = it.thisTrack.primaryGenreName
                 countryText.text = it.thisTrack.country
 
-                val artworkUrl100: ImageView = findViewById(R.id.artworkUrl100)
-                Glide.with(this@AudioPlayer)
+                Glide.with(this@AudioPlayerFragment)
                     .load(it.thisTrack.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
                     .placeholder(R.drawable.music_base)
                     .centerCrop()
                     .transform(RoundedCorners(8))
-                    .into(artworkUrl100)
+                    .into(binding.artworkUrl100)
             }
             val seconds = (it.currentPosition / 1000) % 60
             val minutes = (it.currentPosition / (1000 * 60)) % 60
@@ -112,5 +111,6 @@ class AudioPlayer : AppCompatActivity() {
             }
         }
     }
+
 
 }

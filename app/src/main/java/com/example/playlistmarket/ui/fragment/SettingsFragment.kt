@@ -1,42 +1,54 @@
-package com.example.playlistmarket.ui.activity
+package com.example.playlistmarket.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.ActivitySettingsBinding
+import com.example.playlistmarket.databinding.FragmentSettingsBinding
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
 import org.koin.android.ext.android.inject
 
-class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySettingsBinding
+class SettingsFragment : Fragment() {
+
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by inject()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSettingsBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupThemeSwitch()
         setupBackButton()
         setupShareButton()
         setupUserAgreementLink()
         setupSupportEmail()
-
     }
 
 
     private fun observeViewModel(){
-        viewModel.themeMode.observe(this) { nightMode ->
+        viewModel.themeMode.observe(viewLifecycleOwner) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
             if (nightMode == 2) {
                 binding.textViewStyle.isChecked = true
@@ -47,23 +59,20 @@ class SettingsActivity : AppCompatActivity() {
     }
 
 
-
     private fun setupThemeSwitch() {
         binding.textViewStyle.setOnClickListener {
             viewModel.saveUpdateTheme(binding.textViewStyle.isChecked)
         }
     }
-
     private fun setupBackButton()  {
         binding.buttonBack.setOnClickListener {
-            finish()
+            parentFragmentManager.popBackStackImmediate()
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
             val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             view.updatePadding(top = statusBar.top)
             insets }
     }
-
     private fun setupShareButton() {
         binding.textViewShare.setOnClickListener {
             val shareIntent = Intent().apply {
@@ -74,7 +83,6 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share)))
         }
     }
-
     private fun setupUserAgreementLink() {
         binding.buttonUserText.setOnClickListener {
             val browserIntent =
@@ -82,7 +90,6 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(browserIntent)
         }
     }
-
     private fun setupSupportEmail() {
         binding.buttonHelper.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
