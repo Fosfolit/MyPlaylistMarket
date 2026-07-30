@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mediaLibrary_navigationGraph"
+    app:startDestination="@id/favoriteTracksFragment">
+
+    <fragment
+        android:id="@+id/favoriteTracksFragment"
+        android:name="com.example.playlistmarket.ui.fragment.MediaLibrary.MLFavoriteTracksFragment"
+        android:label="Избранные треки">
+        <action
+            android:id="@+id/action_favoriteTracksFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.playlistmarket.ui.fragment.MediaLibrary.MLPlaylistFragment"
+        android:label= "Плейлисты" >
+
+        <action
+            android:id="@+id/action_playlistFragment_to_favoriteTracksFragment"
+            app:destination="@id/favoriteTracksFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+
+
+
+</navigation>

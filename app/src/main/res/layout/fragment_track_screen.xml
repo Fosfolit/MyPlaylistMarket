@@ -8,17 +8,17 @@
     android:layout_height="match_parent"
     android:theme="@style/Music.Theme"
     android:background="?attr/colorPrimary"
-    tools:context=".ui.activity.AudioPlayer">
+    tools:context=".ui.fragment.AudioPlayerFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/arrow_back"
             app:layout_constraintBottom_toTopOf="@+id/mainBlock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/arrow_back"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainBlock"

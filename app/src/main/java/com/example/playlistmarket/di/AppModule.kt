@@ -43,8 +43,8 @@ import com.example.playlistmarket.ui.viewModel.MainViewModel
 import com.example.playlistmarket.ui.viewModel.MediaLibraryViewModel
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
-import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryFavoriteTracksViewModel
-import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryPlaylistViewModel
+import com.example.playlistmarket.ui.viewModel.MediaLibrary.MLFavoriteTracksViewModel
+import com.example.playlistmarket.ui.viewModel.MediaLibrary.MLPlaylistViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -185,9 +185,9 @@ val viewModelModule = module {
         MediaLibraryViewModel()
     }
     viewModel {
-        MediaLibraryFavoriteTracksViewModel(get(named("FavoriteTrack")))
+        MLFavoriteTracksViewModel(get(named("FavoriteTrack")))
     }
     viewModel {
-        MediaLibraryPlaylistViewModel(get(named("FavoriteTrack")))
+        MLPlaylistViewModel(get(named("FavoriteTrack")))
     }
 }

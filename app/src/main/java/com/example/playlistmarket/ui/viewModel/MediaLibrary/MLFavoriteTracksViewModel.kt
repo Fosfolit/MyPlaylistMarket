@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui.viewModel.fragment
+package com.example.playlistmarket.ui.viewModel.MediaLibrary
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,15 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
 import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.MLPlaylistState
-import com.example.playlistmarket.domain.model.PlayerState
-import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.domain.model.TrackList
-import com.example.playlistmarket.ui.viewModel.MediaLibState
-import com.example.playlistmarket.ui.viewModel.PlayerUiState
 import java.util.LinkedList
 
 
-class MediaLibraryFavoriteTracksViewModel(
+class MLFavoriteTracksViewModel(
     private val trackListInteraction: TrackListInteractor
 ): ViewModel() {
     private val condition = MLPViewModelStates()
@@ -23,7 +19,7 @@ class MediaLibraryFavoriteTracksViewModel(
 
     init {
         mediaLibraryPlaylistVMState.postValue(MLPViewModelStates())
-        //loadTrack()
+        loadTrack()
     }
 
     fun loadTrack(){

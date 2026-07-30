@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui.fragment.MediaLbrary
+package com.example.playlistmarket.ui.fragment.MediaLibrary
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,27 +8,27 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.FragmentMediaFavoriteTracksBinding
+import com.example.playlistmarket.databinding.FragmentMlFavoriteTracksBinding
 import com.example.playlistmarket.domain.model.MLPlaylistState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapterMLFragment
 import com.example.playlistmarket.ui.ErrorDataMLFragment
-import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryFavoriteTracksViewModel
+import com.example.playlistmarket.ui.viewModel.MediaLibrary.MLFavoriteTracksViewModel
 import org.koin.android.ext.android.inject
 
 
-class MediaLibraryFavoriteTracksFragment : Fragment() {
+class MLFavoriteTracksFragment : Fragment() {
 
-    private  var _binding: FragmentMediaFavoriteTracksBinding? = null
+    private  var _binding: FragmentMlFavoriteTracksBinding? = null
     private  val binding get() = _binding!!
-    private val viewModel: MediaLibraryFavoriteTracksViewModel by inject()
+    private val viewModel: MLFavoriteTracksViewModel by inject()
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMediaFavoriteTracksBinding.inflate(inflater,container,false)
+        _binding = FragmentMlFavoriteTracksBinding.inflate(inflater,container,false)
 
         recyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

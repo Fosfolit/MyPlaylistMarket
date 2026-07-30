@@ -18,11 +18,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.SearchMusicScreenBinding
+import com.example.playlistmarket.databinding.FragmentSearchMusicScreenBinding
 import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapter
@@ -35,7 +37,7 @@ import com.example.playlistmarket.ui.viewModel.SettingsViewModel
 import org.koin.android.ext.android.inject
 
 class SearchFragment : Fragment() {
-    private var _binding: SearchMusicScreenBinding? = null
+    private var _binding: FragmentSearchMusicScreenBinding? = null
     private val binding get() = _binding!!
     private var searchQuery: String = ""
     private lateinit var inputEditText: EditText
@@ -50,7 +52,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = SearchMusicScreenBinding.inflate(inflater,container,false)
+        _binding = FragmentSearchMusicScreenBinding.inflate(inflater,container,false)
         return binding.root
     }
     override fun onDestroyView() {
@@ -127,14 +129,7 @@ class SearchFragment : Fragment() {
 
     // Кнопка назад
     private fun setupBackButton() {
-        val toolbar: Toolbar = binding.buttonBack
-        toolbar.setOnClickListener {
-            parentFragmentManager.popBackStackImmediate()
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { view, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            view.updatePadding(top = statusBar.top)
-            insets }
+
     }
 
     // Кнопка для очиски поиска
@@ -195,11 +190,7 @@ class SearchFragment : Fragment() {
         viewModel.observeSearchState.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.clickStatus) {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, AudioPlayerFragment())
-                        .addToBackStack("my_backstack")
-                        .setReorderingAllowed(true)
-                        .commit()
+                    findNavController().navigate(R.id.action_searchFragment_to_audioPlayerFragment)
                 }
                 when (it.modelStatus) {
                     SearchViewModelState.START -> {

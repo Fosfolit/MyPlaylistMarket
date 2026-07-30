@@ -9,7 +9,7 @@
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
     android:theme="@style/Media_library.Theme"
-    tools:context=".ui.MediaLibraryActivity"
+    tools:context=".ui.fragment.MediaLibraryFragment"
 
     >
 
@@ -18,7 +18,7 @@
         style="@style/MediaLibraryButtonBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/arrow_back">
+       >
 
         <TextView
             style="@style/MediaLibrary.ButtonBackText"
@@ -54,10 +54,15 @@
             android:textSize="14sp" />
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/fragment_container"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_ml"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/media_library_navigation_graph"
+        tools:layout="@layout/fragment_ml_favorite_tracks" />
+
 
 
 </LinearLayout>

@@ -9,12 +9,11 @@
     android:orientation="vertical"
     android:theme="@style/Search.Theme"
     android:background="?attr/colorPrimary"
-    tools:context=".ui.activity.SearchActivity">
+    tools:context=".ui.fragment.SearchFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             style="@style/SettingMainToolbarStyle"
-            app:navigationIcon="@drawable/arrow_back"
             app:layout_constraintBottom_toTopOf="@+id/searchString"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

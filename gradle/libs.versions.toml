@@ -1,71 +1,42 @@
 [versions]
-agp = "8.6.0"
-appcompatVersion = "1.6.0"
-dagger = "2.45"
-daggerCompiler = "2.48"
-daggerVersion = "2.57.1"
-design = "28.0.0"
+agp = "8.6.1"
 glide = "4.14.2"
 gson = "2.10.1"
-gsonVersion = "2.8.8"
-hiltAndroid = "2.48"
-hiltCompiler = "2.57.2"
-hiltCompilerVersion = "2.48"
-hiltNavigationFragment = "1.3.0"
 koinAndroid = "3.5.0"
 kotlin = "1.9.0"
-coreKtx = "1.15.0"
+coreKtx = "1.13.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.0"
-material = "1.12.0"
-activity = "1.9.3"
-constraintlayout = "2.2.0"
-materialVersion = "1.6.1"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.14.0"
+activity = "1.10.0"
+constraintlayout = "2.2.1"
 recyclerview = "1.4.0"
 retrofit = "2.9.0"
-runner = "1.6.1"
-uiDesktop = "1.7.0"
-navigationFragmentKtx = "2.9.8"
+navigationFragmentKtx = "2.8.0"
+fragment = "1.8.9"
 
 [libraries]
-androidx-appcompat-v160 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx" }
-androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerVersion" }
-dagger-compiler-v248 = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerCompiler" }
-dagger-v2571 = { module = "com.google.dagger:dagger", version.ref = "daggerVersion" }
-design = { module = "com.android.support:design", version.ref = "design" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
-gson-v288 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
-hilt-compiler-v248 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompilerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-androidx-viewmodel = { module = "io.insert-koin:koin-androidx-viewmodel", version.ref = "koinAndroid" }
-koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager", version.ref = "koinAndroid" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-material-v161 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-navigation-fragment-ktx = { module = "andriodx.navigation:navigation-fragment-ktx" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
-androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

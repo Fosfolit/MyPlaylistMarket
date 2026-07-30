@@ -21,7 +21,7 @@ data class ErrorDataMLFragment(
 class ErrorAdapterMLFragment(private val news: List<ErrorDataMLFragment>, private val retryClickListener: (ErrorDataMLFragment) -> Unit) : RecyclerView.Adapter<ErrorViewHolderMLFragment> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ErrorViewHolderMLFragment {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_ml_error_notfound, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ml_error_notfound, parent, false)
         return ErrorViewHolderMLFragment(view)
     }
     override fun onBindViewHolder(holder: ErrorViewHolderMLFragment, position: Int) {
