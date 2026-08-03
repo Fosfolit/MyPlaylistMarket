@@ -19,7 +19,6 @@ class MediaLibraryFragment: Fragment()   {
     private val viewModel: MediaLibraryViewModel by inject()
     private lateinit var navController: NavController
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,28 +34,23 @@ class MediaLibraryFragment: Fragment()   {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         val navHostFragment = childFragmentManager.findFragmentById(R.id.fragment_container_ml) as NavHostFragment
         navController = navHostFragment.navController
 
-        val tabLayout: TabLayout = binding.tabLayout // добавьте в binding
+        val tabLayout: TabLayout = binding.tabLayout
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val position = tab?.position ?: 0
-                viewModel.switchTabs(position) // обновляем состояние
+                viewModel.switchTabs(position)
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-
-
         observeMLState()
-        setupBackButton()
     }
 
 
-    fun observeMLState(){
+    private fun observeMLState(){
         viewModel.observeMediaLibraryState.observe(viewLifecycleOwner) {
             when(it.tabsStatus){
                 0 -> {
@@ -66,13 +60,10 @@ class MediaLibraryFragment: Fragment()   {
                 1 -> {
                     navController.navigate(R.id.playlistFragment)
                 }
-
                 else->{}
             }
         }
     }
-    private fun setupBackButton() {
 
-    }
 
 }

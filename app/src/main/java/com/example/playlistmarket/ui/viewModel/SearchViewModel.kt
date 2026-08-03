@@ -1,9 +1,9 @@
 package com.example.playlistmarket.ui.viewModel
 
+import android.widget.Adapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
 import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.TrackList
@@ -72,15 +72,6 @@ class SearchViewModel (
                         updateModelStatus(SearchViewModelState.ERR_FIND) }
                 }
                 foundMusicList.onFailure {
-                    /*
-                    when (it){
-                        is NullPointerException ->{updateErrorName(R.string.nullPointerException)}
-                        is SSLHandshakeException ->{updateErrorName(R.string.sSLHandshakeException)}
-                        is SocketTimeoutException ->{updateErrorName(R.string.socketTimeoutException)}
-                        is UnknownHostException ->{updateErrorName(R.string.unknownHostException)}
-                        is ClassCastException ->{updateErrorName(R.string.classCastException)}
-                        is ConnectException ->{updateErrorName(R.string.сonnectException)}
-                    }*/
 
                     updateModelStatus(SearchViewModelState.ERR_INET)
 

@@ -13,27 +13,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.FragmentSearchMusicScreenBinding
 import com.example.playlistmarket.domain.model.SearchViewModelState
-import com.example.playlistmarket.ui.ButtonVisibility
-import com.example.playlistmarket.ui.ErrorAdapter
-import com.example.playlistmarket.ui.ErrorData
-import com.example.playlistmarket.ui.MusicAdapter
-import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
-import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
+import com.example.playlistmarket.ui.adapter.ButtonVisibility
+import com.example.playlistmarket.ui.adapter.ErrorAdapter
+import com.example.playlistmarket.ui.adapter.ErrorData
+import com.example.playlistmarket.ui.adapter.MusicAdapter
+import com.example.playlistmarket.ui.adapter.SearchedQueriesButtonAdapter
+import com.example.playlistmarket.ui.adapter.SearchedQueriesTextAdapter
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
-import com.example.playlistmarket.ui.viewModel.SettingsViewModel
 import org.koin.android.ext.android.inject
 
 class SearchFragment : Fragment() {
@@ -64,7 +58,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setupSearchInputWatcher()
-        setupBackButton()
         setupClearButton()
         observeViewModel()
         onRestoreInstanceState(savedInstanceState)
@@ -124,12 +117,6 @@ class SearchFragment : Fragment() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
-    }
-
-
-    // Кнопка назад
-    private fun setupBackButton() {
-
     }
 
     // Кнопка для очиски поиска
