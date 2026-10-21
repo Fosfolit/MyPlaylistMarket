@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:theme="@style/Media_library.Theme"
+    android:backgroundTint="?attr/colorPrimary"
+    >
+    <Button
+        android:id="@+id/buttonError"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="@string/newPlaylists"
+        style="@style/MLButtonError"
+
+    />
+    <ImageView
+        android:id="@+id/imageError"
+        android:layout_width ="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/search_error_notfound"
+        style="@style/MLImageError"
+        />
+
+    <TextView
+        android:id="@+id/nameError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yourMediaLibraryEmpty"
+        style="@style/MLNameError"
+        />
+
+</LinearLayout>

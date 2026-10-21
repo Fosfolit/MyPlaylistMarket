@@ -10,12 +10,12 @@ class TrackListRepositoryImpl (
     private val mapper : TrackListMapper
 ) : TrackListRepository {
 
-    override fun saveListTrack(list: TrackList) {
-        client.saveListTrack(mapper.toDTO(list))
+    override fun saveListTrack(nameType: String,list: TrackList) {
+        client.saveListTrack(nameType,mapper.toDTO(list))
     }
 
-    override fun loadListTrack(): TrackList {
-        return mapper.fromDTO( client.loadListTrack())
+    override fun loadListTrack(nameType: String): TrackList {
+        return mapper.fromDTO( client.loadListTrack(nameType))
     }
 
 }

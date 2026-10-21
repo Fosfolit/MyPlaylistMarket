@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui
+package com.example.playlistmarket.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +27,7 @@ enum class ButtonVisibility {
 class ErrorAdapter(private val news: List<ErrorData>, private val retryClickListener: (ErrorData) -> Unit) : RecyclerView.Adapter<ErrorViewHolderError> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ErrorViewHolderError {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.search_error_notfound, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.block_search_error_notfound, parent, false)
         return ErrorViewHolderError(view)
     }
     override fun onBindViewHolder(holder: ErrorViewHolderError, position: Int) {

@@ -40,10 +40,14 @@ import com.example.playlistmarket.domain.lmpl.MusicInteractImpl
 import com.example.playlistmarket.domain.lmpl.TrackListInteractorImpl
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import com.example.playlistmarket.ui.viewModel.MainViewModel
+import com.example.playlistmarket.ui.viewModel.MediaLibraryViewModel
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
+import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryFavoriteTracksViewModel
+import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryPlaylistViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -149,8 +153,11 @@ val interactorModule = module {
     single<ThemeInteractor> {
         ThemeInteractorImpl(get())
     }
-    single<TrackListInteractor> {
-        TrackListInteractorImpl(get(),HISTORY_COUNT_LIST)
+    single<TrackListInteractor>(named("FavoriteTrack")){
+        TrackListInteractorImpl("FavoriteTrack",get(),HISTORY_COUNT_LIST)
+    }
+    single<TrackListInteractor>(named("HistoryTrack")){
+        TrackListInteractorImpl("HistoryTrack",get(),HISTORY_COUNT_LIST)
     }
     single<TrackPositionInteractor> {
         TrackPositionInteractImpl(get())
@@ -169,9 +176,18 @@ val viewModelModule = module {
         MainViewModel(get())
     }
     viewModel {
-        SearchViewModel(get(),get(),get())
+        SearchViewModel(get(),get(named("HistoryTrack")),get())
     }
     viewModel {
         SettingsViewModel(get())
+    }
+    viewModel {
+        MediaLibraryViewModel()
+    }
+    viewModel {
+        MediaLibraryFavoriteTracksViewModel(get(named("FavoriteTrack")))
+    }
+    viewModel {
+        MediaLibraryPlaylistViewModel(get(named("FavoriteTrack")))
     }
 }

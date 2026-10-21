@@ -8,13 +8,14 @@ import com.example.playlistmarket.domain.api.repository.TrackListRepository
 import java.util.LinkedList
 
 class TrackListInteractorImpl (
+    private val nameType: String,
     private val repository: TrackListRepository,
     private val maxListSize: Int
 ): TrackListInteractor {
 
     override fun addItem(track: DataMusic) {
         val t = Thread {
-            val trackList : TrackList = repository.loadListTrack()
+            val trackList : TrackList = repository.loadListTrack(nameType)
             trackList.list.remove(track)
 
             if (trackList.list.size >= maxListSize) {
@@ -31,21 +32,21 @@ class TrackListInteractorImpl (
 
     override fun saveListTrack(list: TrackList) {
         val t = Thread {
-            repository.saveListTrack(list)
+            repository.saveListTrack(nameType,list)
         }
         t.start()
     }
 
     override fun loadListTrack(consume: TrackListInteractor.LoadTrackList) {
         val t = Thread {
-            consume.consume(repository.loadListTrack())
+            consume.consume(repository.loadListTrack(nameType))
         }
         t.start()
     }
 
     override fun clearListTrack(){
         val t = Thread {
-            repository.saveListTrack(TrackList(LinkedList<DataMusic>()))
+            repository.saveListTrack(nameType,TrackList(LinkedList<DataMusic>()))
         }
         t.start()
     }

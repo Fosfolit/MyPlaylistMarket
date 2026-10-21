@@ -1,4 +1,4 @@
-package com.example.playlistmarket.ui
+package com.example.playlistmarket.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +42,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 class MusicAdapter(private val news: List<DataMusic>, private val retryClickListener: (DataMusic) -> Unit) : RecyclerView.Adapter<MusicViewHolder> () {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.block_music_view, parent, false)
         return MusicViewHolder(view)
     }
 

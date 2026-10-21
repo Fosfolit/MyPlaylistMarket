@@ -9,14 +9,9 @@
     android:backgroundTint="?attr/colorPrimary">
     <Button
         android:id="@+id/SearchedQueriesButton"
-        android:layout_marginTop="@dimen/mediumPadding"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:textSize="14sp"
-        android:fontFamily = "@font/ys_display_medium"
-        android:textColor="?attr/colorPrimary"
-        android:backgroundTint="?attr/colorPrimaryVariant"
-        android:padding="6dp"
-        android:gravity="center"
-        android:text="Очистить историю" />
+        android:layout_height="@dimen/cleanHistoryButton"
+        android:text="@string/clearHistory"
+        style="@style/SearchedQueriesButton"
+        />
 </LinearLayout>
