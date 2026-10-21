@@ -9,10 +9,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.FragmentMediaLibraryBinding
-import com.example.playlistmarket.ui.ViewPagerAdapter
+import com.example.playlistmarket.ui.adapter.ViewPagerAdapter
 import com.example.playlistmarket.ui.fragment.MediaLbrary.MediaLibraryFavoriteTracksFragment
 import com.example.playlistmarket.ui.fragment.MediaLbrary.MediaLibraryPlaylistFragment
 import com.example.playlistmarket.ui.viewModel.MediaLibraryViewModel

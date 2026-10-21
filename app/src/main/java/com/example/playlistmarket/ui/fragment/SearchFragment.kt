@@ -24,14 +24,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.SearchMusicScreenBinding
 import com.example.playlistmarket.domain.model.SearchViewModelState
-import com.example.playlistmarket.ui.ButtonVisibility
-import com.example.playlistmarket.ui.ErrorAdapter
-import com.example.playlistmarket.ui.ErrorData
-import com.example.playlistmarket.ui.MusicAdapter
-import com.example.playlistmarket.ui.SearchedQueriesButtonAdapter
-import com.example.playlistmarket.ui.SearchedQueriesTextAdapter
+import com.example.playlistmarket.ui.adapter.ButtonVisibility
+import com.example.playlistmarket.ui.adapter.ErrorAdapter
+import com.example.playlistmarket.ui.adapter.ErrorData
+import com.example.playlistmarket.ui.adapter.MusicAdapter
+import com.example.playlistmarket.ui.adapter.SearchedQueriesButtonAdapter
+import com.example.playlistmarket.ui.adapter.SearchedQueriesTextAdapter
 import com.example.playlistmarket.ui.viewModel.SearchViewModel
-import com.example.playlistmarket.ui.viewModel.SettingsViewModel
 import org.koin.android.ext.android.inject
 
 class SearchFragment : Fragment() {

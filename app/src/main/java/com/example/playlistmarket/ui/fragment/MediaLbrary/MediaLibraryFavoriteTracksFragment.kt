@@ -11,9 +11,9 @@ import com.example.playlistmarket.R
 
 import com.example.playlistmarket.databinding.FragmentMlFavoriteTracksBinding
 import com.example.playlistmarket.domain.model.MLPlaylistState
-import com.example.playlistmarket.ui.ButtonVisibility
-import com.example.playlistmarket.ui.ErrorAdapterMLFragment
-import com.example.playlistmarket.ui.ErrorDataMLFragment
+import com.example.playlistmarket.ui.adapter.ButtonVisibility
+import com.example.playlistmarket.ui.adapter.ErrorAdapterMLFragment
+import com.example.playlistmarket.ui.adapter.ErrorDataMLFragment
 import com.example.playlistmarket.ui.viewModel.fragment.MediaLibraryFavoriteTracksViewModel
 import org.koin.android.ext.android.inject
 
