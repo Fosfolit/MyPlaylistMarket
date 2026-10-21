@@ -123,7 +123,7 @@ data class SearchState (
     var listHistory :List<DataMusic> = LinkedList<DataMusic>(),
     var listSearch :List<DataMusic> = LinkedList<DataMusic>(),
     var modelStatus :SearchViewModelState = SearchViewModelState.START,
-    var errorName : Int = R.string.notInternetError1
+    var errorName : Int = R.string.app_name
 )
 
 

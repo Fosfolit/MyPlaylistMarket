@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:theme="@style/Search.Theme"
     android:background="?attr/colorPrimary"
-    tools:context=".ui.activity.SearchActivity">
+    tools:context=".ui.fragment.SearchFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
@@ -39,8 +39,9 @@
 
                 <EditText
                     android:id="@+id/inputEditText"
-                    style="@style/Search"
+                    style="@style/SettingToolbar"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:autofillHints="text"
                     android:drawableStart="@drawable/search"
                     android:hint="@string/search"

@@ -168,9 +168,9 @@ class SearchFragment : Fragment() {
                 ErrorData(
                     imageError = R.drawable.search_error_internet,
                     nameError = nameError,
-                    commentError = R.string.notInternetError2,
+                    commentError = R.string.loadErrorCheckInternet,
                     buttonErrorVisibility = ButtonVisibility.VISIBLE,
-                    buttonErrorText = R.string.notInternetError3,
+                    buttonErrorText = R.string.update,
                 )
             )
         ) {viewModel.searchMusic(searchQuery)}
@@ -181,10 +181,10 @@ class SearchFragment : Fragment() {
             listOf(
                 ErrorData(
                     imageError = R.drawable.search_error_notfound,
-                    nameError = R.string.notFoundError1,
-                    commentError = R.string.notFoundError2,
+                    nameError = R.string.nothingFound,
+                    commentError = R.string.nothing,
                     buttonErrorVisibility = ButtonVisibility.INVISIBLE,
-                    buttonErrorText = R.string.searchErrorButton
+                    buttonErrorText = R.string.update
                 )
             )
         ) {viewModel.searchMusic(searchQuery)}
@@ -214,11 +214,11 @@ class SearchFragment : Fragment() {
 
                     SearchViewModelState.HISTORY -> {
                         recyclerView.adapter = ConcatAdapter(
-                            SearchedQueriesTextAdapter(listOf(getString(R.string.textSearchHistory))),
+                            SearchedQueriesTextAdapter(listOf(getString(R.string.youLooking))),
                             MusicAdapter(it.listHistory) {
                                 viewModel.handleTrackClick(it)
                             },
-                            SearchedQueriesButtonAdapter(listOf(getString(R.string.textSearchButtonDeleteHistory))) {
+                            SearchedQueriesButtonAdapter(listOf(getString(R.string.clearHistory))) {
                                 viewModel.clearSearchHistory()
                             }
                         )

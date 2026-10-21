@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/trackName"
             style ="@style/MusicBlockTextUp"
-            tools:text="@string/settingbuttonText1"
+            tools:text="@string/mailMain"
             />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/settingbuttonText3" />
+                tools:text="@string/mailMain" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -52,7 +52,7 @@
             <TextView
                 android:id="@+id/trackTime"
                 style="@style/MusicBlockTextDown"
-                tools:text="@string/settingbuttonText3"
+                tools:text="@string/mailMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/imageView"

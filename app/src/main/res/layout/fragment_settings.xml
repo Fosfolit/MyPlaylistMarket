@@ -6,48 +6,63 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SettingsActivity"
+    tools:context=".ui.fragment.SettingsFragment"
     android:theme="@style/Setting.Theme"
     android:background="?attr/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/buttonBack"
-        style="@style/SettingMainToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIconTint="?attr/colorSecondary"
         app:navigationIcon="@drawable/arrow_back"
+        style="@style/SettingToolbar"
         >
+
         <TextView
-            style="@style/SettingMainStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/setting"
+            style="@style/SettingToolbarText"
             />
 
     </androidx.appcompat.widget.Toolbar>
 
     <Switch
         android:id="@+id/textViewStyle"
-        style="@style/SettingButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/darkTheme"
         android:checked="false"
-        android:text="@string/settingbuttonText1"
+        style="@style/SettingMenuBlock"
         />
 
     <TextView
         android:id="@+id/textViewShare"
-        style="@style/SettingButtonStyle"
-        android:text="@string/settingbuttonText2"
-        app:drawableEndCompat="@drawable/share" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/shareApp"
+        app:drawableEndCompat="@drawable/share"
+        style="@style/SettingMenuBlock"
+        />
 
     <TextView
         android:id="@+id/buttonHelper"
-        style="@style/SettingButtonStyle"
-        android:text="@string/settingbuttonText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/writeSupport"
         app:drawableEndCompat="@drawable/support"
+        style="@style/SettingMenuBlock"
         />
+
     <TextView
         android:id="@+id/buttonUserText"
-        style="@style/SettingButtonStyle"
-        android:text="@string/settingbuttonText4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/uerAgreement"
         app:drawableEndCompat="@drawable/vector"
+        style="@style/SettingMenuBlock"
         />
+
 </LinearLayout>

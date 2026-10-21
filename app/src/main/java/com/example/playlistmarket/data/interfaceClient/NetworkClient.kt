@@ -4,5 +4,4 @@ import com.example.playlistmarket.data.dto.searchMusic.Response
 
 interface NetworkClient {
     fun doRequest(dto: Any): Response
-
 }

@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.FragmentMediaFavoriteTracksBinding
+
+import com.example.playlistmarket.databinding.FragmentMlFavoriteTracksBinding
 import com.example.playlistmarket.domain.model.MLPlaylistState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapterMLFragment
@@ -19,16 +20,18 @@ import org.koin.android.ext.android.inject
 
 class MediaLibraryFavoriteTracksFragment : Fragment() {
 
-    private  var _binding: FragmentMediaFavoriteTracksBinding? = null
+    private  var _binding: FragmentMlFavoriteTracksBinding? = null
     private  val binding get() = _binding!!
     private val viewModel: MediaLibraryFavoriteTracksViewModel by inject()
     private lateinit var recyclerView: RecyclerView
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMediaFavoriteTracksBinding.inflate(inflater,container,false)
+        _binding = FragmentMlFavoriteTracksBinding.inflate(inflater,container,false)
 
         recyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -42,9 +45,9 @@ class MediaLibraryFavoriteTracksFragment : Fragment() {
             listOf(
                 ErrorDataMLFragment(
                     imageError = R.drawable.search_error_notfound,
-                    nameError  = R.string.mediaLibraryErrorEmptyMediaLibrary,
+                    nameError  = R.string.yourMediaLibraryEmpty,
                     buttonErrorVisibility = ButtonVisibility.INVISIBLE,
-                    buttonErrorText = R.string.mediaLibraryErrorEmptyMediaLibrary,
+                    buttonErrorText = R.string.mailMain,
                 )
             )
         ) {}
@@ -70,4 +73,11 @@ class MediaLibraryFavoriteTracksFragment : Fragment() {
         }
 
     }
+
+    companion object {
+        fun newInstance(): MediaLibraryFavoriteTracksFragment =
+            MediaLibraryFavoriteTracksFragment()
+    }
+
+
 }

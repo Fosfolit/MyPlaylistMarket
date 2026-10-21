@@ -1,48 +1,33 @@
 <resources>
-    <string name="app_name">Playlist market</string>
 
-    <string name="baseUrl">https://itunes.apple.com</string>
-    <string name="menubuttonText2">Медиатека</string>
+    <string name="mediaLibrary">Медиатека</string>
     <string name="setting">Настройки</string>
-    <string name="settingbuttonText1">Тёмная тема</string>
-    <string name="settingbuttonText2">Поделится приложением</string>
-    <string name="settingbuttonText3">Написать в поддержку</string>
-    <string name="settingbuttonText4">Пользовательское соглашение</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="buttonBack">Назад</string>
-    <string name="titleYandex">https://practicum.yandex.ru/learn/android-developer-plus/courses/aa69bcb1-18ad-4e02-b80f-7ab8ffca3574/sprints/342785/topics/9fbf99c8-cc59-4961-b3ab-368f9f433525/lessons/fe5f10e2-f6b9-48de-a585-986772cd94e0/</string>
-    <string name="titleYandexText">https://yandex.ru/legal/practicum_offer/</string>
-    <string name="mailMain">bedarev_egor@mail.ru</string>
+    <string name="darkTheme">Тёмная тема</string>
+    <string name="shareApp">Поделится приложением</string>
+    <string name="writeSupport">Написать в поддержку</string>
+    <string name="uerAgreement">Пользовательское соглашение</string>
+    <string name="back">Назад</string>
     <string name="spsAdmin">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="spsPeople">Сообщение разработчикам и разработчицам приложения Playlist Make</string>
     <string name="share">Поделится через:</string>
-
     <string name="search">Поиск</string>
-    <string name="searchSite">https://itunes.apple.com</string>
+    <string name="update">Обновить</string>
+    <string name="youLooking">Вы искали</string>
+    <string name="clearHistory">Очистить историю</string>
+    <string name="nothingFound">Ничего не найдено</string>
+    <string name="nothing"> </string>
+    <string name="connectionIssues">Проблемы со связью</string>
+    <string name="unknownError">Неизвестная ошибка</string>
+    <string name="unableConnectServer">Не удается подключиться к серверу</string>
+    <string name="newPlaylists">Новый плейлист</string>
+    <string name="playlists">Плейлисты</string>
+    <string name="selectedTracks">Избранные треки</string>
+    <string name="yourMediaLibraryEmpty">Ваша медиатека пуста</string>
+    <string name="dataFormatError">Ошибка формата данных</string>
+    <string name="dataError">Ошибка данных</string>
+    <string name="emptyPlaylistCreated">Вы не создали ни одного плейлиста</string>
+    <string name="timeOutTryAgain">Сервер не отвечает. Попробуйте позже</string>
+    <string name="connectionSecurityError">Ошибка безопасности соединения</string>
+    <string name="loadErrorCheckInternet">Загрузка не удалась. Проверьте подключение к интернету</string>
 
-    <string name="searchErrorButton">Обновить</string>
-    <string name="textSearchHistory">Вы искали</string>
-    <string name="textSearchButtonDeleteHistory">Очистить историю</string>
-    <string name="notFoundError1">Ничего не найдено</string>
-    <string name="notFoundError2"> </string>
-    <string name="notFoundError3"> </string>
-    <string name="notInternetError1">Проблемы со связью</string>
-    <string name="notInternetError2">Загрузка не удалась. Проверьте подключение к интернету</string>
-    <string name="notInternetError3">Обновить</string>
-    <string name="nullPointerException">"Ошибка данных</string>
-    <string name="sSLHandshakeException">Ошибка безопасности соединения</string>
-    <string name="socketTimeoutException">Сервер не отвечает. Попробуйте позже</string>
-    <string name="unknownHostException">Не удается подключиться к серверу</string>
-    <string name="classCastException">Ошибка формата данных</string>
-    <string name="exception">Неизвестная ошибка</string>
-    <string name="сonnectException">Не удается подключиться к серверу</string>
-
-    <string name="mediaLibraryName">Медиотека</string>
-    <string name="mediaLibraryPlaylists">Плейлисты</string>
-    <string name="mediaLibrarySelectedTracks">Избранные треки</string>
-    <string name="mediaLibraryNewPlaylists">Новый плейлист</string>
-    <string name="mediaLibraryErrorEmptyMediaLibrary">Ваша медиатека пуста</string>
-    <string name="mediaLibraryErrorMissingPlaylists">Вы не создали ни одного плейлиста</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

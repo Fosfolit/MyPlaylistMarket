@@ -11,7 +11,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.MediaLibraryScreenBinding
+import com.example.playlistmarket.databinding.FragmentMediaLibraryBinding
 import com.example.playlistmarket.ui.ViewPagerAdapter
 import com.example.playlistmarket.ui.fragment.MediaLbrary.MediaLibraryFavoriteTracksFragment
 import com.example.playlistmarket.ui.fragment.MediaLbrary.MediaLibraryPlaylistFragment
@@ -20,22 +20,20 @@ import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
 
 class MediaLibraryFragment: Fragment()   {
-    private  var _binding: MediaLibraryScreenBinding? = null
+    private  var _binding: FragmentMediaLibraryBinding? = null
     private  val binding get() = _binding!!
     private val viewModel: MediaLibraryViewModel by inject()
 
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager: ViewPager
-    private lateinit var adapter: ViewPagerAdapter
-
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = MediaLibraryScreenBinding.inflate(inflater,container,false)
+        _binding = FragmentMediaLibraryBinding.inflate(inflater,container,false)
         return binding.root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -43,29 +41,9 @@ class MediaLibraryFragment: Fragment()   {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        // Инициализация
-        tabLayout = view.findViewById(R.id.tab_layout)
-        viewPager = view.findViewById(R.id.fragment_container)
-
-        // Создаем адаптер (ВАЖНО: используем childFragmentManager)
-        adapter = ViewPagerAdapter(childFragmentManager)
-
-        // Устанавливаем адаптер
-        viewPager.adapter = adapter
-
-        // Связываем TabLayout с ViewPager
-        tabLayout.setupWithViewPager(viewPager)
-
-
-
-
-
-
-
+        binding.fragmentContainer.adapter = ViewPagerAdapter(childFragmentManager)
+        binding.tabLayout.setupWithViewPager(binding.fragmentContainer)
         startingFragment(savedInstanceState)
-        //setTabLayout()
         observeMLState()
         setupBackButton()
     }

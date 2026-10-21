@@ -11,7 +11,7 @@ class RetrofitNetworkClient (
     private val retrofit : MusicInterface
 ): NetworkClient {
 
-    override fun doRequest(dto: Any): Response {
+     override fun doRequest(dto: Any): Response {
         if (dto is MusicSearchRequest) {
             val resp = retrofit.getMusic(dto.expression).execute()
 

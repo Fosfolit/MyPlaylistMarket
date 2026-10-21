@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.FragmentMediaPlaylistBinding
+
+import com.example.playlistmarket.databinding.FragmentMlPlaylistBinding
 import com.example.playlistmarket.domain.model.MLPlaylistState
 import com.example.playlistmarket.ui.ButtonVisibility
 import com.example.playlistmarket.ui.ErrorAdapterMLFragment
@@ -19,7 +20,7 @@ import org.koin.android.ext.android.inject
 
 class MediaLibraryPlaylistFragment : Fragment() {
     private val viewModel: MediaLibraryPlaylistViewModel by inject()
-    private  var _binding: FragmentMediaPlaylistBinding? = null
+    private  var _binding: FragmentMlPlaylistBinding? = null
     private  val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
@@ -28,7 +29,7 @@ class MediaLibraryPlaylistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentMediaPlaylistBinding.inflate(inflater,container,false)
+        _binding = FragmentMlPlaylistBinding.inflate(inflater,container,false)
         recyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         observeViewModel()
@@ -41,9 +42,9 @@ class MediaLibraryPlaylistFragment : Fragment() {
             listOf(
                 ErrorDataMLFragment(
                     imageError = R.drawable.search_error_notfound,
-                    nameError  = R.string.mediaLibraryErrorMissingPlaylists,
+                    nameError  = R.string.emptyPlaylistCreated,
                     buttonErrorVisibility = ButtonVisibility.VISIBLE,
-                    buttonErrorText = R.string.mediaLibraryNewPlaylists,
+                    buttonErrorText = R.string.newPlaylists,
                 )
             )
         ) {}
@@ -67,4 +68,9 @@ class MediaLibraryPlaylistFragment : Fragment() {
         }
 
     }
+    companion object {
+        fun newInstance(): MediaLibraryPlaylistFragment =
+            MediaLibraryPlaylistFragment()
+    }
+
 }

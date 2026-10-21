@@ -3,7 +3,9 @@
     <dimen name="littleCornerRadius">8dp</dimen>
     <dimen name="smallCornerRadius">16dp</dimen>
 
+    <dimen name="megaShortPadding">2dp</dimen>
     <dimen name="shortPadding">4dp</dimen>
+    <dimen name="shortButtonPadding">6dp</dimen>
     <dimen name="littlePadding">8dp</dimen>
     <dimen name="smallPadding">16dp</dimen>
     <dimen name="mediumPadding">20dp</dimen>
@@ -11,6 +13,7 @@
 
     <dimen name="shortTextSize">4dp</dimen>
     <dimen name="littleTextSize">8dp</dimen>
+    <dimen name="smallButtonTextSize">14sp</dimen>
     <dimen name="smallTextSize">16sp</dimen>
     <dimen name="mediumTextSize">24sp</dimen>
 
@@ -20,5 +23,9 @@
     <dimen name="player_playlist_n_favorites_buttons">16dp</dimen>
     <dimen name="player_layout_left_right_space">24dp</dimen>
     <dimen name="player_track_properties_textSize">13sp</dimen>
+
+    <dimen name="mainMenuButton">56dp</dimen>
+    <dimen name="sErrorButton">36dp</dimen>
+    <dimen name="cleanHistoryButton">36dp</dimen>
 
 </resources>
