@@ -42,12 +42,9 @@ android {
 dependencies {
     implementation (libs.androidx.appcompat.v160)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.runner)
-    implementation(libs.androidx.espresso.core)
     implementation(libs.androidx.ui.desktop)
     implementation(libs.androidx.navigation.fragment.ktx)
     testImplementation(libs.junit)
@@ -56,14 +53,12 @@ dependencies {
     implementation(libs.material.v161)
     implementation(libs.glide)
     implementation (libs.retrofit)
-    implementation (libs.gson)
     annotationProcessor(libs.compiler)
     implementation (libs.androidx.recyclerview)
     implementation (libs.converter.gson)
     implementation (libs.gson.v288)
     implementation (libs.koin.android)
     implementation (libs.koin.core)
-    
     implementation (libs.androidx.navigation.ui.ktx)
     implementation (libs.androidx.fragment.ktx)
 }
