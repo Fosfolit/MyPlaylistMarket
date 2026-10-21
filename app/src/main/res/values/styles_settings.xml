@@ -23,6 +23,7 @@
         <item name="drawableTint">?attr/colorOnPrimary</item>
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:backgroundTint">?attr/colorOnPrimary</item>
-        <item name="android:thumbTint">?attr/colorOnSecondary</item> //
+        <item name="android:thumbTint">?attr/colorOnSecondary</item>
         <item name="android:trackTint">?attr/colorSecondaryVariant</item>
+
     </style></resources>

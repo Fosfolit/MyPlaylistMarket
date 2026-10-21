@@ -24,6 +24,9 @@
     <dimen name="player_layout_left_right_space">24dp</dimen>
     <dimen name="player_track_properties_textSize">13sp</dimen>
 
+    <dimen name="searchedQueriesText">19sp</dimen>
+    <dimen name="searchProgressBar">44dp</dimen>
+    <dimen name="searchBlockSearch">64dp</dimen>
     <dimen name="mainMenuButton">56dp</dimen>
     <dimen name="sErrorButton">36dp</dimen>
     <dimen name="cleanHistoryButton">36dp</dimen>
