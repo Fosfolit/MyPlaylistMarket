@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -33,9 +34,16 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         viewModel.themeMode.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, insets ->
+            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            bottomNavigationView.isVisible = !imeVisible
+            insets
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer) { view, insets ->
@@ -45,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setupWithNavController(navController)
         animBottomNavigation()
     }
