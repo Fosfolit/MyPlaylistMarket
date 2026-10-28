@@ -2,43 +2,37 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/mainActivity2">
-    <activity
-        android:id="@+id/mainActivity2"
-        android:name="com.example.playlistmarket.ui.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
-    <fragment
-        android:id="@+id/mainMenuFragment2"
-        android:name="com.example.playlistmarket.ui.fragment.MainMenuFragment"
-        android:label="MainMenuFragment" >
-        <action
-            android:id="@+id/action_mainMenuFragment2_to_mediaLibraryFragment"
-            app:destination="@id/mediaLibraryFragment" />
-        <action
-            android:id="@+id/action_mainMenuFragment2_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_mainMenuFragment2_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-    </fragment>
+    android:id="@+id/main_navigationGraph"
+    app:startDestination="@id/mediaLibraryFragment">
+
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.playlistmarket.ui.fragment.SearchFragment"
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_audioPlayerFragment"
-            app:destination="@id/audioPlayerFragment" />
+            app:destination="@id/audioPlayerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.playlistmarket.ui.fragment.SettingsFragment"
-        android:label="SettingsFragment" />
+
     <fragment
         android:id="@+id/mediaLibraryFragment"
         android:name="com.example.playlistmarket.ui.fragment.MediaLibraryFragment"
-        android:label="MediaLibraryFragment" />
+        android:label="MediaLibraryFragment" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.playlistmarket.ui.fragment.SettingsFragment"
+        android:label="SettingsFragment" >
+
+    </fragment>
+
     <fragment
         android:id="@+id/audioPlayerFragment"
         android:name="com.example.playlistmarket.ui.fragment.AudioPlayerFragment"

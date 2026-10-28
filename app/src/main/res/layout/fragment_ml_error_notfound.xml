@@ -7,6 +7,7 @@
     android:gravity="center"
     android:theme="@style/Media_library.Theme"
     android:backgroundTint="?attr/colorPrimary"
+    android:paddingVertical="@dimen/mediumPadding"
     >
     <Button
         android:id="@+id/buttonError"

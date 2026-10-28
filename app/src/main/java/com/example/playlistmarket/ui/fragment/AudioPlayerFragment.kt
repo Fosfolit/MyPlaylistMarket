@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmarket.R
-import com.example.playlistmarket.databinding.MediaScreenBinding
+import com.example.playlistmarket.databinding.FragmentMediaScreenBinding
 import com.example.playlistmarket.domain.model.PlayerState
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import org.koin.android.ext.android.inject
@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayerFragment: Fragment()  {
-    private  var _binding: MediaScreenBinding? = null
+    private  var _binding: FragmentMediaScreenBinding? = null
     private  val binding get() = _binding!!
     private val viewModel: AudioPlayerViewModel by inject()
     override fun onCreateView(
@@ -27,7 +27,7 @@ class AudioPlayerFragment: Fragment()  {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = MediaScreenBinding.inflate(inflater,container,false)
+        _binding = FragmentMediaScreenBinding.inflate(inflater,container,false)
         return binding.root
     }
 

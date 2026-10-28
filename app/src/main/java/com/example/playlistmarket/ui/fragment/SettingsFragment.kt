@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.FragmentSettingsBinding
 import com.example.playlistmarket.ui.viewModel.SettingsViewModel
@@ -40,7 +42,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupThemeSwitch()
-        setupBackButton()
+
         setupShareButton()
         setupUserAgreementLink()
         setupSupportEmail()
@@ -63,15 +65,6 @@ class SettingsFragment : Fragment() {
         binding.textViewStyle.setOnClickListener {
             viewModel.saveUpdateTheme(binding.textViewStyle.isChecked)
         }
-    }
-    private fun setupBackButton()  {
-        binding.buttonBack.setOnClickListener {
-            parentFragmentManager.popBackStackImmediate()
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            view.updatePadding(top = statusBar.top)
-            insets }
     }
     private fun setupShareButton() {
         binding.textViewShare.setOnClickListener {

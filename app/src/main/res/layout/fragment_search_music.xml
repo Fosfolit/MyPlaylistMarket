@@ -14,8 +14,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/arrow_back"
+            android:layout_height="56dp"
             app:layout_constraintBottom_toTopOf="@+id/searchString"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
