@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -57,10 +54,6 @@ class AudioPlayerFragment: Fragment()  {
             viewModel.saveTrackPosition()
             parentFragmentManager.popBackStackImmediate()
         }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonBack) { view, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            view.updatePadding(top = statusBar.top)
-            insets }
     } // Функционал Toolbar
 
     private fun observeViewModel(){

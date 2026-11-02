@@ -6,11 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
 import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.MLPlaylistState
-import com.example.playlistmarket.domain.model.PlayerState
-import com.example.playlistmarket.domain.model.SearchViewModelState
 import com.example.playlistmarket.domain.model.TrackList
-import com.example.playlistmarket.ui.viewModel.MediaLibState
-import com.example.playlistmarket.ui.viewModel.PlayerUiState
 import java.util.LinkedList
 
 

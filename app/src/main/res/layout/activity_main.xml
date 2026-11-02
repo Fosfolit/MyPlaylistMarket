@@ -31,10 +31,10 @@
         app:menu="@menu/bottom_navigation_menu"
         app:itemIconTint="@color/nav_item_color"
         android:background="?attr/colorOnPrimary"
-        app:itemActiveIndicatorStyle="?attr/colorOnPrimary"
         android:textSize="@dimen/smallMenuTextSize"
         android:fontFamily="@font/ys_display_regular"
         app:itemIconSize="24dp"
+        app:itemTextColor="@color/nav_item_color"
         />
 
 </LinearLayout>

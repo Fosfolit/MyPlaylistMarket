@@ -6,12 +6,11 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmarket.Constants
-import com.example.playlistmarket.domain.model.DataMusic
-import com.example.playlistmarket.domain.model.TrackPosition
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
+import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.PlayerState
+import com.example.playlistmarket.domain.model.TrackPosition
 
 class AudioPlayerViewModel (
     private val trackPositionInteraction: TrackPositionInteractor,

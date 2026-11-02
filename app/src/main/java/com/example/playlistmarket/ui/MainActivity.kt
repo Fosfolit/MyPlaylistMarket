@@ -46,15 +46,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer) { view, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            view.updatePadding(top = statusBar.top)
-            insets }
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
         bottomNavigationView.setupWithNavController(navController)
-        animBottomNavigation()
+
     }
 
     fun animBottomNavigation(){
@@ -63,10 +59,10 @@ class MainActivity : AppCompatActivity() {
             var oldIndex = getItemIndex(bottomNavigationView.selectedItemId)
             when {
                 newIndex > oldIndex -> {
-                    navController.navigate(menuItem.itemId, null, navToRight)
+                    navController.navigate(menuItem.itemId, null)
                 }
                 newIndex < oldIndex -> {
-                    navController.navigate(menuItem.itemId, null, navToLeft)
+                    navController.navigate(menuItem.itemId, null)
                 }
                 else -> {}
             }
@@ -83,18 +79,5 @@ class MainActivity : AppCompatActivity() {
         }
         return -1 // если не найден
     }
-    private val navToLeft = NavOptions.Builder()
-        .setEnterAnim(R.anim.slide_in_left)
-        .setExitAnim(R.anim.slide_out_right)
-        .setPopEnterAnim(R.anim.slide_in_right)
-        .setPopExitAnim(R.anim.slide_out_left)
-        .build()
-
-    private val navToRight = NavOptions.Builder()
-        .setEnterAnim(R.anim.slide_in_right)
-        .setExitAnim(R.anim.slide_out_left)
-        .setPopEnterAnim(R.anim.slide_in_left)
-        .setPopExitAnim(R.anim.slide_out_right)
-        .build()
 
 }
