@@ -7,8 +7,8 @@
         <item name="colorOnPrimary">@color/YP_White</item><!-- Кнопки -->
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/YP_Black</item><!-- Текст на фоне -->
-        <item name="colorSecondaryVariant">@color/YP_Black</item><!-- Текст кнопок-->
-        <item name="colorOnSecondary">@color/YP_Black</item>
+        <item name="colorSecondaryVariant">@color/YP_Light_Gray</item><!-- Текст кнопок-->
+        <item name="colorOnSecondary">@color/YP_White</item>
         <!-- Customize your theme here. -->
     </style>
 

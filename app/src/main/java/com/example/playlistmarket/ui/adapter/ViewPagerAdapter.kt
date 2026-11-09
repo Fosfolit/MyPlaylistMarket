@@ -11,8 +11,8 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     // Названия вкладок
     private val tabTitles = arrayOf(
-       "R.string.selectedTracks",
-        "R.string.playlists")
+       "Избранные треки",
+        "Плейлисты")
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
@@ -24,5 +24,7 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int = tabTitles.size
 
-
+    override fun getPageTitle(position: Int): CharSequence {
+        return tabTitles[position]
+    }
 }

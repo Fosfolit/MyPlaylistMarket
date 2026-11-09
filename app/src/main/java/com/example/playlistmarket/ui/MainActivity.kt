@@ -2,6 +2,7 @@ package com.example.playlistmarket.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -32,52 +33,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        var vis: Boolean = false
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = navHostFragment.navController
+
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         viewModel.themeMode.observe(this) { nightMode ->
             AppCompatDelegate.setDefaultNightMode(nightMode)
         }
-
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, insets ->
             val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-            bottomNavigationView.isVisible = !imeVisible
+            if(!vis){binding.linearLayoutNavigation.isVisible = !imeVisible}
             insets
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
-        navController = navHostFragment.navController
-
         bottomNavigationView.setupWithNavController(navController)
 
-    }
-
-    fun animBottomNavigation(){
-        bottomNavigationView.setOnItemSelectedListener { menuItem: MenuItem ->
-            var newIndex = getItemIndex(menuItem.itemId)
-            var oldIndex = getItemIndex(bottomNavigationView.selectedItemId)
-            when {
-                newIndex > oldIndex -> {
-                    navController.navigate(menuItem.itemId, null)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.audioPlayerFragment -> {
+                    vis = true
+                    binding.linearLayoutNavigation.visibility = View.GONE
                 }
-                newIndex < oldIndex -> {
-                    navController.navigate(menuItem.itemId, null)
+                else -> {
+                    vis = false
+                    binding.linearLayoutNavigation.visibility = View.VISIBLE
                 }
-                else -> {}
             }
-            true
         }
     }
 
-    private fun getItemIndex(itemId: Int): Int {
-        val menu = bottomNavigationView.menu
-        for (i in 0 until menu.size()) {
-            if (menu.getItem(i).itemId == itemId) {
-                return i
-            }
-        }
-        return -1 // если не найден
-    }
 
 }
