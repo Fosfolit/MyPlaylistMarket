@@ -6,18 +6,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.SettingsFragment"
     android:theme="@style/Setting.Theme"
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
+    tools:context=".ui.fragment.SettingsFragment"
     >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/buttonBack"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/arrow_back"
-        style="@style/SettingToolbar"
+        android:layout_height="56dp"
         >
 
         <TextView

@@ -3,14 +3,13 @@ package com.example.playlistmarket.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmarket.Constants
 import com.example.playlistmarket.R
-import com.example.playlistmarket.domain.model.DataMusic
-import com.example.playlistmarket.domain.model.TrackList
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.MusicInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
+import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.SearchViewModelState
+import com.example.playlistmarket.domain.model.TrackList
 import java.util.LinkedList
 
 

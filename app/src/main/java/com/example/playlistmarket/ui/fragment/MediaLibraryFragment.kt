@@ -5,9 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.FragmentMediaLibraryBinding
@@ -99,10 +96,6 @@ class MediaLibraryFragment: Fragment()   {
         toolbar.setOnClickListener {
             parentFragmentManager.popBackStackImmediate()
         }
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { view, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            view.updatePadding(top = statusBar.top)
-            insets }
     }
 
 }

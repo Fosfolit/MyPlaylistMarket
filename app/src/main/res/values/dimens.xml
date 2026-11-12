@@ -14,6 +14,7 @@
     <dimen name="shortTextSize">4dp</dimen>
     <dimen name="littleTextSize">8dp</dimen>
     <dimen name="smallButtonTextSize">14sp</dimen>
+    <dimen name="smallMenuTextSize">12sp</dimen>
     <dimen name="smallTextSize">16sp</dimen>
     <dimen name="mediumTextSize">24sp</dimen>
 

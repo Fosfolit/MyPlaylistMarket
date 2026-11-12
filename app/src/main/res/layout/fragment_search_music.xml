@@ -15,7 +15,6 @@
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/arrow_back"
             app:layout_constraintBottom_toTopOf="@+id/searchString"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/search"
                     style="@style/SearchToolbarText"
                     />
 
@@ -35,20 +33,21 @@
         <RelativeLayout
             android:id="@+id/searchString"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/searchBlockSearch"
+            android:layout_height="64dp"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonBack"
-            style="@style/SearchBlockSearch"
+            style="@style/SearchInputText"
             >
 
                 <EditText
                     android:id="@+id/inputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
+                    android:drawableStart="@drawable/search"
                     android:hint="@string/search"
-                    style="@style/SearchEditText"
+                    style="@style/SearchInputTextEditText"
                     />
 
                 <ImageView
@@ -56,7 +55,7 @@
                     android:layout_width="@dimen/smallTextSize"
                     android:layout_height="@dimen/smallTextSize"
                     android:src="@drawable/krest"
-                    style="@style/SearchClearIcon"
+                    style="@style/SearchInputTextClearIcon"
                     />
 
         </RelativeLayout>
@@ -70,6 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchString"
+
             />
 
         <ProgressBar
@@ -80,8 +80,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchString"
-            style="@style/SearchProgressBar"/>
+            style="@style/SearchProgressBar"
+            />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
