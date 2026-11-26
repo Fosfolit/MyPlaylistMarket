@@ -8,17 +8,11 @@ import com.example.playlistmarket.domain.api.repository.ActivTrackRepository
 class ActivTrackInteractorImpl (
     private val repository: ActivTrackRepository
 ): ActivTrackInteractor {
-    override fun saveTrack(expression: DataMusic) {
-        val t = Thread {
+    override suspend fun saveTrack(expression: DataMusic) =
             repository.saveTrack(expression)
-        }
-        t.start()
-    }
 
-    override fun loadTrack(trackConsumer: ActivTrackInteractor.ActivTrackConsumer) {
-        val t = Thread {
-            trackConsumer.consume(repository.loadTrack())
-        }
-        t.start()
-    }
+
+    override suspend fun loadTrack():DataMusic =
+          repository.loadTrack()
+
 }

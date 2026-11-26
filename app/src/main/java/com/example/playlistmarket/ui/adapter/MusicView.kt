@@ -25,7 +25,7 @@ class MusicViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(model: DataMusic, retryClickListener: (DataMusic) -> Unit) {
         trackName.text = model.trackName
-        trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
+        trackTime.text = model.trackTime
         artistName.text = model.artistName
         Glide.with(itemView)
             .load(model.artworkUrl100)

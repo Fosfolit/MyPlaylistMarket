@@ -5,6 +5,9 @@ import com.example.playlistmarket.data.dto.dto.DataMusicDto
 import com.example.playlistmarket.data.dto.dto.TrackListDto
 import com.example.playlistmarket.data.interfaceClient.TrackListClient
 import com.example.playlistmarket.di.GsonMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import java.util.LinkedList
 
 
@@ -14,19 +17,23 @@ class StorageListTrackClient (
 ) : TrackListClient {
 
 
-    override fun loadListTrack(nameType: String): TrackListDto {
-        if(sharedPrefs.contains(nameType)) {
-            val json =  sharedPrefs.getString(nameType, null)
-            return mapper.fromDTO(json, TrackListDto::class.java)
+    override suspend fun loadListTrack(nameType: String): TrackListDto =
+        withContext(Dispatchers.IO) {
+            if (sharedPrefs.contains(nameType)) {
+                val json = sharedPrefs.getString(nameType, null)
+                mapper.fromDTO(json, TrackListDto::class.java)
+            } else {
+                TrackListDto(LinkedList<DataMusicDto>())
+            }
         }
-        return TrackListDto(LinkedList<DataMusicDto>())
-    }
-    override fun saveListTrack(nameType: String,list : TrackListDto) {
-        sharedPrefs.edit()
-            .remove(nameType)
-            .putString(nameType,mapper.toDTO(list))
-            .apply()
-    }
+    override suspend fun saveListTrack(nameType: String,list : TrackListDto) =
+        withContext(NonCancellable +Dispatchers.IO) {
+            sharedPrefs.edit()
+                .remove(nameType)
+                .putString(nameType, mapper.toDTO(list))
+                .apply()
+        }
+
 
 
 }

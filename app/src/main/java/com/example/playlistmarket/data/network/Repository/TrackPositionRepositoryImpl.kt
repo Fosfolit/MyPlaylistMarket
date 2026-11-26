@@ -9,13 +9,17 @@ class TrackPositionRepositoryImpl (
     private val trackPositionClient : TrackPositionClient,
     private val mapper: TrackPositionMapper
 ) : TrackPositionRepository {
-    override fun saveTrackPosition(track: TrackPosition) {
+    override suspend fun saveTrackPosition(track: TrackPosition) {
         trackPositionClient.saveTrackPosition(
-            mapper.toDTO(track)
+            mapper
+                .toDTO(track)
         )
     }
 
-    override fun loadTrackPosition(): TrackPosition {
-        return mapper.fromDTO(trackPositionClient.loadTrackPosition())
+    override suspend fun loadTrackPosition(): TrackPosition {
+        return mapper.fromDTO(
+            trackPositionClient
+                .loadTrackPosition()
+        )
     }
 }

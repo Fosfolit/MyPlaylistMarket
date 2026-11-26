@@ -10,11 +10,11 @@ class ActivTrackRepositoryImpl (
     private val mapper : DataMusicMapper
 ): ActivTrackRepository {
 
-    override fun saveTrack(track: DataMusic) {
+    override suspend fun saveTrack(track: DataMusic) {
         client.saveTrack(mapper.toDTO(track))
     }
 
-    override fun loadTrack(): DataMusic {
+    override suspend fun loadTrack(): DataMusic {
         return mapper.fromDTO(client.loadTrack())
     }
 

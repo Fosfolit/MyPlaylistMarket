@@ -3,10 +3,12 @@ package com.example.playlistmarket.ui.viewModel.fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmarket.domain.api.interactor.TrackListInteractor
 import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.MLPlaylistState
 import com.example.playlistmarket.domain.model.TrackList
+import kotlinx.coroutines.launch
 import java.util.LinkedList
 
 
@@ -22,11 +24,9 @@ class MediaLibraryPlaylistViewModel(
     }
 
     fun loadTrack(){
-        trackListInteraction.loadListTrack(object : TrackListInteractor.LoadTrackList {
-            override fun consume(list: TrackList) {
-                updateListPlaylist(list.list)
-            }
-        })
+        viewModelScope.launch {
+            updateListPlaylist(trackListInteraction.loadListTrack().list)
+        }
     }
 
 

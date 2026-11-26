@@ -6,11 +6,18 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmarket.domain.api.interactor.ActivTrackInteractor
 import com.example.playlistmarket.domain.api.interactor.TrackPositionInteractor
 import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.PlayerState
 import com.example.playlistmarket.domain.model.TrackPosition
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import org.koin.core.time.Timer
 
 class AudioPlayerViewModel (
     private val trackPositionInteraction: TrackPositionInteractor,
@@ -22,36 +29,47 @@ class AudioPlayerViewModel (
     private val playerUiState = MutableLiveData<PlayerUiState>()
     val observePlayerUiState: LiveData<PlayerUiState> = playerUiState
     private lateinit var currentTrackUrl : String
-    private val handler = Handler(Looper.getMainLooper())
-    private lateinit var timerUpdateRunnable: Runnable
-
+    private var timerJob: Job? = null
 
     init {
         playerUiState.postValue(PlayerUiState())
         updatePlayerState(PlayerState.STATE_DEFAULT)
         loadTrack()
-        timerUpdateRunnable = Runnable {
-            updateCurrentPosition(mediaPlayer.currentPosition)
-            handler.postDelayed( timerUpdateRunnable, 1000)
+    }
+
+    private fun timerStart(){
+        timerJob = viewModelScope.launch {
+            while(isActive){
+                updateCurrentPosition(mediaPlayer.currentPosition)
+                delay(300L)
+            }
         }
     }
 
-
+    private fun timerStop() {
+        timerJob?.cancel()
+        timerJob = null
+    }
 
     private fun loadTrack(){
-        activeTrack.loadTrack(object : ActivTrackInteractor. ActivTrackConsumer {
-            override fun consume(savedTrack: DataMusic) {
-                updateCurrentTrack(savedTrack)
-                currentTrackUrl = savedTrack.previewUrl
-                trackPositionInteraction.loadTrackPosition(object : TrackPositionInteractor.StorageConsumer {
-                    override fun consume(savedPosition: TrackPosition) {
-                        updateTrackPosition(savedPosition)
-                        prepareMedia(savedPosition, savedTrack)
-                    }
-                })
-            }
-        })
+        viewModelScope.launch {
+            val savedTrack = activeTrack.loadTrack()
+            activeTrack.saveTrack(DataMusic("", "", "", "00:00", "", "", "", "", ""))
+            updateCurrentTrack(savedTrack)
+            currentTrackUrl = savedTrack.previewUrl
+            loadTrackPosition(savedTrack)
+        }
     }
+
+    private fun loadTrackPosition(savedTrack: DataMusic){
+        viewModelScope.launch {
+            val savedPosition = trackPositionInteraction.loadTrackPosition()
+            updateTrackPosition(savedPosition)
+            prepareMedia(savedPosition, savedTrack)
+        }
+
+    }
+
 
 
 
@@ -72,6 +90,7 @@ class AudioPlayerViewModel (
         }
         mediaPlayer.setOnCompletionListener {
             updatePlayerState(PlayerState.STATE_PREPARED)
+            updateCurrentPosition(0)
             mediaPlayer.seekTo(0)
         }
     }
@@ -81,7 +100,9 @@ class AudioPlayerViewModel (
     fun saveTrackPosition(){
         stopPlayback()
         if (currentTrackUrl.isNotEmpty()){
-            trackPositionInteraction.saveTrackPosition(TrackPosition(currentTrackUrl,mediaPlayer.currentPosition))
+            viewModelScope.launch {
+                trackPositionInteraction.saveTrackPosition(TrackPosition(currentTrackUrl,mediaPlayer.currentPosition))
+            }
         }
     }
 
@@ -89,13 +110,13 @@ class AudioPlayerViewModel (
         when(condition.playerState) {
             PlayerState.STATE_PLAYING -> {
                 updatePlayerState(PlayerState.STATE_PAUSED)
-                handler.removeCallbacks(timerUpdateRunnable)
+                timerStop()
                 mediaPlayer.pause()
             }
             PlayerState.STATE_PREPARED, PlayerState.STATE_PAUSED -> {
                 updatePlayerState(PlayerState.STATE_PLAYING)
                 mediaPlayer.start()
-                handler.post(timerUpdateRunnable)
+                timerStart()
             }
             else ->{
                 //  Toast.makeText(context, playerState.value.toString(), Toast.LENGTH_SHORT).show()
@@ -104,7 +125,7 @@ class AudioPlayerViewModel (
     }
 
     fun stopPlayback(){
-        handler.removeCallbacks(timerUpdateRunnable)
+        timerStop()
         mediaPlayer.stop()
     }
 
@@ -129,7 +150,7 @@ class AudioPlayerViewModel (
 data class PlayerUiState(
     var currentPosition: Int = 0,
     var playerState: PlayerState = PlayerState.STATE_DEFAULT,
-    var thisTrack: DataMusic = DataMusic("", "", "", 0, "", "", "", "", ""),
+    var thisTrack: DataMusic = DataMusic("", "", "", "00:00", "", "", "", "", ""),
     var trackPosition: TrackPosition = TrackPosition("", 0)
 )
 

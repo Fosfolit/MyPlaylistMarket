@@ -5,6 +5,6 @@ import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 
 
 interface TrackPositionClient {
-    fun saveTrackPosition(dto: TrackPositionDto)
-    fun loadTrackPosition(): TrackPositionDto
+    suspend fun saveTrackPosition(dto: TrackPositionDto)
+    suspend fun loadTrackPosition(): TrackPositionDto
 }

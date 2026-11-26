@@ -1,15 +1,8 @@
 package com.example.playlistmarket.domain.api.interactor
 
 import com.example.playlistmarket.domain.model.TrackList
+import kotlinx.coroutines.flow.Flow
 
 interface MusicInteractor {
-    fun searchMusic(expression: String, consumer: MusicConsumer)
-    fun clickDebounce(consume: BoolMusicConsumer)
-
-    interface MusicConsumer {
-        fun consume(foundMusicList: Result<TrackList>)
-    }
-    interface BoolMusicConsumer {
-        fun consume(click: Boolean)
-    }
+    suspend fun searchMusic(expression: String): Flow<Result<TrackList>>
 }

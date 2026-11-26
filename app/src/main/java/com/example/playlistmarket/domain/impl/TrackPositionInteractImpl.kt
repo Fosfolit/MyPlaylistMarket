@@ -8,17 +8,12 @@ import com.example.playlistmarket.domain.api.repository.TrackPositionRepository
 class TrackPositionInteractImpl (
     private val repository: TrackPositionRepository
 ): TrackPositionInteractor {
-    override fun saveTrackPosition(expression: TrackPosition) {
-        val t = Thread {
-            repository.saveTrackPosition(expression)
-        }
-        t.start()
-    }
 
-    override fun loadTrackPosition(consumer: TrackPositionInteractor.StorageConsumer) {
-        val t = Thread {
-            consumer.consume(repository.loadTrackPosition())
-        }
-        t.start()
-    }
+    override suspend fun saveTrackPosition(expression: TrackPosition) =
+        repository.saveTrackPosition(expression)
+
+
+    override suspend fun loadTrackPosition(): TrackPosition =
+        repository.loadTrackPosition()
+
 }

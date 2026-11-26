@@ -6,18 +6,11 @@ import com.example.playlistmarket.domain.api.repository.ThemeRepository
 class ThemeInteractorImpl (
     private val repository: ThemeRepository
 ): ThemeInteractor {
-    override fun loadTheme(consumeTheme: ThemeInteractor.ThemeConsumer) {
-        val t = Thread {
-            consumeTheme.consume(repository.loadTheme())
-        }
-        t.start()
-    }
+    override suspend fun loadTheme():Boolean =
+        repository.loadTheme()
 
-    override fun saveTheme(theme: Boolean) {
-        val t = Thread {
-            repository.saveTheme(theme)
-        }
-        t.start()
-    }
+
+    override suspend fun saveTheme(theme: Boolean) =
+        repository.saveTheme(theme)
 
 }
