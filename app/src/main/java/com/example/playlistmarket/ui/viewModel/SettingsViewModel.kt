@@ -1,9 +1,12 @@
 package com.example.playlistmarket.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmarket.domain.api.interactor.ThemeInteractor
+import kotlinx.coroutines.launch
 
 class SettingsViewModel  (
     private val themeInteractor : ThemeInteractor
@@ -24,16 +27,17 @@ class SettingsViewModel  (
     }
 
     private fun loadTheme(){
-        themeInteractor.loadTheme(object : ThemeInteractor.ThemeConsumer {
-            override fun consume(isDarkMode: Boolean) {
-                updateTheme(isDarkMode)
-            }
-        })
+        viewModelScope.launch {
+            updateTheme(themeInteractor.loadTheme())
+        }
     }
 
+
     fun saveUpdateTheme(isDarkMode: Boolean){
-        themeInteractor.saveTheme(isDarkMode)
-        updateTheme(isDarkMode)
+        viewModelScope.launch {
+            themeInteractor.saveTheme(isDarkMode)
+            updateTheme(themeInteractor.loadTheme())
+        }
     }
 
     fun updateTheme(isDarkMode: Boolean){

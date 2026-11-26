@@ -7,11 +7,11 @@ class ThemeRepositoryImpl (
     private val themeClient: ThemeClient
 ): ThemeRepository {
 
-    override fun loadTheme(): Boolean {
+    override suspend fun loadTheme(): Boolean {
         return  themeClient.loadTheme()
     }
 
-    override fun saveTheme(theme: Boolean) {
+    override suspend fun saveTheme(theme: Boolean) {
         themeClient.saveTheme(theme)
     }
 

@@ -15,6 +15,7 @@ materialVersion = "1.6.1"
 recyclerview = "1.4.0"
 retrofit = "2.9.0"
 runner = "1.6.1"
+rxjavaVersion = "2.2.21"
 uiDesktop = "1.7.0"
 navigationFragmentKtx = "2.9.8"
 
@@ -40,6 +41,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+rxjava2-rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjavaVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

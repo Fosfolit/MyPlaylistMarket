@@ -4,13 +4,8 @@ import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.TrackList
 
 interface TrackListInteractor {
-    fun addItem(track : DataMusic)
-    fun saveListTrack(list: TrackList)
-    fun loadListTrack(consume: LoadTrackList)
-    fun clearListTrack()
-
-    interface LoadTrackList {
-        fun consume(list: TrackList)
-    }
-
+    suspend fun addItem(track : DataMusic)
+    suspend fun saveListTrack(list: TrackList)
+    suspend fun loadListTrack(): TrackList
+    suspend fun clearListTrack()
 }

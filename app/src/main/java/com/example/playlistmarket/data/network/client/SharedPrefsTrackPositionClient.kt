@@ -4,6 +4,9 @@ import android.content.SharedPreferences
 import com.example.playlistmarket.data.interfaceClient.TrackPositionClient
 import com.example.playlistmarket.data.dto.dto.TrackPositionDto
 import com.example.playlistmarket.di.GsonMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 
 
 class SharedPrefsTrackPositionClient (
@@ -11,18 +14,23 @@ class SharedPrefsTrackPositionClient (
     private val mapper : GsonMapper
 ) : TrackPositionClient {
 
-    override fun saveTrackPosition(dto: TrackPositionDto) {
-        sharedPrefs.edit()
-            .remove("TrackPosition")
-            .putString("TrackPosition", mapper.toDTO(dto))
-            .apply()
-    }
-    override fun loadTrackPosition(): TrackPositionDto {
-        if(sharedPrefs.contains("TrackPosition")){
-            val track = sharedPrefs.getString("TrackPosition", null)
-            return mapper.fromDTO(track,TrackPositionDto::class.java)
+    override suspend fun saveTrackPosition(dto: TrackPositionDto) =
+        withContext(NonCancellable +Dispatchers.IO) {
+            sharedPrefs.edit()
+                .remove("TrackPosition")
+                .putString("TrackPosition", mapper.toDTO(dto))
+                .apply()
         }
-        return TrackPositionDto("",0)
-    }
+
+    override suspend fun loadTrackPosition(): TrackPositionDto =
+        withContext(Dispatchers.IO) {
+            if(sharedPrefs.contains("TrackPosition")){
+                val track = sharedPrefs.getString("TrackPosition", null)
+                 mapper.fromDTO(track,TrackPositionDto::class.java)
+            } else {
+                TrackPositionDto("", 0)
+            }
+        }
+
 
 }

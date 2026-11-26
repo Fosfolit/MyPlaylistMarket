@@ -8,6 +8,9 @@ import com.example.playlistmarket.domain.model.TrackList
 import com.example.playlistmarket.domain.model.TrackPosition
 import com.google.gson.Gson
 import java.util.LinkedList
+import java.text.SimpleDateFormat
+import java.util.Locale
+
 
 class DataMusicMapper {
     fun fromDTO(dto: DataMusicDto): DataMusic {
@@ -15,7 +18,8 @@ class DataMusicMapper {
             dto.previewUrl,
             dto.trackName,
             dto.artistName,
-            dto.trackTime,
+            SimpleDateFormat("mm:ss", Locale.getDefault())
+                .format(dto.trackTime),
             dto.artworkUrl100,
             dto.collectionName,
             dto.releaseDate,
@@ -29,7 +33,9 @@ class DataMusicMapper {
             user.previewUrl,
             user.trackName,
             user.artistName,
-            user.trackTime,
+            SimpleDateFormat("mm:ss", Locale.getDefault())
+                .parse(user.trackTime)
+                .time,
             user.artworkUrl100,
             user.collectionName,
             user.releaseDate,

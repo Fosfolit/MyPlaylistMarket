@@ -148,7 +148,7 @@ val interactorModule = module {
         ActivTrackInteractorImpl(get())
     }
     single<MusicInteractor> {
-        MusicInteractImpl(get(),get())
+        MusicInteractImpl(get())
     }
     single<ThemeInteractor> {
         ThemeInteractorImpl(get())

@@ -61,4 +61,5 @@ dependencies {
     implementation (libs.koin.core)
     implementation (libs.androidx.navigation.ui.ktx)
     implementation (libs.androidx.fragment.ktx)
+    implementation (libs.rxjava2.rxjava)
 }

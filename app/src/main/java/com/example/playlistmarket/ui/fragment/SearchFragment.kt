@@ -177,7 +177,9 @@ class SearchFragment : Fragment() {
         viewModel.observeSearchState.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.clickStatus) {
+                    viewModel.deleteClickStatus()
                     findNavController().navigate(R.id.action_searchFragment_to_audioPlayerFragment)
+
                 }
                 when (it.modelStatus) {
                     SearchViewModelState.START -> {
@@ -194,7 +196,7 @@ class SearchFragment : Fragment() {
                         recyclerView.adapter = ConcatAdapter(
                             SearchedQueriesTextAdapter(listOf(getString(R.string.youLooking))),
                             MusicAdapter(it.listHistory) {
-                                viewModel.handleTrackClick(it)
+                                viewModel.clickOnTrack(it)
                             },
                             SearchedQueriesButtonAdapter(listOf(getString(R.string.clearHistory))) {
                                 viewModel.clearSearchHistory()
@@ -208,7 +210,7 @@ class SearchFragment : Fragment() {
                     SearchViewModelState.RESULT -> {
                         recyclerView.adapter =
                             MusicAdapter(it.listSearch) {
-                                viewModel.handleTrackClick(it)
+                                viewModel.clickOnTrack(it)
                             }
                         recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.INVISIBLE

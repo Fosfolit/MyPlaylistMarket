@@ -1,6 +1,6 @@
 package com.example.playlistmarket.data.interfaceClient
 
 interface ThemeClient {
-    fun loadTheme(): Boolean
-    fun saveTheme(theme :Boolean)
+    suspend fun loadTheme(): Boolean
+    suspend fun saveTheme(theme :Boolean)
 }

@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmarket.R
 import com.example.playlistmarket.databinding.FragmentMediaScreenBinding
+import com.example.playlistmarket.domain.model.DataMusic
 import com.example.playlistmarket.domain.model.PlayerState
 import com.example.playlistmarket.ui.viewModel.AudioPlayerViewModel
 import org.koin.android.ext.android.inject
@@ -58,33 +59,11 @@ class AudioPlayerFragment: Fragment()  {
 
     private fun observeViewModel(){
         viewModel.observePlayerUiState.observe(viewLifecycleOwner) {
-            binding.apply {
-                trackName.text = it.thisTrack.trackName
-                artistName.text = it.thisTrack.artistName
-                timerText.text = SimpleDateFormat("mm:ss", Locale.getDefault())
-                    .format(it.thisTrack.trackTime)
-
-                albumText.visibility = View.INVISIBLE
-                if (it.thisTrack.collectionName.isNotEmpty()) {
-                    albumText.text = it.thisTrack.collectionName
-                }
-                albumText.visibility = View.VISIBLE
-
-                yearText.text = it.thisTrack.releaseDate.substring(0, 4)
-                genreText.text = it.thisTrack.primaryGenreName
-                countryText.text = it.thisTrack.country
-
-                Glide.with(this@AudioPlayerFragment)
-                    .load(it.thisTrack.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
-                    .placeholder(R.drawable.music_base)
-                    .centerCrop()
-                    .transform(RoundedCorners(8))
-                    .into(binding.artworkUrl100)
-            }
+            setText(it.thisTrack)
+            setImage(it.thisTrack.artworkUrl100)
             val seconds = (it.currentPosition / 1000) % 60
             val minutes = (it.currentPosition / (1000 * 60)) % 60
             binding.timer.text = "%02d:%02d".format(minutes, seconds)
-
             when (it.playerState) {
                 PlayerState.STATE_PREPARED -> {
                     binding.buttonPause.setIconResource(R.drawable.button_play)
@@ -104,6 +83,37 @@ class AudioPlayerFragment: Fragment()  {
             }
         }
     }
+    private fun setImage(artworkUrl100:String){
+        if (artworkUrl100!="") {
+            Glide.with(this@AudioPlayerFragment)
+                .load(artworkUrl100.replaceAfterLast('/', "512x512bb.jpg"))
+                .placeholder(R.drawable.music_base)
+                .centerCrop()
+                .transform(RoundedCorners(8))
+                .into(binding.artworkUrl100)
+        }
+    }
+    private fun setText(thisTrack:DataMusic) {
+        binding.apply {
+            trackName.text = thisTrack.trackName
+            artistName.text = thisTrack.artistName
+            timerText.text = thisTrack.trackTime
+            albumText.visibility = View.INVISIBLE
+            if (thisTrack.collectionName.isNotEmpty()) {
+                albumText.text = thisTrack.collectionName
+            }
+            albumText.visibility = View.VISIBLE
+            if(thisTrack.releaseDate.length>4) {
+                yearText.text = thisTrack.releaseDate.substring(0, 4)
+            } else{
+                yearText.text = thisTrack.releaseDate
+            }
+            genreText.text = thisTrack.primaryGenreName
+            countryText.text = thisTrack.country
+        }
+    }
+
+
 
 
 }
